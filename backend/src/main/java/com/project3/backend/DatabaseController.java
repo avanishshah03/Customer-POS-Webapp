@@ -17,4 +17,9 @@ public class DatabaseController {
     public List<Item> getMenuItems() {
         return jdbcTemplate.query("SELECT * FROM items", new BeanPropertyRowMapper<Item>(Item.class));
     }
+
+    @GetMapping("/categories")
+    public List<ItemCategory> getCategories() {
+        return jdbcTemplate.query("SELECT * FROM categories", new BeanPropertyRowMapper<ItemCategory>(ItemCategory.class));
+    }
 }
