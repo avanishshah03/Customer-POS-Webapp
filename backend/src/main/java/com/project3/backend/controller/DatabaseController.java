@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemCategory;
+import com.project3.backend.service.ItemCategoryServiceImpl;
 import com.project3.backend.service.ItemServiceImpl;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -27,6 +28,6 @@ public class DatabaseController {
 
     @GetMapping("/itemCategories")
     public List<ItemCategory> getItemCategories() {
-        return itemCategoryService.fetchMenuCategories();
+        return itemCategoryService.fetchItemCategories();
     }
 }
