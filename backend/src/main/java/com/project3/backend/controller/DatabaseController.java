@@ -10,9 +10,7 @@ import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemCategory;
 import com.project3.backend.service.ItemCategoryServiceImpl;
 import com.project3.backend.service.ItemServiceImpl;
-
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.project3.backend.service.OrderServiceImpl;
 
 @RestController
 public class DatabaseController {
@@ -20,6 +18,8 @@ public class DatabaseController {
     private ItemServiceImpl itemService;
     @Autowired
     private ItemCategoryServiceImpl itemCategoryService;
+    @Autowired
+    private OrderServiceImpl orderService;
 
     @GetMapping("/menuItems")
     public List<Item> getMenuItems() {
@@ -30,4 +30,10 @@ public class DatabaseController {
     public List<ItemCategory> getItemCategories() {
         return itemCategoryService.fetchItemCategories();
     }
+
+    @GetMapping("/orders")
+    public List<com.project3.backend.entity.Order> getOrders() {
+        return orderService.fetchAllOrders();
+    }
+    
 }
