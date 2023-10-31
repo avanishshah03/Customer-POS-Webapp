@@ -104,31 +104,24 @@ function App() {
             variant="fullWidth"
             aria-label="basic tabs example"
           >
-            <Tab label="Search Flower" />
-            <Tab label="Quit" />
+            <Tab label="Breakfast" />
+            <Tab label="Dinner" />
           </Tabs>
         </Paper>
         <Box style={tabContainerStyle}>
-          <TabPanel value={tabValue} index={3}>
-            <Button variant="contained" color="primary">
-              Search Flower
-            </Button>
+          <TabPanel value={tabValue} index={0}>
+            <MenuItemsDisplay menuItems={mockMenuItems} showImage={true} />
           </TabPanel>
-          <TabPanel value={tabValue} index={4}>
-            <Button variant="contained" color="primary">
-              Quit
-            </Button>
+          <TabPanel value={tabValue} index={1}>
+            <MenuItemsDisplay menuItems={mockMenuItems} showImage={true} />
           </TabPanel>
-          <MenuItemsDisplay menuItems={mockMenuItems} showImage={true}></MenuItemsDisplay>
         </Box>
       </Grid>
     </Grid>
   );
 }
 
-function TabPanel(props) {
-  const { children, value, index } = props;
-
+const TabPanel = ({ children, value, index }: any) => {
   return (
     <div role="tabpanel" hidden={value !== index}>
       {value === index && <Box p={3}>{children}</Box>}
