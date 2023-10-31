@@ -8,7 +8,7 @@ import java.util.List;
 
 
 
-public class ItemServiceImpl {
+public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemRepository itemRepository;
 

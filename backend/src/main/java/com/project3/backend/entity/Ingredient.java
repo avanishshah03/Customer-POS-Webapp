@@ -10,9 +10,12 @@ import lombok.Data;
 public class Ingredient {
     private int id;
     private String name;
-    private int stock, restock, amountordered;
+    private int stock;
+    private int restock;
+    private int amountordered;
     private double price;
-    private boolean glutenfree, vegan;
+    private boolean glutenfree;
+    private boolean vegan;
 
     /**
      * Default constructor for creating an Ingredient.
