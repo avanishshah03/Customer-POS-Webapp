@@ -5,12 +5,6 @@ interface CartEntry {
     quantity: number;
 }
 
-/*
-cart.map(({ quantity }) => {..
-        arg1.quantity;
-    ..})
-*/
-
 export interface MenuItem {
     id: number;
     name: string;
