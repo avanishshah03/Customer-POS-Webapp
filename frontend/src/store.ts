@@ -5,10 +5,17 @@ interface CartEntry {
     quantity: number;
 }
 
-interface MenuItem {
+/*
+cart.map(({ quantity }) => {..
+        arg1.quantity;
+    ..})
+*/
+
+export interface MenuItem {
     id: number;
     name: string;
     price: number;
+    imageUrl: string;
 }
 
 interface Store {
