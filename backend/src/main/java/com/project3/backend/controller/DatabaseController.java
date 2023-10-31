@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemCategory;
+import com.project3.backend.service.ItemServiceImpl;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,15 +16,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @RestController
 public class DatabaseController {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private ItemServiceImpl itemService;
+    @Autowired
+    private ItemCategoryServiceImpl itemCategoryService;
 
     @GetMapping("/menuItems")
     public List<Item> getMenuItems() {
-        return jdbcTemplate.query("SELECT * FROM items", new BeanPropertyRowMapper<Item>(Item.class));
+        return itemService.fetchMenuItems();
     }
 
-    @GetMapping("/categories")
-    public List<ItemCategory> getCategories() {
-        return jdbcTemplate.query("SELECT * FROM categories", new BeanPropertyRowMapper<ItemCategory>(ItemCategory.class));
+    @GetMapping("/itemCategories")
+    public List<ItemCategory> getItemCategories() {
+        return itemCategoryService.fetchMenuCategories();
     }
 }
