@@ -1,10 +1,12 @@
-package com.project3.backend;
-import java.util.*;
+package com.project3.backend.entity;
+
+import lombok.Data;
 
 /**
  * The `ItemCategory` class represents a category for items in a database.
  * It includes information such as the category's ID and name.
  */
+@Data
 public class ItemCategory {
     private int id;
     private String name;
@@ -39,36 +41,6 @@ public class ItemCategory {
     {
         this.id = id;
         this.name = name;
-    }
-
-    /**
-     * Get the ID of the category.
-     *
-     * @return The category's ID.
-     */
-    public int getID()
-    {
-        return this.id;
-    }
-    
-    /**
-     * Get the name of the category.
-     *
-     * @return The category's name.
-     */
-    public String getName()
-    {
-    	return this.name;
-    }
-
-    /**
-     * Get a string representation of the ItemCategory.
-     *
-     * @return A formatted string representation of the category.
-     */
-    public String toString()
-    {
-        return String.format("ItemCategory[id=%d, name=%s]", this.id, this.name);
     }
 
     // /**

@@ -1,10 +1,12 @@
-package com.project3.backend;
-import java.util.*;
+package com.project3.backend.entity;
+
+import lombok.Data;
 
 
 /**
  * Represents an Ingredient used in the restaurant.
  */
+@Data
 public class Ingredient {
     private int id;
     private String name;
@@ -70,81 +72,6 @@ public class Ingredient {
         this.amountordered = amountordered;
         this.price = price;
         this.glutenfree = glutenfree;
-        this.vegan = vegan;
-    }
-
-    public int getID()
-    {
-        return this.id;
-    }
-
-    public String getName()
-    {
-        return this.name;
-    }
-
-    public int getStock()
-    {
-        return this.stock;
-    }
-
-    public int getRestock()
-    {
-        return this.restock;
-    }
-
-    public int getAmountOrdered()
-    {
-        return this.amountordered;
-    }
-
-    public double getPrice()
-    {
-        return this.price;
-    }
-
-    public boolean isGlutenFree()
-    {
-        return this.glutenfree;
-    }
-
-    public boolean isVegan()
-    {
-        return this.vegan;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public void setStock(int stock)
-    {
-        this.stock = stock;
-    }
-
-    public void setRestock(int restock)
-    {
-        this.restock = restock;
-    }
-
-    public void setAmountOrdered(int amountordered)
-    {
-        this.amountordered = amountordered;
-    }
-
-    public void setPrice(double price)
-    {
-        this.price = price;
-    }
-
-    public void setGlutenFree(boolean glutenfree)
-    {
-        this.glutenfree = glutenfree;
-    }
-
-    public void setVegan(boolean vegan)
-    {
         this.vegan = vegan;
     }
 

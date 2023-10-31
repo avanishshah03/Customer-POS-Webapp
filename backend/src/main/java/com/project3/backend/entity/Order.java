@@ -1,7 +1,10 @@
-package com.project3.backend;
+package com.project3.backend.entity;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import lombok.Data;
+
 import java.time.*;
 
 /**
@@ -10,6 +13,7 @@ import java.time.*;
  * user ID,
  * as well as a list of ordered item IDs.
  */
+@Data
 public class Order {
     private int id;
     private double price;
@@ -56,52 +60,7 @@ public class Order {
         this.price = orderedItems.stream().mapToDouble(Item::getPrice).sum();
         this.time = time;
         this.userId = 1;
-        this.orderedItemIDs = orderedItems.stream().map(Item::getID).collect(Collectors.toList());
-    }
-
-    /**
-     * Get the ID of the order.
-     *
-     * @return The unique identifier of the order.
-     */
-    public int getID() {
-        return this.id;
-    }
-
-    /**
-     * Get the total price of the order.
-     *
-     * @return The total price of the order.
-     */
-    public double getPrice() {
-        return this.price;
-    }
-
-    /**
-     * Get the timestamp when the order was placed.
-     *
-     * @return The timestamp of the order.
-     */
-    public LocalDateTime getTime() {
-        return this.time;
-    }
-
-    /**
-     * Get the user ID associated with the order.
-     *
-     * @return The user ID of the order owner.
-     */
-    public int getUserId() {
-        return this.userId;
-    }
-
-    /**
-     * Returns a string representation of the order.
-     *
-     * @return A formatted string describing the order.
-     */
-    public String toString() {
-        return String.format("Order %d with price $%.2f at time %s by user %d", id, price, time.toString(), userId);
+        this.orderedItemIDs = orderedItems.stream().map(Item::getId).collect(Collectors.toList());
     }
 
     // /**
