@@ -30,9 +30,9 @@ export const useMenuStore = create<Store>((set) => ({
     ],
 
     menuItems: [
-        { id: 1, name: "Item A", price: 10.99 },
-        { id: 2, name: "Item B", price: 6.99 },
-        { id: 3, name: "Item C", price: 8.49 },
+        { id: 1, name: "Item A", price: 10.99, imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg" },
+        { id: 2, name: "Item B", price: 6.99, imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg" },
+        { id: 3, name: "Item C", price: 8.49, imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg" },
     ],
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
