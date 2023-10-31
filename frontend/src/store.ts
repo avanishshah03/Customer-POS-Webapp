@@ -5,12 +5,6 @@ interface CartEntry {
     quantity: number;
 }
 
-/*
-cart.map(({ quantity }) => {..
-        arg1.quantity;
-    ..})
-*/
-
 export interface MenuItem {
     id: number;
     name: string;
@@ -23,9 +17,17 @@ interface Store {
     cart: CartEntry[];
 }
 
-const useMenuStore = create<Store>((set) => ({
-    cart: [],
-    menuItems: [],
+export const useMenuStore = create<Store>((set) => ({
+    cart: [
+        { itemId: 1, quantity: 2 },
+        { itemId: 2, quantity: 1 },
+    ],
+
+    menuItems: [
+        { id: 1, name: "Item A", price: 10.99 },
+        { id: 2, name: "Item B", price: 6.99 },
+        { id: 3, name: "Item C", price: 8.49 },
+    ],
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
     addCartEntry: (id: number) => {

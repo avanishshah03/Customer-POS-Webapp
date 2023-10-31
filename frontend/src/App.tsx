@@ -1,7 +1,4 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-// import './App.css'
 import {
   Box,
   Button,
@@ -9,9 +6,9 @@ import {
   Paper,
   Tab,
   Tabs,
-  styled,
-  Typography,
+  Typography
 } from "@mui/material";
+import { CheckoutCart } from "./components/CheckoutCart";
 import { MenuItemsDisplay } from "./components/Menu";
 
 const mockMenuItems = [
@@ -65,49 +62,6 @@ const mockMenuItems = [
   },
 ];
 
-// Then, you can use the MenuItemsDisplay component with this mock data like this:
-
-// function App() {
-//   const gridStyle = {
-//     borderRight: '1px solid #ccc', // Add a border to the right of the first grid
-//   };
-
-//   const [tabValue, setTabValue] = useState(0);
-
-//   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-//     setTabValue(newValue);
-//   };
-//   return (
-//     <Grid container spacing={2} columns={16}>
-//       <Grid xs={8} style={gridStyle}>
-//         <Tabs aria-label="basic tabs example"
-//           indicatorColor="primary"
-//           textColor="inherit"
-//           variant='fullWidth'>
-//           <Tab label="Item One" />
-//           <Tab label="Item Two" />
-//           <Tab label="Item Three" />
-//         </Tabs>
-//       </Grid>
-//       <Grid xs={8} >
-
-//         <Tabs aria-label="basic tabs example"
-//           indicatorColor="primary"
-//           textColor="inherit"
-//           variant='fullWidth'>
-//           <Tab label="Item One" />
-//           <Tab label="Item Two" />
-//           <Tab label="Item Three" />
-//         </Tabs>
-
-//       </Grid>
-//     </Grid>
-
-//   )
-
-// }
-
-// export default App;
 
 function App() {
   const [tabValue, setTabValue] = useState(0);
@@ -138,37 +92,7 @@ function App() {
         </Paper>
       </Grid>
       <Grid item xs={6}>
-        <Paper style={paperStyle}>
-          <Tabs
-            value={tabValue}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-            aria-label="basic tabs example"
-          >
-            <Tab label="Add Flower" />
-            <Tab label="Edit Flower" />
-            <Tab label="Delete Flower" />
-          </Tabs>
-        </Paper>
-        <Box style={tabContainerStyle}>
-          <TabPanel value={tabValue} index={0}>
-            <Button variant="contained" color="primary">
-              Add Flower
-            </Button>
-          </TabPanel>
-          <TabPanel value={tabValue} index={1}>
-            <Button variant="contained" color="primary">
-              Edit Flower
-            </Button>
-          </TabPanel>
-          <TabPanel value={tabValue} index={2}>
-            <Button variant="contained" color="primary">
-              Delete Flower
-            </Button>
-          </TabPanel>
-        </Box>
+        <CheckoutCart />
       </Grid>
       <Grid item xs={6}>
         <Paper style={paperStyle}>
