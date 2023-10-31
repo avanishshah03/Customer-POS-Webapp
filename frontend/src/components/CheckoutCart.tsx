@@ -11,19 +11,14 @@ export const CheckoutCart = () => {
         textAlign: 'center',
         backgroundColor: '#f3f3f3',
     };
-
-
-
     const tableStyle = {
         border: '1px solid #ddd',
         width: '100%',
     };
-
     const cellStyle = {
         border: '1px solid #ddd',
         padding: '8px',
     };
-
     return (
         <Paper style={columnStyle}>
             <Typography variant="h5">Point of Sale</Typography>
@@ -40,7 +35,6 @@ export const CheckoutCart = () => {
                             <TableCell style={cellStyle} >
                                 <Typography variant="h6">{"Quantity"}</Typography>
                             </TableCell>
-
                         </TableRow>
                     </TableHead>
                     <TableBody>
