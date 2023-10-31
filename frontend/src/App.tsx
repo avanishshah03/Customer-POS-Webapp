@@ -1,6 +1,4 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 // import './App.css'
 import {
   Box,
@@ -9,9 +7,9 @@ import {
   Paper,
   Tab,
   Tabs,
-  styled,
-  Typography,
+  Typography
 } from "@mui/material";
+import { CheckoutCart } from "./components/CheckoutCart";
 import { MenuItemsDisplay } from "./components/Menu";
 
 const mockMenuItems = [
@@ -138,37 +136,7 @@ function App() {
         </Paper>
       </Grid>
       <Grid item xs={6}>
-        <Paper style={paperStyle}>
-          <Tabs
-            value={tabValue}
-            onChange={handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-            aria-label="basic tabs example"
-          >
-            <Tab label="Add Flower" />
-            <Tab label="Edit Flower" />
-            <Tab label="Delete Flower" />
-          </Tabs>
-        </Paper>
-        <Box style={tabContainerStyle}>
-          <TabPanel value={tabValue} index={0}>
-            <Button variant="contained" color="primary">
-              Add Flower
-            </Button>
-          </TabPanel>
-          <TabPanel value={tabValue} index={1}>
-            <Button variant="contained" color="primary">
-              Edit Flower
-            </Button>
-          </TabPanel>
-          <TabPanel value={tabValue} index={2}>
-            <Button variant="contained" color="primary">
-              Delete Flower
-            </Button>
-          </TabPanel>
-        </Box>
+        <CheckoutCart />
       </Grid>
       <Grid item xs={6}>
         <Paper style={paperStyle}>
