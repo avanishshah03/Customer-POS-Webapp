@@ -5,6 +5,8 @@ import { useMenuStore } from '../store';
 export const CheckoutCart = () => {
     const cart = useMenuStore(state => state.cart);
     const menuitems = useMenuStore(state => state.menuItems);
+    const decrement = useMenuStore(state => state.decrementCartEntryQuantity);
+    const increment = useMenuStore(state => state.incrementCartEntryQuantity);
     const columnStyle = {
         padding: '20px',
         margin: '10px',
@@ -22,12 +24,21 @@ export const CheckoutCart = () => {
     const buttonStyleplus = {
         backgroundColor: 'black',
         color: 'white',
+        padding: '8px 12px',
+        fontSize: '12px',
     };
     const buttonStyleminus = {
         backgroundColor: 'white',
         color: 'black',
+        padding: '1px 1px',
+        margin: '1px',
+        border: '1px solid black',
+        fontSize: '15px',
     };
-    const handleDeleteItem = (itemId) => {
+    const handlePlusItem = (itemId) => {
+        cart
+    };
+    const handleMinusItem = (itemId) => {
 
     };
     return (
@@ -61,7 +72,7 @@ export const CheckoutCart = () => {
                                     <Button
                                         variant="contained"
                                         style={buttonStyleminus}
-                                        onClick={() => handleDeleteItem(item.itemId)}
+                                        onClick={() => decrement(item.itemId)}
                                     >
                                         -
                                     </Button>
@@ -69,7 +80,7 @@ export const CheckoutCart = () => {
                                     <Button
                                         variant="contained"
                                         style={buttonStyleplus}
-                                        onClick={() => handleDeleteItem(item.itemId)}
+                                        onClick={() => increment(item.itemId)}
                                     >
                                         +
                                     </Button>
@@ -82,6 +93,6 @@ export const CheckoutCart = () => {
             <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>
                 Checkout
             </Button>
-        </Paper>
+        </Paper >
     );
 }

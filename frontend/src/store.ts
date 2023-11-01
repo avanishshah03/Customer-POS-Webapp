@@ -13,6 +13,9 @@ export interface MenuItem {
 }
 
 interface Store {
+
+    incrementCartEntryQuantity: (id: number) => void;
+    decrementCartEntryQuantity: (id: number) => void;
     menuItems: MenuItem[];
     cart: CartEntry[];
 }
@@ -55,6 +58,18 @@ export const useMenuStore = create<Store>((set) => ({
                 cart: state.cart.map(entry => {
                     if (entry.itemId == id) {
                         return { ...entry, quantity: entry.quantity - 1 }
+                    }
+                    return entry
+                }).filter(entry => entry.quantity > 0)
+            }
+        ))
+    },
+    incrementCartEntryQuantity: (id: number) => {
+        set(state => (
+            {
+                cart: state.cart.map(entry => {
+                    if (entry.itemId == id) {
+                        return { ...entry, quantity: entry.quantity + 1 }
                     }
                     return entry
                 }).filter(entry => entry.quantity > 0)
