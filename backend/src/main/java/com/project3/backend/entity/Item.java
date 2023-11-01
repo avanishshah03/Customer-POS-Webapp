@@ -23,7 +23,6 @@ public class Item {
     private double price;
     private String size;
     private boolean extraSauce;
-
     @Transient
     private Map<Integer, Integer> ingredients; // ingredient id -> quantity
 
