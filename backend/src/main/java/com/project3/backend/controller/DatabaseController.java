@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project3.backend.entity.Ingredient;
 import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemCategory;
 import com.project3.backend.entity.Order;
@@ -47,5 +48,17 @@ public class DatabaseController {
         System.out.println("Saving order: " + order.toString());
         orderService.saveOrder(order);
     }
+
+    @PostMapping("/items")
+    public void saveItem(@RequestBody Item item) {
+        //TODO: process POST request
+        System.out.println("Saving ingredient: " + item.toString());
+        itemService.saveItem(item);
+        
+        
+    }
+
+    
+    
     
 }
