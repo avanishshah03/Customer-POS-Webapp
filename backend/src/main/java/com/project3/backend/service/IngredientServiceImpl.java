@@ -18,5 +18,15 @@ public class IngredientServiceImpl {
         return (List<Ingredient>) ingredientRepository.findAll();
     }
 
+    public void saveIngredient(Ingredient ingredient)
+    {
+        ingredientRepository.save(ingredient);
+    }
+
+    public void deleteIngredient(int id)
+    {
+        ingredientRepository.deleteById(id);
+    }
+
     
 }

@@ -3,6 +3,7 @@ package com.project3.backend.entity;
 import java.util.*;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class Item {
     private double price;
     private String size;
     private boolean extraSauce;
+    @Transient
     private Map<Integer, Integer> ingredients; // ingredient id -> quantity
     
     /**
