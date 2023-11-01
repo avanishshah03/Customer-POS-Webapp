@@ -19,6 +19,17 @@ export const CheckoutCart = () => {
         border: '1px solid #ddd',
         padding: '8px',
     };
+    const buttonStyleplus = {
+        backgroundColor: 'red',
+        color: 'white',
+    };
+    const buttonStyleminus = {
+        backgroundColor: 'white',
+        color: 'black',
+    };
+    const handleDeleteItem = (itemId) => {
+
+    };
     return (
         <Paper style={columnStyle}>
             <Typography variant="h5">Point of Sale</Typography>
@@ -48,6 +59,20 @@ export const CheckoutCart = () => {
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     {item.quantity}
+                                    <Button
+                                        variant="contained"
+                                        style={buttonStyleplus}
+                                        onClick={() => handleDeleteItem(item.itemId)}
+                                    >
+                                        +
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        style={buttonStyleplus}
+                                        onClick={() => handleDeleteItem(item.itemId)}
+                                    >
+                                        -
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
