@@ -20,7 +20,7 @@ export const CheckoutCart = () => {
         padding: '8px',
     };
     const buttonStyleplus = {
-        backgroundColor: 'red',
+        backgroundColor: 'black',
         color: 'white',
     };
     const buttonStyleminus = {
@@ -58,6 +58,13 @@ export const CheckoutCart = () => {
                                     {menuitems.find(menuitem => menuitem.id === item.itemId)?.price}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
+                                    <Button
+                                        variant="contained"
+                                        style={buttonStyleminus}
+                                        onClick={() => handleDeleteItem(item.itemId)}
+                                    >
+                                        -
+                                    </Button>
                                     {item.quantity}
                                     <Button
                                         variant="contained"
@@ -65,13 +72,6 @@ export const CheckoutCart = () => {
                                         onClick={() => handleDeleteItem(item.itemId)}
                                     >
                                         +
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        style={buttonStyleminus}
-                                        onClick={() => handleDeleteItem(item.itemId)}
-                                    >
-                                        -
                                     </Button>
                                 </TableCell>
                             </TableRow>
