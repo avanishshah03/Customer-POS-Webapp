@@ -26,12 +26,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
               {props.showImage && (
                 <div style={{ height: "100px", width: "100px" }}></div>
               )}
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                }}
-              >
+              <Button variant="contained" color="primary" onClick={() => {}}>
                 <Typography variant="h6">
                   {menuItem.name} ${menuItem.price.toFixed(2)}
                 </Typography>
