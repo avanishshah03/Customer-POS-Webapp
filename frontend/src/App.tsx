@@ -27,9 +27,9 @@ function App() {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Paper style={paperStyle}>
-          <Typography variant="h4">Flower Shop</Typography>
+          <Typography variant="h4">Mess Waffles</Typography>
           <Typography variant="subtitle1">
-            Choose an option from the tabs below:
+            MESSin around with waffles
           </Typography>
         </Paper>
       </Grid>

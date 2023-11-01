@@ -7,6 +7,13 @@ export const CheckoutCart = () => {
     const menuitems = useMenuStore(state => state.menuItems);
     const decrement = useMenuStore(state => state.decrementCartEntryQuantity);
     const increment = useMenuStore(state => state.incrementCartEntryQuantity);
+    let totalPrice = 0;
+    for (const item of cart) {
+        const menuItem = menuitems.find(menuitem => menuitem.id === item.itemId);
+        if (menuItem) {
+            totalPrice += menuItem.price * item.quantity;
+        }
+    }
     const columnStyle = {
         padding: '20px',
         margin: '10px',
@@ -90,6 +97,7 @@ export const CheckoutCart = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Typography variant="h6">Total Price: ${totalPrice.toFixed(2)}</Typography>
             <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>
                 Checkout
             </Button>
