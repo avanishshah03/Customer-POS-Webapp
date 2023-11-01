@@ -1,5 +1,7 @@
 package com.project3.backend.entity;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.Data;
 
 /**
@@ -8,6 +10,7 @@ import lombok.Data;
  */
 @Data
 public class ItemCategory {
+    @Id
     private int id;
     private String name;
     

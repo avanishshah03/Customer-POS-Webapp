@@ -1,11 +1,15 @@
 package com.project3.backend.entity;
 
-import java.util.*;
-import java.util.stream.Collectors;
+// import java.util.*;
+// import java.util.stream.Collectors;
 
 import lombok.Data;
 
 import java.time.*;
+import java.util.List;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 
 /**
  * The `Order` class represents a customer order in an e-commerce system.
@@ -15,11 +19,15 @@ import java.time.*;
  */
 @Data
 public class Order {
+    @Id
     private int id;
     private double price;
     private LocalDateTime time;
     private int userId;
-    private List<Integer> orderedItemIDs;
+    @Transient
+    private List<Integer> orderedItemIds;
+    @Transient
+    private List<Integer> quantities;
 
     /**
      * Default constructor for creating an empty order.
@@ -29,7 +37,6 @@ public class Order {
         this.price = 0.0;
         this.time = LocalDateTime.now();
         this.userId = 0;
-        orderedItemIDs = new ArrayList<>();
     }
 
     /**
@@ -45,23 +52,22 @@ public class Order {
         this.price = price;
         this.time = time;
         this.userId = userId;
-        orderedItemIDs = new ArrayList<>();
     }
 
-    /**
-     * Constructor for creating an order with a timestamp and a list of ordered
-     * items.
-     *
-     * @param time         The timestamp when the order was placed.
-     * @param orderedItems A list of items included in the order.
-     */
-    public Order(LocalDateTime time, List<Item> orderedItems) {
-        this.id = 0;
-        this.price = orderedItems.stream().mapToDouble(Item::getPrice).sum();
-        this.time = time;
-        this.userId = 1;
-        this.orderedItemIDs = orderedItems.stream().map(Item::getId).collect(Collectors.toList());
-    }
+    // /**
+    //  * Constructor for creating an order with a timestamp and a list of ordered
+    //  * items.
+    //  *
+    //  * @param time         The timestamp when the order was placed.
+    //  * @param orderedItems A list of items included in the order.
+    //  */
+    // public Order(LocalDateTime time, List<Item> orderedItems) {
+    //     this.id = 0;
+    //     this.price = orderedItems.stream().mapToDouble(Item::getPrice).sum();
+    //     this.time = time;
+    //     this.userId = 1;
+    //     this.orderedItemIDs = orderedItems.stream().map(Item::getId).collect(Collectors.toList());
+    // }
 
     // /**
     //  * Inserts the order and associated items into the database.
