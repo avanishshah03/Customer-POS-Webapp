@@ -1,66 +1,8 @@
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  Paper,
-  Tab,
-  Tabs,
-  Typography
-} from "@mui/material";
+import { Box, Button, Grid, Paper, Tab, Tabs, Typography } from "@mui/material";
 import { CheckoutCart } from "./components/CheckoutCart";
 import { MenuItemsDisplay } from "./components/Menu";
 
-const mockMenuItems = [
-  {
-    id: 1,
-    name: "Chicken",
-    price: 12.99,
-    imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 2,
-    name: "Waffles",
-    price: 12.99,
-    imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 3,
-    name: "Lettuce",
-    price: 12.99,
-    imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 4,
-    name: "Kid's Meal",
-    price: 12.99,
-    imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 5,
-    name: "Cow Brain",
-    price: 12.99,
-    imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 6,
-    name: "Juice",
-    price: 12.99,
-    imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 7,
-    name: "Soda",
-    price: 12.99,
-    imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 8,
-    name: "Tomato",
-    price: 12.99,
-    imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-];
 
 
 function App() {
@@ -104,36 +46,29 @@ function App() {
             variant="fullWidth"
             aria-label="basic tabs example"
           >
-            <Tab label="Search Flower" />
-            <Tab label="Quit" />
+            <Tab label="Breakfast" />
+            <Tab label="Dinner" />
           </Tabs>
         </Paper>
         <Box style={tabContainerStyle}>
-          <TabPanel value={tabValue} index={3}>
-            <Button variant="contained" color="primary">
-              Search Flower
-            </Button>
+          <TabPanel value={tabValue} index={0}>
+            <MenuItemsDisplay showImage={true} />
           </TabPanel>
-          <TabPanel value={tabValue} index={4}>
-            <Button variant="contained" color="primary">
-              Quit
-            </Button>
+          <TabPanel value={tabValue} index={1}>
+            <MenuItemsDisplay showImage={true} />
           </TabPanel>
-          <MenuItemsDisplay menuItems={mockMenuItems} showImage={true}></MenuItemsDisplay>
         </Box>
       </Grid>
     </Grid>
   );
 }
 
-function TabPanel(props) {
-  const { children, value, index } = props;
-
+const TabPanel = ({ children, value, index }: any) => {
   return (
     <div role="tabpanel" hidden={value !== index}>
       {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
-}
+};
 
 export default App;

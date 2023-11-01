@@ -5,25 +5,42 @@ import { useMenuStore } from '../store';
 export const CheckoutCart = () => {
     const cart = useMenuStore(state => state.cart);
     const menuitems = useMenuStore(state => state.menuItems);
+    const decrement = useMenuStore(state => state.decrementCartEntryQuantity);
+    const increment = useMenuStore(state => state.incrementCartEntryQuantity);
     const columnStyle = {
         padding: '20px',
         margin: '10px',
         textAlign: 'center',
         backgroundColor: '#f3f3f3',
     };
-
-
-
     const tableStyle = {
         border: '1px solid #ddd',
         width: '100%',
     };
-
     const cellStyle = {
         border: '1px solid #ddd',
         padding: '8px',
     };
+    const buttonStyleplus = {
+        backgroundColor: 'black',
+        color: 'white',
+        padding: '8px 12px',
+        fontSize: '12px',
+    };
+    const buttonStyleminus = {
+        backgroundColor: 'white',
+        color: 'black',
+        padding: '1px 1px',
+        margin: '1px',
+        border: '1px solid black',
+        fontSize: '15px',
+    };
+    const handlePlusItem = (itemId) => {
+        cart
+    };
+    const handleMinusItem = (itemId) => {
 
+    };
     return (
         <Paper style={columnStyle}>
             <Typography variant="h5">Point of Sale</Typography>
@@ -40,7 +57,6 @@ export const CheckoutCart = () => {
                             <TableCell style={cellStyle} >
                                 <Typography variant="h6">{"Quantity"}</Typography>
                             </TableCell>
-
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -53,7 +69,21 @@ export const CheckoutCart = () => {
                                     {menuitems.find(menuitem => menuitem.id === item.itemId)?.price}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
+                                    <Button
+                                        variant="contained"
+                                        style={buttonStyleminus}
+                                        onClick={() => decrement(item.itemId)}
+                                    >
+                                        -
+                                    </Button>
                                     {item.quantity}
+                                    <Button
+                                        variant="contained"
+                                        style={buttonStyleplus}
+                                        onClick={() => increment(item.itemId)}
+                                    >
+                                        +
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -63,6 +93,6 @@ export const CheckoutCart = () => {
             <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>
                 Checkout
             </Button>
-        </Paper>
+        </Paper >
     );
 }
