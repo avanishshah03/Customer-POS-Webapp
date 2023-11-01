@@ -3,64 +3,7 @@ import { Box, Button, Grid, Paper, Tab, Tabs, Typography } from "@mui/material";
 import { CheckoutCart } from "./components/CheckoutCart";
 import { MenuItemsDisplay } from "./components/Menu";
 
-const mockMenuItems = [
-  {
-    id: 1,
-    name: "Chicken",
-    price: 12.99,
-    imageUrl:
-      "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 2,
-    name: "Waffles",
-    price: 12.99,
-    imageUrl:
-      "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 3,
-    name: "Lettuce",
-    price: 12.99,
-    imageUrl:
-      "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 4,
-    name: "Kid's Meal",
-    price: 12.99,
-    imageUrl:
-      "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 5,
-    name: "Cow Brain",
-    price: 12.99,
-    imageUrl:
-      "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 6,
-    name: "Juice",
-    price: 12.99,
-    imageUrl:
-      "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 7,
-    name: "Soda",
-    price: 12.99,
-    imageUrl:
-      "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-  {
-    id: 8,
-    name: "Tomato",
-    price: 12.99,
-    imageUrl:
-      "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg",
-  },
-];
+
 
 function App() {
   const [tabValue, setTabValue] = useState(0);
