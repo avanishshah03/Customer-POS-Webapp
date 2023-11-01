@@ -68,7 +68,7 @@ export const CheckoutCart = () => {
                                     </Button>
                                     <Button
                                         variant="contained"
-                                        style={buttonStyleplus}
+                                        style={buttonStyleminus}
                                         onClick={() => handleDeleteItem(item.itemId)}
                                     >
                                         -
