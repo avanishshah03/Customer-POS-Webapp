@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 
 export const MenuItemsDisplay = (props: { showImage: boolean }) => {
   const menuItems = useMenuStore((state) => state.menuItems);
+  const addtoCart = useMenuStore(state => state.addCartEntry);
   return (
     <div>
       <Grid container spacing={2}>
@@ -17,6 +18,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
               variant="text"
               color="secondary"
               onClick={() => {
+                addtoCart(menuItem.id);
               }}
             >
               <Paper

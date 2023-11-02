@@ -42,12 +42,6 @@ export const CheckoutCart = () => {
         border: '1px solid black',
         fontSize: '15px',
     };
-    const handlePlusItem = (itemId) => {
-        cart
-    };
-    const handleMinusItem = (itemId) => {
-
-    };
     return (
         <Paper style={columnStyle}>
             <Typography variant="h5">Point of Sale</Typography>
@@ -98,7 +92,12 @@ export const CheckoutCart = () => {
                 </Table>
             </TableContainer>
             <Typography variant="h6">Total Price: ${totalPrice.toFixed(2)}</Typography>
-            <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>
+            <Button
+                variant="contained"
+                color="primary"
+                style={{ marginTop: '20px' }}
+                onClick={() => }
+            >
                 Checkout
             </Button>
         </Paper >
