@@ -76,7 +76,7 @@ public class DatabaseController {
     @PostMapping("/items")
     public void saveItem(@RequestBody Item item) {
         //TODO: process POST request
-        System.out.println("Saving ingredient: " + item.toString());
+        System.out.println("Saving item: " + item.toString());
         itemService.saveItem(item);
         
         
