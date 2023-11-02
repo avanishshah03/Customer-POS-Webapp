@@ -35,17 +35,7 @@ function App() {
       </Grid>
       <Grid item xs={6}>
         <Paper style={paperStyle}>
-          <Tabs
-            value={tabValue}
-            onChange={setTabValue as any}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-            aria-label="basic tabs example"
-          >
-            <Tab label="Breakfast" />
-            <Tab label="Dinner" />
-          </Tabs>
+
         </Paper>
         <Box style={tabContainerStyle}>
           <TabPanel value={tabValue} index={0}>
