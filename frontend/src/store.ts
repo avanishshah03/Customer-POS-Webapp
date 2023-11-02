@@ -10,6 +10,12 @@ export interface MenuItem {
     name: string;
     price: number;
     imageUrl: string;
+    categoryId: number;
+}
+
+export interface ItemCategory {
+    id: number;
+    name: string;
 }
 
 interface Store {
@@ -20,13 +26,14 @@ interface Store {
     decrementCartEntryQuantity: (id: number) => void;
     menuItems: MenuItem[];
     cart: CartEntry[];
+    itemCategories: ItemCategory[];
 }
 
 let menuItems: MenuItem[] = await (await fetch("/api/menuItems")).json()
-
+let itemCategories: ItemCategory[] = await (await fetch("/api/itemCategories")).json()
 export const useMenuStore = create<Store>((set) => ({
     cart: [],
-
+    itemCategories: itemCategories,
     menuItems: menuItems,
     // TODO: talk to backend
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
