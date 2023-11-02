@@ -30,6 +30,12 @@ public class DatabaseController {
     @Autowired
     private OrderServiceImpl orderService;
 
+    @GetMapping("/secured")
+    public String secured()
+    {
+        return "Hello, secured";
+    }
+
     @GetMapping("/menuItems")
     public List<Item> getMenuItems() {
         return itemService.fetchMenuItems();
