@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Button, Grid, Paper, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Grid, Paper, Tab, Tabs, Typography } from "@mui/material";
 import { CheckoutCart } from "./components/CheckoutCart";
 import { MenuItemsDisplay } from "./components/Menu";
 
@@ -8,16 +8,13 @@ import { MenuItemsDisplay } from "./components/Menu";
 function App() {
   const [tabValue, setTabValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
 
   const paperStyle = {
     padding: "20px",
     margin: "20px",
     textAlign: "center",
     backgroundColor: "#f3f3f3",
-  };
+  } as any;
 
   const tabContainerStyle = {
     marginTop: "20px",
@@ -40,7 +37,7 @@ function App() {
         <Paper style={paperStyle}>
           <Tabs
             value={tabValue}
-            onChange={handleChange}
+            onChange={setTabValue as any}
             indicatorColor="primary"
             textColor="primary"
             variant="fullWidth"
