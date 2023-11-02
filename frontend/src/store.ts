@@ -14,6 +14,7 @@ export interface MenuItem {
 
 interface Store {
 
+    checkout: () => void;
     incrementCartEntryQuantity: (id: number) => void;
     decrementCartEntryQuantity: (id: number) => void;
     menuItems: MenuItem[];
@@ -31,6 +32,7 @@ export const useMenuStore = create<Store>((set) => ({
         { id: 2, name: "Item B", price: 6.99, imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg" },
         { id: 3, name: "Item C", price: 8.49, imageUrl: "https://assets.epicurious.com/photos/62f16ed5fe4be95d5a460eed/3:2/w_6948,h_4632,c_limit/RoastChicken_RECIPE_080420_37993.jpg" },
     ],
+    // TODO: talk to backend
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
     addCartEntry: (id: number) => {
@@ -76,4 +78,13 @@ export const useMenuStore = create<Store>((set) => ({
             }
         ))
     },
+    checkout: () => {
+        set(state => {
+            // TODO: talk to backend
+            return {
+                cart: []
+            }
+        })
+    },
+
 }))
