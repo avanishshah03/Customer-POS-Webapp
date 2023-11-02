@@ -1,9 +1,8 @@
-import React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { MenuItem, useMenuStore } from "../store";
+import { useMenuStore } from "../store";
 import { Box } from "@mui/material";
 
 export const MenuItemsDisplay = (props: { showImage: boolean }) => {

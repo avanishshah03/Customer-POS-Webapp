@@ -1,12 +1,12 @@
-import React from 'react';
-import { Paper, Typography, Grid, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button } from '@mui/material';
-import { useMenuStore } from '../store';
+import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button } from '@mui/material';
+import { MenuItem, useMenuStore } from '../store';
 
 export const CheckoutCart = () => {
     const cart = useMenuStore(state => state.cart);
     const menuitems = useMenuStore(state => state.menuItems);
     const decrement = useMenuStore(state => state.decrementCartEntryQuantity);
     const increment = useMenuStore(state => state.incrementCartEntryQuantity);
+    const checkout = useMenuStore(state => state.checkout);
     let totalPrice = 0;
     for (const item of cart) {
         const menuItem = menuitems.find(menuitem => menuitem.id === item.itemId);
@@ -14,12 +14,6 @@ export const CheckoutCart = () => {
             totalPrice += menuItem.price * item.quantity;
         }
     }
-    const columnStyle = {
-        padding: '20px',
-        margin: '10px',
-        textAlign: 'center',
-        backgroundColor: '#f3f3f3',
-    };
     const tableStyle = {
         border: '1px solid #ddd',
         width: '100%',
@@ -43,7 +37,12 @@ export const CheckoutCart = () => {
         fontSize: '15px',
     };
     return (
-        <Paper style={columnStyle}>
+        <Paper style={{
+            padding: '20px',
+            margin: '10px',
+            textAlign: 'center',
+            backgroundColor: '#f3f3f3',
+        }}>
             <Typography variant="h5">Point of Sale</Typography>
             <TableContainer>
                 <Table style={tableStyle}>
@@ -64,7 +63,7 @@ export const CheckoutCart = () => {
                         {cart.map((item, itemIndex) => (
                             <TableRow key={itemIndex}>
                                 <TableCell style={cellStyle} >
-                                    {menuitems.find(menuitem => menuitem.id === item.itemId).name}
+                                    {(menuitems.find(menuitem => menuitem.id === item.itemId) as MenuItem).name}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     {menuitems.find(menuitem => menuitem.id === item.itemId)?.price}
@@ -92,11 +91,7 @@ export const CheckoutCart = () => {
                 </Table>
             </TableContainer>
             <Typography variant="h6">Total Price: ${totalPrice.toFixed(2)}</Typography>
-            <Button
-                variant="contained"
-                color="primary"
-                style={{ marginTop: '20px' }}
-            >
+            <Button variant="contained" color="primary" style={{ marginTop: '20px' }} onClick={checkout}>
                 Checkout
             </Button>
         </Paper >
