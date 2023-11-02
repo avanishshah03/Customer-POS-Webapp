@@ -15,9 +15,9 @@ public class Ingredient {
     private String name;
     private int stock;
     private int restock;
-    private int amountordered;
+    private int amountOrdered;
     private double price;
-    private boolean glutenfree;
+    private boolean glutenFree;
     private boolean vegan;
 
     /**
@@ -29,9 +29,9 @@ public class Ingredient {
         this.name = "";
         this.stock = 0;
         this.restock = 0;
-        this.amountordered = 0;
+        this.amountOrdered = 0;
         this.price = 0.0;
-        this.glutenfree = false;
+        this.glutenFree = false;
         this.vegan = false;
     }
 
@@ -42,18 +42,18 @@ public class Ingredient {
      * @param stock      The current stock of the ingredient.
      * @param restock    The restock quantity of the ingredient.
      * @param price      The price of the ingredient.
-     * @param glutenfree Indicates if the ingredient is gluten-free.
+     * @param glutenFree Indicates if the ingredient is gluten-free.
      * @param vegan      Indicates if the ingredient is vegan.
      */
-    public Ingredient(String name, int stock, int restock, double price, boolean glutenfree, boolean vegan)
+    public Ingredient(String name, int stock, int restock, double price, boolean glutenFree, boolean vegan)
     {
         this.id = 0;
         this.name = name;
         this.stock = stock;
         this.restock = restock;
-        this.amountordered = 0;
+        this.amountOrdered = 0;
         this.price = price;
-        this.glutenfree = glutenfree;
+        this.glutenFree = glutenFree;
         this.vegan = vegan;
     }
 
@@ -64,20 +64,20 @@ public class Ingredient {
      * @param name        The name of the ingredient.
      * @param stock       The current stock of the ingredient.
      * @param restock     The restock quantity of the ingredient.
-     * @param amountordered The amount of this ingredient ordered.
+     * @param amountOrdered The amount of this ingredient ordered.
      * @param price       The price of the ingredient.
-     * @param glutenfree  Indicates if the ingredient is gluten-free.
+     * @param glutenFree  Indicates if the ingredient is gluten-free.
      * @param vegan       Indicates if the ingredient is vegan.
      */
-    public Ingredient(int id, String name, int stock, int restock, int amountordered, double price, boolean glutenfree, boolean vegan)
+    public Ingredient(int id, String name, int stock, int restock, int amountOrdered, double price, boolean glutenFree, boolean vegan)
     {
         this.id = id;
         this.name = name;
         this.stock = stock;
         this.restock = restock;
-        this.amountordered = amountordered;
+        this.amountOrdered = amountOrdered;
         this.price = price;
-        this.glutenfree = glutenfree;
+        this.glutenFree = glutenFree;
         this.vegan = vegan;
     }
 
