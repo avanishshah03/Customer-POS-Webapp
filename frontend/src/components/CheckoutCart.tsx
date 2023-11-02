@@ -96,7 +96,6 @@ export const CheckoutCart = () => {
                 variant="contained"
                 color="primary"
                 style={{ marginTop: '20px' }}
-                onClick={() => }
             >
                 Checkout
             </Button>
