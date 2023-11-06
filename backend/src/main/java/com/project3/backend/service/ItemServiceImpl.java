@@ -45,4 +45,9 @@ public class ItemServiceImpl implements ItemService {
         itemToIngredientRepository.saveAll(itemsToIngredient);
 
     }
+
+    public void deleteItem(int id)
+    {
+        itemRepository.deleteById(id);
+    }
 }

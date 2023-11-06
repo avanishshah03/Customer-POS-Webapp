@@ -7,5 +7,6 @@ import java.util.List;
 public interface ItemService {
     List<Item> fetchMenuItems();
     void saveItem(Item item);
+    void deleteItem(int id);
     
 }
