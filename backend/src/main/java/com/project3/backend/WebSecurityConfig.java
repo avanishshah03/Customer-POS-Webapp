@@ -17,24 +17,24 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		/*http
+		http
 			.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/", "/home", "/orders").permitAll()
 				.anyRequest().permitAll()
-			).csrf((csrf) -> csrf.disable());*/
+			).csrf((csrf) -> csrf.disable());
 			// .formLogin((form) -> form
 			// 	.loginPage("/login")
 			// 	.permitAll()
 			// )
 			// .logout((logout) -> logout.permitAll());
-		return http
+		/*return http
 			.authorizeHttpRequests(auth -> {
 				auth.requestMatchers("/").permitAll(); //for home route anyone can get to it
 				auth.anyRequest().authenticated(); //other pages will require login
 			})
 			.oauth2Login(Customizer.withDefaults())
-			.formLogin(Customizer.withDefaults()).build();
-		//return http.build();
+			.formLogin(Customizer.withDefaults()).build();*/
+		return http.build();
 	}
 
 	@Bean
