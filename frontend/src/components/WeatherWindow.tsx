@@ -58,11 +58,11 @@ function SimpleDialog(props: SimpleDialogProps) {
 
         // Update the rows with real data from the API
         const updatedRows = [
-            createData('Temperature', (apiData.main.temp - 273.15) * 9/5 + 32),
-            createData('Feels like', (apiData.main.feels_like - 273.15) * 9/5 + 32),
-            createData('Today\'s max', (apiData.main.temp_max - 273.15) * 9/5 + 32),
-            createData('Today\'s min', (apiData.main.temp_min - 273.15) * 9/5 + 32),
-            createData('Wind speed', apiData.wind.speed * 2.237),
+            createData('Temperature', Math.round((apiData.main.temp - 273.15) * 9/5 + 32)),
+            createData('Feels like', Math.round((apiData.main.feels_like - 273.15) * 9/5 + 32)),
+            createData('Today\'s max', Math.round((apiData.main.temp_max - 273.15) * 9/5 + 32)),
+            createData('Today\'s min', Math.round((apiData.main.temp_min - 273.15) * 9/5 + 32)),
+            createData('Wind speed', Math.round(apiData.wind.speed * 2.237)),
             createData('Humidity', apiData.main.humidity),
           // Add more rows as needed
         ];
