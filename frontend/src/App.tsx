@@ -6,7 +6,7 @@ import { Link, Route } from "wouter";
 import SignIn from "./LoginPage";
 import Weather from "./components/WeatherWindow"; // Import the WeatherWindow component
 
-function App() {
+export default function App() {
   const [tabValue, setTabValue] = useState(0);
   const paperStyle = {
     padding: "20px",
@@ -19,44 +19,27 @@ function App() {
     marginTop: "20px",
   };
   return (
-    <div>
-      <Route path="/login">
-        <SignIn />
-      </Route>
-      <Route path="/">
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Paper style={{ ...paperStyle, display: "flex" }}>
-              <Weather />
-              <div style={{ margin: "auto" }}>
-                <Typography variant="h4">Mess Waffles</Typography>
-                <Typography variant="subtitle1">
-                  MESSin around with waffles
-                </Typography>
-              </div>
-              <Link href="/login">
-                <Button variant="contained">Login</Button>
-              </Link>
-            </Paper>
-          </Grid>
-          <Grid item xs={6}>
-            <CheckoutCart />
-          </Grid>
-          <Grid item xs={6}>
-            <MenuItemsDisplay showImage={true} />
-          </Grid>
-        </Grid>
-      </Route>
-    </div>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Paper style={{ ...paperStyle, display: "flex" }}>
+          <Weather />
+          <div style={{ margin: "auto" }}>
+            <Typography variant="h4">Mess Waffles</Typography>
+            <Typography variant="subtitle1">
+              MESSin around with waffles
+            </Typography>
+          </div>
+          <Link href="/login">
+            <Button variant="contained">Login</Button>
+          </Link>
+        </Paper>
+      </Grid>
+      <Grid item xs={8}>
+        <MenuItemsDisplay showImage={true} />
+      </Grid>
+      <Grid item xs={4}>
+        <CheckoutCart />
+      </Grid>
+    </Grid>
   );
 }
-
-const TabPanel = ({ children, value, index }: any) => {
-  return (
-    <div role="tabpanel" hidden={value !== index}>
-      {value === index && <Box p={3}>{children}</Box>}
-    </div>
-  );
-};
-
-export default App;
