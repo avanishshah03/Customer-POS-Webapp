@@ -11,6 +11,10 @@ export interface MenuItem {
     price: number;
     imageUrl: string;
     categoryId: number;
+    vegan: boolean;
+    glutenFree: boolean;
+    size: string;
+    extrasauce: boolean;
 }
 
 export interface ItemCategory {
@@ -18,12 +22,20 @@ export interface ItemCategory {
     name: string;
 }
 
+export interface Order {
+    id: number;
+    name: string;
+}
+
+
+
 interface Store {
 
     checkout: () => void;
     addCartEntry: (id: number) => void;
     incrementCartEntryQuantity: (id: number) => void;
     decrementCartEntryQuantity: (id: number) => void;
+    changeItemPrice: (id: number, newPrice: number) => void;
     menuItems: MenuItem[];
     cart: CartEntry[];
     itemCategories: ItemCategory[];
@@ -81,6 +93,19 @@ export const useMenuStore = create<Store>((set) => ({
             }
         ))
     },
+    changeItemPrice: (id: number, newPrice: number) => {
+        return set(state => ({
+            menuItems: state.menuItems.map(item => {
+                if (item.id === id) {
+                    return { ...item, price: newPrice };
+                }
+                return item;
+            }),
+            cart: state.cart,
+            itemCategories: state.itemCategories
+        }));
+    },
+
     checkout: () => {
         set(() => {
             // TODO: talk to backend
