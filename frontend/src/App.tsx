@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, Button, Grid, Paper, Tab, Tabs, Typography } from "@mui/material";
 import { CheckoutCart } from "./components/CheckoutCart";
+import { ManagerItems } from "./components/ManagerItems";
 import { MenuItemsDisplay } from "./components/Menu";
 import { Link, Route } from "wouter";
 import SignIn from "./LoginPage";
