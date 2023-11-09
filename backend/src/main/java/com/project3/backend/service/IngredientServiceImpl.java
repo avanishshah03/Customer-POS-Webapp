@@ -18,6 +18,11 @@ public class IngredientServiceImpl {
         return (List<Ingredient>) ingredientRepository.findAll();
     }
 
+    public List<Ingredient> fetchIngredientsById(List<Integer> ids)
+    {
+        return (List<Ingredient>) ingredientRepository.findAllById(ids);
+    }
+
     public void saveIngredient(Ingredient ingredient)
     {
         ingredientRepository.save(ingredient);

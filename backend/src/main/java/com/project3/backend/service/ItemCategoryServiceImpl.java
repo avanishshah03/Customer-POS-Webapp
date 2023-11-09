@@ -12,7 +12,7 @@ public class ItemCategoryServiceImpl implements ItemCategoryService{
     @Autowired
     private ItemCategoryRepository itemCategoryRepository;
 
-    public  List<ItemCategory> fetchItemCategories()
+    public List<ItemCategory> fetchItemCategories()
     {
         return (List<ItemCategory>) itemCategoryRepository.findAll();
 
