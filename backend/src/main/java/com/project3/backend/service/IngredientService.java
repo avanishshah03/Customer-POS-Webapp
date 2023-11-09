@@ -4,6 +4,7 @@ import java.util.*;
 
 public interface IngredientService {
     List<Ingredient> fetchIngredients();
+    List<Ingredient> fetchIngredientsById(List<Integer> ids);
     void saveIngredient(Ingredient ingredient);
     void deleteIngredient(int id);
 }
