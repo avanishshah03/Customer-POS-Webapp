@@ -1,3 +1,4 @@
+import { MenuItem } from "@mui/material";
 import { create } from "zustand";
 
 interface CartEntry {
@@ -36,6 +37,10 @@ interface Store {
     incrementCartEntryQuantity: (id: number) => void;
     decrementCartEntryQuantity: (id: number) => void;
     changeItemPrice: (id: number, newPrice: number) => void;
+    changeGF: (id: number) => void;
+    changeVegan: (id: number) => void;
+    changeExtraSauce: (id: number) => void;
+    changeSize: (id: number, sizein: string) => void;
     menuItems: MenuItem[];
     cart: CartEntry[];
     itemCategories: ItemCategory[];
@@ -115,4 +120,68 @@ export const useMenuStore = create<Store>((set) => ({
         })
     },
 
+    changeGF: (id: number) => {
+        set(state => ({
+            menuItems: state.menuItems.map(item => {
+                if (item.glutenFree === true) {
+                    if (item.id === id) {
+                        return { ...item, glutenFree: false };
+                    }
+                }
+                else {
+                    if (item.id === id) {
+                        return { ...item, glutenFree: true };
+                    }
+                }
+                return item;
+            }),
+        }));
+    },
+
+    changeVegan: (id: number) => {
+        set(state => ({
+            menuItems: state.menuItems.map(item => {
+                if (item.vegan === true) {
+                    if (item.id === id) {
+                        return { ...item, vegan: false };
+                    }
+                }
+                else {
+                    if (item.id === id) {
+                        return { ...item, vegan: true };
+                    }
+                }
+                return item;
+            }),
+        }));
+    },
+
+    changeExtraSauce: (id: number) => {
+        set(state => ({
+            menuItems: state.menuItems.map(item => {
+                if (item.extrasauce === true) {
+                    if (item.id === id) {
+                        return { ...item, extrasauce: false };
+                    }
+                }
+                else {
+                    if (item.id === id) {
+                        return { ...item, extrasauce: true };
+                    }
+                }
+                return item;
+            }),
+        }));
+    },
+    changeSize: (id: number, sizein: string) => {
+        set(state => ({
+            menuItems: state.menuItems.map(item => {
+                if (item.id === id) {
+                    return { ...item, size: sizein };
+                }
+                return item;
+            }),
+        }));
+    },
 }))
+

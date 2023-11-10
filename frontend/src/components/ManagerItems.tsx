@@ -1,5 +1,6 @@
-import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField } from '@mui/material';
-import { MenuItem, useMenuStore } from '../store';
+import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, Checkbox, Select, MenuItem, SelectChangeEvent } from '@mui/material';
+import { useMenuStore } from '../store';
+import React from 'react';
 
 export const ManagerItems = () => {
     const cart = useMenuStore(state => state.cart);
@@ -7,7 +8,10 @@ export const ManagerItems = () => {
     const decrement = useMenuStore(state => state.decrementCartEntryQuantity);
     const increment = useMenuStore(state => state.incrementCartEntryQuantity);
     const changeItemPrice = useMenuStore(state => state.changeItemPrice);
-    const checkout = useMenuStore(state => state.checkout);
+    const changeGF = useMenuStore(state => state.changeGF);
+    const changeVegan = useMenuStore(state => state.changeVegan);
+    const changeExtraSauce = useMenuStore(state => state.changeExtraSauce);
+    const changeSize = useMenuStore(state => state.changeSize);
     const tableStyle = {
         border: '1px solid #ddd',
         width: '100%',
@@ -32,6 +36,12 @@ export const ManagerItems = () => {
         margin: '1px',
         border: '1px solid black',
         fontSize: '15px',
+    };
+
+
+
+    const handleChange = (value: string, menuId: number) => {
+        changeSize(menuId, value);
     };
 
     // const [inputValue, setInputValue] = useState('');
@@ -113,15 +123,38 @@ export const ManagerItems = () => {
                                     </Button> */}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.glutenFree ? "Yes" : "No"}
-                                </TableCell><TableCell style={cellStyle} >
-                                    {menuItem.vegan ? "Yes" : "No"}
+                                    <Checkbox checked={menuItem.glutenFree}
+                                        onChange={(e) => changeGF(menuItem.id)} />
+                                </TableCell>
+                                <TableCell style={cellStyle} >
+                                    <Checkbox checked={menuItem.vegan}
+                                        onChange={(e) => changeVegan(menuItem.id)} />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     {menuItem.size}
+                                    <Select
+                                        labelId="size-select-label"
+                                        id="size-select-label"
+                                        value={menuItem.size}
+                                        label="menuitem.size"
+                                        onChange={(e) => changeSize(menuItem.id, e.target.value)}
+                                    >
+                                        <MenuItem value={"single"}>single</MenuItem>
+                                        <MenuItem value={"double"}>double</MenuItem>
+                                        <MenuItem value={"large"}>large</MenuItem>
+                                        <MenuItem value={"regular"}>regular</MenuItem>
+                                        <MenuItem value={"snack"}>snack</MenuItem>
+                                        <MenuItem value={"plus"}>plus</MenuItem>
+                                        <MenuItem value={""}>one piece</MenuItem>
+                                        <MenuItem value={"none"}>none</MenuItem>
+                                        <MenuItem value={"Medium"}>Medium</MenuItem>
+                                        <MenuItem value={"two piece"}>two piece</MenuItem>
+                                        <MenuItem value={"three piece"}>three piece</MenuItem>
+                                    </Select>
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.extrasauce ? "Yes" : "No"}
+                                    <Checkbox checked={menuItem.extrasauce}
+                                        onChange={(e) => changeExtraSauce(menuItem.id)} />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
 
@@ -134,3 +167,4 @@ export const ManagerItems = () => {
         </Paper>
     );
 }
+
