@@ -3,6 +3,8 @@ import { MenuItem, useMenuStore } from '../store';
 import ItemToAdd from './ItemToAdd';
 import { useState } from 'react';
 
+
+
 export const ManagerItems = () => {
     const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
     const cart = useMenuStore(state => state.cart);
@@ -10,7 +12,11 @@ export const ManagerItems = () => {
     const decrement = useMenuStore(state => state.decrementCartEntryQuantity);
     const increment = useMenuStore(state => state.incrementCartEntryQuantity);
     const changeItemPrice = useMenuStore(state => state.changeItemPrice);
-    const checkout = useMenuStore(state => state.checkout);
+    const changeGF = useMenuStore(state => state.changeGF);
+    const changeVegan = useMenuStore(state => state.changeVegan);
+    const changeExtraSauce = useMenuStore(state => state.changeExtraSauce);
+    const changeSize = useMenuStore(state => state.changeSize);
+    const changeItemName = useMenuStore(state => state.changeItemName);
     const tableStyle = {
         border: '1px solid #ddd',
         width: '100%',
@@ -37,24 +43,12 @@ export const ManagerItems = () => {
         fontSize: '15px',
     };
 
-    // const [inputValue, setInputValue] = useState('');
-    // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setInputValue(event.target.value);
-    // };
 
-    // const handleButtonClick = (menuId: number) => {
-    //     clickCalled = true;
-    //     // Convert the entered value to a float
-    //     const floatValue = parseFloat(inputValue);
 
-    //     // Check if it's a valid float
-    //     if (!isNaN(floatValue)) {
-    //         // Call your function with the float value
-    //         changeItemPrice(menuId, floatValue);
-    //     } else {
-    //         // Handle invalid input (optional)
-    //         console.error('Invalid float input');
-    //     }
+    const handleChange = (value: string, menuId: number) => {
+        changeSize(menuId, value);
+    };
+
     // };
 
     return (
@@ -101,34 +95,53 @@ export const ManagerItems = () => {
                                     {menuItem.id}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.name}
+                                    <TextField
+                                        variant="outlined"
+                                        type="string"
+                                        value={menuItem.name}
+                                        onChange={(e) => changeItemName(menuItem.id, e.target.value as any)}
+                                    />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.price}
                                     <TextField
-                                        label="Edit Price"
                                         variant="outlined"
                                         type="number"
                                         value={menuItem.price}
                                         onChange={(e) => changeItemPrice(menuItem.id, e.target.value as any)}
                                     />
-                                    {/* <Button variant="contained" color="primary" onClick={() => handleButtonClick(menuItem.id)}>
-                                        Call Function
-                                    </Button> */}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.glutenFree ? "Yes" : "No"}
-                                </TableCell><TableCell style={cellStyle} >
-                                    {menuItem.vegan ? "Yes" : "No"}
+                                    <Checkbox checked={menuItem.glutenFree}
+                                        onChange={(e) => changeGF(menuItem.id)} />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.size}
+                                    <Checkbox checked={menuItem.vegan}
+                                        onChange={(e) => changeVegan(menuItem.id)} />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.extrasauce ? "Yes" : "No"}
+                                    <Select
+                                        labelId="size-select-label"
+                                        id="size-select-label"
+                                        value={menuItem.size}
+                                        label="menuitem.size"
+                                        onChange={(e) => changeSize(menuItem.id, e.target.value)}
+                                    >
+                                        <MenuItem value={"single"}>single</MenuItem>
+                                        <MenuItem value={"double"}>double</MenuItem>
+                                        <MenuItem value={"large"}>large</MenuItem>
+                                        <MenuItem value={"regular"}>regular</MenuItem>
+                                        <MenuItem value={"snack"}>snack</MenuItem>
+                                        <MenuItem value={"plus"}>plus</MenuItem>
+                                        <MenuItem value={""}>one piece</MenuItem>
+                                        <MenuItem value={"none"}>none</MenuItem>
+                                        <MenuItem value={"Medium"}>Medium</MenuItem>
+                                        <MenuItem value={"two piece"}>two piece</MenuItem>
+                                        <MenuItem value={"three piece"}>three piece</MenuItem>
+                                    </Select>
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-
+                                    <Checkbox checked={menuItem.extrasauce}
+                                        onChange={(e) => changeExtraSauce(menuItem.id)} />
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -138,3 +151,4 @@ export const ManagerItems = () => {
         </Paper>
     );
 }
+
