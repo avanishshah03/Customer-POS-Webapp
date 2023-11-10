@@ -12,6 +12,7 @@ export const ManagerItems = () => {
     const changeVegan = useMenuStore(state => state.changeVegan);
     const changeExtraSauce = useMenuStore(state => state.changeExtraSauce);
     const changeSize = useMenuStore(state => state.changeSize);
+    const changeItemName = useMenuStore(state => state.changeItemName);
     const tableStyle = {
         border: '1px solid #ddd',
         width: '100%',
@@ -44,24 +45,6 @@ export const ManagerItems = () => {
         changeSize(menuId, value);
     };
 
-    // const [inputValue, setInputValue] = useState('');
-    // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setInputValue(event.target.value);
-    // };
-
-    // const handleButtonClick = (menuId: number) => {
-    //     clickCalled = true;
-    //     // Convert the entered value to a float
-    //     const floatValue = parseFloat(inputValue);
-
-    //     // Check if it's a valid float
-    //     if (!isNaN(floatValue)) {
-    //         // Call your function with the float value
-    //         changeItemPrice(menuId, floatValue);
-    //     } else {
-    //         // Handle invalid input (optional)
-    //         console.error('Invalid float input');
-    //     }
     // };
 
     return (
@@ -107,20 +90,20 @@ export const ManagerItems = () => {
                                     {menuItem.id}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.name}
+                                    <TextField
+                                        variant="outlined"
+                                        type="string"
+                                        value={menuItem.name}
+                                        onChange={(e) => changeItemName(menuItem.id, e.target.value as any)}
+                                    />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.price}
                                     <TextField
-                                        label="Edit Price"
                                         variant="outlined"
                                         type="number"
                                         value={menuItem.price}
                                         onChange={(e) => changeItemPrice(menuItem.id, e.target.value as any)}
                                     />
-                                    {/* <Button variant="contained" color="primary" onClick={() => handleButtonClick(menuItem.id)}>
-                                        Call Function
-                                    </Button> */}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     <Checkbox checked={menuItem.glutenFree}
@@ -154,9 +137,6 @@ export const ManagerItems = () => {
                                 <TableCell style={cellStyle} >
                                     <Checkbox checked={menuItem.extrasauce}
                                         onChange={(e) => changeExtraSauce(menuItem.id)} />
-                                </TableCell>
-                                <TableCell style={cellStyle} >
-
                                 </TableCell>
                             </TableRow>
                         ))}

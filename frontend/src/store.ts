@@ -35,6 +35,7 @@ interface Store {
     incrementCartEntryQuantity: (id: number) => void;
     decrementCartEntryQuantity: (id: number) => void;
     changeItemPrice: (id: number, newPrice: number) => void;
+    changeItemName: (id: number, newName: string) => void;
     changeGF: (id: number) => void;
     changeVegan: (id: number) => void;
     changeExtraSauce: (id: number) => void;
@@ -111,6 +112,19 @@ export const useMenuStore = create<Store>((set) => ({
             menuItems: state.menuItems.map((item) => {
                 if (item.id === id) {
                     return { ...item, price: newPrice };
+                }
+                return item;
+            }),
+            cart: state.cart,
+            itemCategories: state.itemCategories,
+        }));
+    },
+
+    changeItemName: (id: number, newName: string) => {
+        return set((state) => ({
+            menuItems: state.menuItems.map((item) => {
+                if (item.id === id) {
+                    return { ...item, name: newName };
                 }
                 return item;
             }),
