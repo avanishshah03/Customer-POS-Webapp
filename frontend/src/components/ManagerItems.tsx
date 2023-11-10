@@ -1,6 +1,6 @@
 import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, MenuItem, Select, Checkbox } from '@mui/material';
 import { useMenuStore } from '../store';
-import ItemToAdd from './ItemToAdd';
+import { ItemToAdd } from './ItemToAdd';
 import { useState } from 'react';
 
 
