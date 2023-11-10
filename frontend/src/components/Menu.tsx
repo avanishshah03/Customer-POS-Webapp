@@ -15,10 +15,9 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
 
   const paperStyle = {
     padding: "20px",
-     textAlign: "center",
+    textAlign: "center",
     backgroundColor: "#f3f3f3",
   } as any;
-
 
   return (
     <div>
@@ -32,13 +31,20 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
           aria-label="basic tabs example"
         >
           {itemCategories.map((category) => (
-            <Tab label={category.name} key={category.id } />
+            <Tab label={category.name} key={category.id} />
           ))}
         </Tabs>
 
         {itemCategories.map((category) => (
-          <div key={category.id} style={{ display: tabValue === category.id ? "block" : "none" }}>
-            <Grid container spacing={2}>
+          <div
+            key={category.id}
+            style={{ display: tabValue === category.id ? "block" : "none" }}
+          >
+            <Grid
+              container
+              spacing={2}
+              sx={{ height: "90vh", overflow: "scroll" }}
+            >
               {menuItems
                 .filter((menuItem) => menuItem.categoryId === category.id + 1)
                 .map((menuItem) => (
@@ -62,7 +68,9 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
                         }}
                       >
                         {props.showImage && (
-                          <div style={{ height: "100px", width: "100px" }}></div>
+                          <div
+                            style={{ height: "100px", width: "100px" }}
+                          ></div>
                         )}
                         <Typography variant="h6">
                           <Box style={{ backgroundColor: "white" }}>
