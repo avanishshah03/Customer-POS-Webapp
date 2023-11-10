@@ -71,7 +71,7 @@ export const ManagerItems = () => {
             backgroundColor: '#f3f3f3',
         }}>
             <Button variant='contained'> Add Item +  </Button>
-            <Typography variant="h5" style={{textAlign: 'center'}}>Point of Sale</Typography>
+            <Typography variant="h5" style={{ textAlign: 'center' }}>Point of Sale</Typography>
             <TableContainer>
                 <Table style={tableStyle}>
                     <TableHead>
@@ -131,7 +131,6 @@ export const ManagerItems = () => {
                                         onChange={(e) => changeVegan(menuItem.id)} />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.size}
                                     <Select
                                         labelId="size-select-label"
                                         id="size-select-label"
