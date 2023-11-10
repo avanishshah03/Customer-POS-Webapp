@@ -39,7 +39,6 @@ export const CheckoutCart = () => {
     return (
         <Paper style={{
             padding: '20px',
-            margin: '10px',
             textAlign: 'center',
             backgroundColor: '#f3f3f3',
         }}>
