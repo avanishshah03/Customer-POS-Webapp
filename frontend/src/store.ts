@@ -28,8 +28,6 @@ export interface Order {
     name: string;
 }
 
-
-
 interface Store {
 
     checkout: () => void;
@@ -46,8 +44,10 @@ interface Store {
     itemCategories: ItemCategory[];
 }
 
-let menuItems: MenuItem[] = await (await fetch("/api/menuItems")).json()
-let itemCategories: ItemCategory[] = await (await fetch("/api/itemCategories")).json()
+let menuItems: MenuItem[] = await (await fetch("/api/menuItems")).json();
+let itemCategories: ItemCategory[] = await (
+    await fetch("/api/itemCategories")
+).json();
 export const useMenuStore = create<Store>((set) => ({
     cart: [],
     itemCategories: itemCategories,
@@ -55,69 +55,68 @@ export const useMenuStore = create<Store>((set) => ({
     // TODO: talk to backend
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
+    addMenuItem: (item: MenuItem) => {
+        fetch("/api/menuItems", {
+            method: "POST",
+            body: JSON.stringify({ ...item, ingredientIds: [], quantities: [] }),
+        });
+        set((state) => ({ menuItems: [...state.menuItems, item] }));
+    },
+
     addCartEntry: (id: number) => {
-        set(state => {
-            if (state.cart.findIndex(entry => entry.itemId === id) === -1) {
+        set((state) => {
+            if (state.cart.findIndex((entry) => entry.itemId === id) === -1) {
                 return {
-                    cart: [...state.cart, { itemId: id, quantity: 1 }]
-                }
+                    cart: [...state.cart, { itemId: id, quantity: 1 }],
+                };
             } else {
                 return {
-                    cart: state.cart.map(entry => {
+                    cart: state.cart.map((entry) => {
                         if (entry.itemId === id) {
-                            return { ...entry, quantity: entry.quantity + 1 }
+                            return { ...entry, quantity: entry.quantity + 1 };
                         } else {
-                            return entry
+                            return entry;
                         }
-                    })
-                }
+                    }),
+                };
             }
-        })
+        });
     },
     incrementCartEntryQuantity: (id: number) => {
-        set(state => (
-            {
-                cart: state.cart.map(entry => {
+        set((state) => ({
+            cart: state.cart
+                .map((entry) => {
                     if (entry.itemId == id) {
-                        return { ...entry, quantity: entry.quantity + 1 }
+                        return { ...entry, quantity: entry.quantity + 1 };
                     }
-                    return entry
-                }).filter(entry => entry.quantity > 0)
-            }
-        ))
+                    return entry;
+                })
+                .filter((entry) => entry.quantity > 0),
+        }));
     },
     decrementCartEntryQuantity: (id: number) => {
-        set(state => (
-            {
-                cart: state.cart.map(entry => {
+        set((state) => ({
+            cart: state.cart
+                .map((entry) => {
                     if (entry.itemId == id) {
-                        return { ...entry, quantity: entry.quantity - 1 }
+                        return { ...entry, quantity: entry.quantity - 1 };
                     }
-                    return entry
-                }).filter(entry => entry.quantity > 0)
-            }
-        ))
+                    return entry;
+                })
+                .filter((entry) => entry.quantity > 0),
+        }));
     },
     changeItemPrice: (id: number, newPrice: number) => {
-        return set(state => ({
-            menuItems: state.menuItems.map(item => {
+        return set((state) => ({
+            menuItems: state.menuItems.map((item) => {
                 if (item.id === id) {
                     return { ...item, price: newPrice };
                 }
                 return item;
             }),
             cart: state.cart,
-            itemCategories: state.itemCategories
+            itemCategories: state.itemCategories,
         }));
-    },
-
-    checkout: () => {
-        set(() => {
-            // TODO: talk to backend
-            return {
-                cart: []
-            }
-        })
     },
 
     changeGF: (id: number) => {
@@ -181,6 +180,11 @@ export const useMenuStore = create<Store>((set) => ({
                 }
                 return item;
             }),
+        }));
+    },
+    checkout: () => {
+        set(state => ({
+            cart: [],
         }));
     },
 }))

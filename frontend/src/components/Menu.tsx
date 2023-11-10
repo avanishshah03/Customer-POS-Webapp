@@ -15,8 +15,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
 
   const paperStyle = {
     padding: "20px",
-    margin: "20px",
-    textAlign: "center",
+     textAlign: "center",
     backgroundColor: "#f3f3f3",
   } as any;
 
@@ -33,7 +32,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
           aria-label="basic tabs example"
         >
           {itemCategories.map((category) => (
-            <Tab label={category.name} key={category.id} />
+            <Tab label={category.name} key={category.id } />
           ))}
         </Tabs>
 
@@ -41,7 +40,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
           <div key={category.id} style={{ display: tabValue === category.id ? "block" : "none" }}>
             <Grid container spacing={2}>
               {menuItems
-                .filter((menuItem) => menuItem.categoryId === category.id)
+                .filter((menuItem) => menuItem.categoryId === category.id + 1)
                 .map((menuItem) => (
                   <Grid item key={menuItem.id} xs={12} sm={6} md={4}>
                     <Button
