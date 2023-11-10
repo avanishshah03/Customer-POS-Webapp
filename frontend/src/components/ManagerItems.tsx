@@ -58,10 +58,10 @@ export const ManagerItems = () => {
         <Paper style={{
             padding: '20px',
             margin: '10px',
-            textAlign: 'center',
             backgroundColor: '#f3f3f3',
         }}>
-            <Typography variant="h5">Point of Sale</Typography>
+            <Button variant='contained'> Add Item +  </Button>
+            <Typography variant="h5" style={{textAlign: 'center'}}>Point of Sale</Typography>
             <TableContainer>
                 <Table style={tableStyle}>
                     <TableHead>
