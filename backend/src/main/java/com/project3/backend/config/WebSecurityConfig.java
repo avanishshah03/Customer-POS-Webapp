@@ -19,9 +19,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+
+	@Autowired
+	private Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -52,6 +57,8 @@ public class WebSecurityConfig {
 			auth.anyRequest().authenticated();
 		})
 		.oauth2Login(oath2 ->{
+			oath2.successHandler(oauth2LoginSuccessHandler);
+
 
 		})
 		.build();*/
