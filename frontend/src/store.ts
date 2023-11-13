@@ -46,6 +46,7 @@ interface Store {
 }
 
 let menuItems: MenuItem[] = await (await fetch("/api/menuItems")).json();
+let orders: Order[] = await (await fetch("/api/orders")).json();
 let itemCategories: ItemCategory[] = await (
     await fetch("/api/itemCategories")
 ).json();
@@ -62,6 +63,35 @@ export const useMenuStore = create<Store>((set) => ({
             body: JSON.stringify({ ...item, ingredientIds: [], quantities: [] }),
         });
         set((state) => ({ menuItems: [...state.menuItems, item] }));
+    },
+
+    checkout: () => {
+        set(state => {
+            // FIXME
+            fetch("/api/orders", {
+                method: "POST",
+                body: JSON.stringify({
+                    price: state.cart.reduce((acc, entry) => {
+                        const item = state.menuItems.find(
+                            (item) => item.id === entry.itemId
+                        );
+                        if (item) {
+                            return acc + item.price * entry.quantity;
+                        } else {
+                            return acc;
+                        }
+                    }, 0),
+                    time: new Date().toISOString(),
+                    userId: 0,// TODO: SETUP USER SYSTEM, IF IT IS JUST THE CUSTOMER THEN IT IS 0
+                    orderedItemIds: state.cart.map((entry) => entry.itemId),
+                    quantities: state.cart.map((entry) => entry.quantity),
+                }),
+            });
+            return {
+                cart: [],
+            }
+        });
+
     },
 
     addCartEntry: (id: number) => {
@@ -196,10 +226,10 @@ export const useMenuStore = create<Store>((set) => ({
             }),
         }));
     },
-    checkout: () => {
-        set(state => ({
-            cart: [],
-        }));
-    },
+    // checkout: () => {
+    //     set(state => ({
+    //         cart: [],
+    //     }));
+    // },
 }))
 
