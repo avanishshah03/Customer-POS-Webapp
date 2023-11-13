@@ -56,7 +56,6 @@ export const useMenuStore = create<Store>((set) => ({
   cart: [],
   itemCategories: itemCategories,
   menuItems: menuItems,
-  // TODO: talk to backend
   setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
   addMenuItem: (item: MenuItem) => {

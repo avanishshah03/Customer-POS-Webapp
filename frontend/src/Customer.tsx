@@ -1,10 +1,8 @@
+import { Button, Grid, Paper, Typography } from "@mui/material";
 import { useState } from "react";
-import { Box, Button, Grid, Paper, Tab, Tabs, Typography } from "@mui/material";
+import { Link } from "wouter";
 import { CheckoutCart } from "./components/CheckoutCart";
-import { ManagerItems } from "./components/ManagerItems";
 import { MenuItemsDisplay } from "./components/Menu";
-import { Link, Route } from "wouter";
-import SignIn from "./LoginPage";
 import Weather from "./components/WeatherWindow"; // Import the WeatherWindow component
 
 export default function App() {
@@ -30,9 +28,6 @@ export default function App() {
               MESSin around with waffles
             </Typography>
           </div>
-          <Link href="/login">
-            <Button variant="contained">Login</Button>
-          </Link>
         </Paper>
       </Grid>
       <Grid item xs={8}>
