@@ -49,7 +49,6 @@ const base = import.meta.env.PROD
   : "/api";
 
 let menuItems: MenuItem[] = await (await fetch(base + "/menuItems")).json();
-let orders: Order[] = await (await fetch(base + "/orders")).json();
 let itemCategories: ItemCategory[] = await (
   await fetch(base + "/itemCategories")
 ).json();
