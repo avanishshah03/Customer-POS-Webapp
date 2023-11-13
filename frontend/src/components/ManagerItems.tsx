@@ -1,8 +1,12 @@
-import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, Checkbox, Select, MenuItem, SelectChangeEvent } from '@mui/material';
+import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, MenuItem, Select, Checkbox } from '@mui/material';
 import { useMenuStore } from '../store';
-import React from 'react';
+import { ItemToAdd } from './ItemToAdd';
+import { useState } from 'react';
+
+
 
 export const ManagerItems = () => {
+    const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
     const cart = useMenuStore(state => state.cart);
     const menuitems = useMenuStore(state => state.menuItems);
     const decrement = useMenuStore(state => state.decrementCartEntryQuantity);
@@ -53,11 +57,12 @@ export const ManagerItems = () => {
             margin: '10px',
             backgroundColor: '#f3f3f3',
         }}>
-            <Button variant='contained'> Add Item +  </Button>
-            <Typography variant="h5" style={{ textAlign: 'center' }}>Point of Sale</Typography>
+            {/* <Button variant='contained'> Add Item +  </Button> */}
+            <ItemToAdd open={isAddItemDialogOpen} onClose={() => setAddItemDialogOpen(false)} />
+            <Typography variant="h5" style={{textAlign: 'center'}}>Point of Sale</Typography>
             <TableContainer>
                 <Table style={tableStyle}>
-                    <TableHead>
+                    <TableHead> 
                         <TableRow>
                             <TableCell style={cellStyle} >
                                 <Typography variant="h6">{"ID"}</Typography>
