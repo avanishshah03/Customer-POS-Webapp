@@ -31,9 +31,14 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
   const [itemName, setItemName] = useState("");
   const [itemPrice, setItemPrice] = useState("");
 
+  const [glutenFree, setGlutenFree] = useState(false);
+  const [vegan, setVegan] = useState(false);
+  const [size, setSize] = useState<string | undefined>("");
+  const [extraSauce, setExtraSauce] = useState(false);
+
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Add Item +</Button> 
+      <Button onClick={() => setOpen(true)}>Add Item +</Button>
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Add Item</DialogTitle>
         <DialogContent>
@@ -55,11 +60,11 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
           />
           <Typography>
             Gluten Free?
-            <Checkbox />
+            <Checkbox onChange={() => setGlutenFree(!glutenFree)} />
           </Typography>
           <Typography>
-            Vegan Free?
-            <Checkbox />
+            Vegan?
+            <Checkbox onChange={() => setVegan(!vegan)} />
           </Typography>
           <Typography>
             Size?
@@ -68,7 +73,7 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
               id="size-select-label"
               value={undefined}
               label="menuitem.size"
-              onChange={() => useState(false)} //idk what this useState does but it works 
+              onChange={(e) => setSize(e.target.value)} //idk what this useState does but it works
             >
               <MenuItem value={"single"}>single</MenuItem>
               <MenuItem value={"double"}>double</MenuItem>
@@ -84,14 +89,10 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
             </Select>
           </Typography>
 
-          <TextField
-            label="Item Price"
-            variant="outlined"
-            fullWidth
-            value={itemPrice}
-            onChange={(e) => setItemPrice(e.target.value)}
-            margin="normal"
-          />
+          <Typography>
+            Extra Sauce?
+            <Checkbox onChange={() => setExtraSauce(!extraSauce)} />
+          </Typography>
           {/* Add more fields as needed */}
 
           <Button variant="contained" color="primary">
