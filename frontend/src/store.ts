@@ -28,6 +28,18 @@ export interface Order {
     name: string;
 }
 
+export interface Ingredient {
+    id: number;
+    name: string;
+    stock: number;
+    restock: number;
+    amount: number;
+    amountOrdered: number;
+    price: number;
+    glutenFree: boolean;
+    vegan: boolean;
+}
+
 interface Store {
 
     checkout: () => void;
@@ -43,10 +55,13 @@ interface Store {
     menuItems: MenuItem[];
     cart: CartEntry[];
     itemCategories: ItemCategory[];
+    ingredients: Ingredient[];
+
 }
 
 let menuItems: MenuItem[] = await (await fetch("/api/menuItems")).json();
 let orders: Order[] = await (await fetch("/api/orders")).json();
+let ingredients: Ingredient[] = await (await fetch("/api/ingredients")).json();
 let itemCategories: ItemCategory[] = await (
     await fetch("/api/itemCategories")
 ).json();
@@ -54,6 +69,7 @@ export const useMenuStore = create<Store>((set) => ({
     cart: [],
     itemCategories: itemCategories,
     menuItems: menuItems,
+    ingredients: ingredients,
     // TODO: talk to backend
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
@@ -226,6 +242,16 @@ export const useMenuStore = create<Store>((set) => ({
             }),
         }));
     },
+    // changeStock: (id: number, newStock: number) => {
+    //     return set((state) => ({
+    //         ingredients: state.ingredients.map((item) => {
+    //             if (item.id === id) {
+    //                 return { ...item, stock: newStock };
+    //             }
+    //             return item;
+    //         }),
+    //     }));
+    // },
     // checkout: () => {
     //     set(state => ({
     //         cart: [],
