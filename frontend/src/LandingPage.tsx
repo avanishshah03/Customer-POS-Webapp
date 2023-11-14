@@ -26,9 +26,14 @@ const LandingPage: React.FC = () => {
                         Employee Login
                     </Button>
                 </Link>
-                <Link to="/manager">
+                <Link to="/managerItems">
                     <Button style={customButtonStyle}>
                         manager temp
+                    </Button>
+                </Link>
+                <Link to="/managerIngredients">
+                    <Button style={customButtonStyle}>
+                        manager ingredients
                     </Button>
                 </Link>
 
