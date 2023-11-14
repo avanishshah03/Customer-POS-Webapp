@@ -34,19 +34,12 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
   const [glutenFree, setGlutenFree] = useState(false);
   const [vegan, setVegan] = useState(false);
   const [size, setSize] = useState<string | undefined>("");
+  const [extraSauce, setExtraSauce] = useState(false);
+
   return (
     <>
       <Button onClick={() => setOpen(true)}>Add Item +</Button>
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <Button
-          onClick={() => {
-            console.log(glutenFree);
-            console.log(vegan);
-            console.log(size);
-          }}
-        >
-          Test
-        </Button>
         <DialogTitle>Add Item</DialogTitle>
         <DialogContent>
           <TextField
@@ -98,7 +91,7 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
 
           <Typography>
             Extra Sauce?
-            <Checkbox />
+            <Checkbox onChange={() => setExtraSauce(!extraSauce)} />
           </Typography>
           {/* Add more fields as needed */}
 
