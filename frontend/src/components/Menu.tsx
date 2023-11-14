@@ -47,6 +47,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize: string }
             >
               {menuItems
                 .filter((menuItem) => menuItem.categoryId === category.id + 1)
+                .filter((v, i, a) => a.map(v => v.name).indexOf(v.name) === i) // https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
                 .map((menuItem) => (
                   <Grid item key={menuItem.id} xs={3} >
                     <Button
