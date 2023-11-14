@@ -50,6 +50,7 @@ interface Store {
     changeGF: (id: number) => void;
     changeVegan: (id: number) => void;
     changeExtraSauce: (id: number) => void;
+    deleteMenuItem: (id: number) => void;
     changeSize: (id: number, sizein: string) => void;
     changeIngredientName: (id: number, newName: string) => void;
     changeIngredientStock: (id: number, newStock: number) => void;
@@ -248,6 +249,11 @@ export const useMenuStore = create<Store>((set) => ({
             }),
         }));
     },
+    deleteMenuItem: (id: number) => {
+        set((state) => ({
+            menuItems: state.menuItems.filter((item) => item.id !== id),
+        }));
+    },
 
     changeIngredientName: (id: number, newName: string) => {
         return set((state) => ({
@@ -331,9 +337,4 @@ export const useMenuStore = create<Store>((set) => ({
             }),
         }));
     },
-    // checkout: () => {
-    //     set(state => ({
-    //         cart: [],
-    //     }));
-    // },
 }));

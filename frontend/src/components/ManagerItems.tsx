@@ -31,14 +31,13 @@ export const ManagerItems = () => {
     const cart = useMenuStore((state) => state.cart);
     const menuitems = useMenuStore((state) => state.menuItems);
     const [page, setPage] = useState(1);
-    const decrement = useMenuStore((state) => state.decrementCartEntryQuantity);
-    const increment = useMenuStore((state) => state.incrementCartEntryQuantity);
     const changeItemPrice = useMenuStore((state) => state.changeItemPrice);
     const changeGF = useMenuStore((state) => state.changeGF);
     const changeVegan = useMenuStore((state) => state.changeVegan);
     const changeExtraSauce = useMenuStore((state) => state.changeExtraSauce);
     const changeSize = useMenuStore((state) => state.changeSize);
     const changeItemName = useMenuStore((state) => state.changeItemName);
+    const deleteMenuItem = useMenuStore((state) => state.deleteMenuItem);
     const tableStyle = {
         border: "1px solid #ddd",
         width: "100%",
@@ -64,12 +63,6 @@ export const ManagerItems = () => {
         border: "1px solid black",
         fontSize: "15px",
     };
-
-    const handleChange = (value: string, menuId: number) => {
-        changeSize(menuId, value);
-    };
-
-    // };
 
     return (
         <Paper
@@ -112,6 +105,9 @@ export const ManagerItems = () => {
                             </TableCell>
                             <TableCell style={cellStyle}>
                                 <Typography variant="h6">{"Extra Sauce"}</Typography>
+                            </TableCell>
+                            <TableCell style={cellStyle}>
+                                <Typography variant="h6">{"Delete Item"}</Typography>
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -177,6 +173,14 @@ export const ManagerItems = () => {
                                         checked={menuItem.extrasauce}
                                         onChange={(e) => changeExtraSauce(menuItem.id)}
                                     />
+                                </TableCell>
+                                <TableCell style={cellStyle}>
+                                    <Button
+                                        style={buttonStyleminus}
+                                        onClick={() => deleteMenuItem(menuItem.id)}
+                                    >
+                                        {"Delete Item"}
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
