@@ -51,6 +51,14 @@ interface Store {
     changeVegan: (id: number) => void;
     changeExtraSauce: (id: number) => void;
     changeSize: (id: number, sizein: string) => void;
+    changeIngredientName: (id: number, newName: string) => void;
+    changeIngredientStock: (id: number, newStock: number) => void;
+    changeIngredientRestock: (id: number, newRestock: number) => void;
+    changeAmountOrdered: (id: number, newAmountOrdered: number) => void;
+    changeIngredientPrice: (id: number, newPrice: number) => void;
+    changeIngredientGF: (id: number) => void;
+    changeIngredientVegan: (id: number) => void;
+    addMenuItem: (item: MenuItem) => void;
     menuItems: MenuItem[];
     cart: CartEntry[];
     itemCategories: ItemCategory[];
@@ -235,6 +243,89 @@ export const useMenuStore = create<Store>((set) => ({
             menuItems: state.menuItems.map((item) => {
                 if (item.id === id) {
                     return { ...item, size: sizein };
+                }
+                return item;
+            }),
+        }));
+    },
+
+    changeIngredientName: (id: number, newName: string) => {
+        return set((state) => ({
+            ingredients: state.ingredients.map((item) => {
+                if (item.id === id) {
+                    return { ...item, name: newName };
+                }
+                return item;
+            }),
+        }));
+    },
+    changeIngredientStock: (id: number, newStock: number) => {
+        return set((state) => ({
+            ingredients: state.ingredients.map((item) => {
+                if (item.id === id) {
+                    return { ...item, stock: newStock };
+                }
+                return item;
+            }),
+        }));
+    },
+    changeIngredientRestock: (id: number, newRestock: number) => {
+        return set((state) => ({
+            ingredients: state.ingredients.map((item) => {
+                if (item.id === id) {
+                    return { ...item, restock: newRestock };
+                }
+                return item;
+            }),
+        }));
+    },
+    changeAmountOrdered: (id: number, newAmountOrdered: number) => {
+        return set((state) => ({
+            ingredients: state.ingredients.map((item) => {
+                if (item.id === id) {
+                    return { ...item, amountOrdered: newAmountOrdered };
+                }
+                return item;
+            }),
+        }));
+    },
+    changeIngredientPrice: (id: number, newPrice: number) => {
+        return set((state) => ({
+            ingredients: state.ingredients.map((item) => {
+                if (item.id === id) {
+                    return { ...item, price: newPrice };
+                }
+                return item;
+            }),
+        }));
+    },
+    changeIngredientGF: (id: number) => {
+        set((state) => ({
+            ingredients: state.ingredients.map((item) => {
+                if (item.glutenFree === true) {
+                    if (item.id === id) {
+                        return { ...item, glutenFree: false };
+                    }
+                } else {
+                    if (item.id === id) {
+                        return { ...item, glutenFree: true };
+                    }
+                }
+                return item;
+            }),
+        }));
+    },
+    changeIngredientVegan: (id: number) => {
+        set((state) => ({
+            ingredients: state.ingredients.map((item) => {
+                if (item.vegan === true) {
+                    if (item.id === id) {
+                        return { ...item, vegan: false };
+                    }
+                } else {
+                    if (item.id === id) {
+                        return { ...item, vegan: true };
+                    }
                 }
                 return item;
             }),
