@@ -6,7 +6,7 @@ export const Server = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={8}>
-        <MenuItemsDisplay showImage={true} />
+        <MenuItemsDisplay showImage={false} fontSize={"small"} />
       </Grid>
       <Grid item xs={4}>
         <CheckoutCart />
