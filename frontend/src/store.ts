@@ -59,6 +59,7 @@ interface Store {
     changeIngredientPrice: (id: number, newPrice: number) => void;
     changeIngredientGF: (id: number) => void;
     changeIngredientVegan: (id: number) => void;
+    deleteIngredient: (id: number) => void;
     addMenuItem: (item: MenuItem) => void;
     menuItems: MenuItem[];
     cart: CartEntry[];
@@ -255,6 +256,23 @@ export const useMenuStore = create<Store>((set) => ({
         }));
     },
 
+    // deleteMenuItem: (id: number) => {
+    //     fetch(base + "/menuItems/" + id, {
+    //         method: "DELETE",
+    //     })
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error("HTTP error " + response.status);
+    //             }
+    //             set((state) => ({
+    //                 menuItems: state.menuItems.filter((item) => item.id !== id),
+    //             }));
+    //         })
+    //         .catch(error => {
+    //             console.error("Failed to delete menu item: ", error);
+    //         });
+    // },
+
     changeIngredientName: (id: number, newName: string) => {
         return set((state) => ({
             ingredients: state.ingredients.map((item) => {
@@ -337,4 +355,10 @@ export const useMenuStore = create<Store>((set) => ({
             }),
         }));
     },
+    deleteIngredient: (id: number) => {
+        set((state) => ({
+            ingredients: state.ingredients.filter((item) => item.id !== id),
+        }));
+    },
+
 }));

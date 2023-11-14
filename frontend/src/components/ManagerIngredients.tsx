@@ -15,6 +15,7 @@ export const ManagerIngredients = () => {
     const changeIngredientPrice = useMenuStore(state => state.changeIngredientPrice);
     const changeIngredientGF = useMenuStore(state => state.changeIngredientGF);
     const changeIngredientVegan = useMenuStore(state => state.changeIngredientVegan);
+    const deleteIngredient = useMenuStore(state => state.deleteIngredient);
 
     const tableStyle = {
         border: '1px solid #ddd',
@@ -42,9 +43,6 @@ export const ManagerIngredients = () => {
         fontSize: '15px',
     };
 
-
-
-    // };
 
     return (
         <Paper style={{
@@ -139,6 +137,14 @@ export const ManagerIngredients = () => {
                                 <TableCell style={cellStyle} >
                                     <Checkbox checked={Ingredients.vegan}
                                         onChange={(e) => changeIngredientVegan(Ingredients.id)} />
+                                </TableCell>
+                                <TableCell style={cellStyle}>
+                                    <Button
+                                        style={buttonStyleminus}
+                                        onClick={() => deleteIngredient(Ingredients.id)}
+                                    >
+                                        {"Delete"}
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}
