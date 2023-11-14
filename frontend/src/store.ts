@@ -41,7 +41,6 @@ export interface Ingredient {
 }
 
 interface Store {
-
     checkout: () => void;
     addCartEntry: (id: number) => void;
     incrementCartEntryQuantity: (id: number) => void;
@@ -55,26 +54,24 @@ interface Store {
     menuItems: MenuItem[];
     cart: CartEntry[];
     itemCategories: ItemCategory[];
-    ingredients: Ingredient[];
-
 }
 
-let menuItems: MenuItem[] = await (await fetch("/api/menuItems")).json();
-let orders: Order[] = await (await fetch("/api/orders")).json();
-let ingredients: Ingredient[] = await (await fetch("/api/ingredients")).json();
+const base = import.meta.env.PROD
+    ? "https://mess-pos-backend.whitefield-0aeef37d.eastus.azurecontainerapps.io"
+    : "/api";
+
+let menuItems: MenuItem[] = await (await fetch(base + "/menuItems")).json();
 let itemCategories: ItemCategory[] = await (
-    await fetch("/api/itemCategories")
+    await fetch(base + "/itemCategories")
 ).json();
 export const useMenuStore = create<Store>((set) => ({
     cart: [],
     itemCategories: itemCategories,
     menuItems: menuItems,
-    ingredients: ingredients,
-    // TODO: talk to backend
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
     addMenuItem: (item: MenuItem) => {
-        fetch("/api/menuItems", {
+        fetch(base + "/menuItems", {
             method: "POST",
             body: JSON.stringify({ ...item, ingredientIds: [], quantities: [] }),
         });
@@ -82,9 +79,9 @@ export const useMenuStore = create<Store>((set) => ({
     },
 
     checkout: () => {
-        set(state => {
+        set((state) => {
             // FIXME
-            fetch("/api/orders", {
+            fetch(base + "/orders", {
                 method: "POST",
                 body: JSON.stringify({
                     price: state.cart.reduce((acc, entry) => {
@@ -98,16 +95,15 @@ export const useMenuStore = create<Store>((set) => ({
                         }
                     }, 0),
                     time: new Date().toISOString(),
-                    userId: 0,// TODO: SETUP USER SYSTEM, IF IT IS JUST THE CUSTOMER THEN IT IS 0
+                    userId: 0, // TODO: SETUP USER SYSTEM, IF IT IS JUST THE CUSTOMER THEN IT IS 0
                     orderedItemIds: state.cart.map((entry) => entry.itemId),
                     quantities: state.cart.map((entry) => entry.quantity),
                 }),
             });
             return {
                 cart: [],
-            }
+            };
         });
-
     },
 
     addCartEntry: (id: number) => {
@@ -180,14 +176,13 @@ export const useMenuStore = create<Store>((set) => ({
     },
 
     changeGF: (id: number) => {
-        set(state => ({
-            menuItems: state.menuItems.map(item => {
+        set((state) => ({
+            menuItems: state.menuItems.map((item) => {
                 if (item.glutenFree === true) {
                     if (item.id === id) {
                         return { ...item, glutenFree: false };
                     }
-                }
-                else {
+                } else {
                     if (item.id === id) {
                         return { ...item, glutenFree: true };
                     }
@@ -198,14 +193,13 @@ export const useMenuStore = create<Store>((set) => ({
     },
 
     changeVegan: (id: number) => {
-        set(state => ({
-            menuItems: state.menuItems.map(item => {
+        set((state) => ({
+            menuItems: state.menuItems.map((item) => {
                 if (item.vegan === true) {
                     if (item.id === id) {
                         return { ...item, vegan: false };
                     }
-                }
-                else {
+                } else {
                     if (item.id === id) {
                         return { ...item, vegan: true };
                     }
@@ -216,14 +210,13 @@ export const useMenuStore = create<Store>((set) => ({
     },
 
     changeExtraSauce: (id: number) => {
-        set(state => ({
-            menuItems: state.menuItems.map(item => {
+        set((state) => ({
+            menuItems: state.menuItems.map((item) => {
                 if (item.extrasauce === true) {
                     if (item.id === id) {
                         return { ...item, extrasauce: false };
                     }
-                }
-                else {
+                } else {
                     if (item.id === id) {
                         return { ...item, extrasauce: true };
                     }
@@ -233,8 +226,8 @@ export const useMenuStore = create<Store>((set) => ({
         }));
     },
     changeSize: (id: number, sizein: string) => {
-        set(state => ({
-            menuItems: state.menuItems.map(item => {
+        set((state) => ({
+            menuItems: state.menuItems.map((item) => {
                 if (item.id === id) {
                     return { ...item, size: sizein };
                 }
@@ -242,20 +235,9 @@ export const useMenuStore = create<Store>((set) => ({
             }),
         }));
     },
-    // changeStock: (id: number, newStock: number) => {
-    //     return set((state) => ({
-    //         ingredients: state.ingredients.map((item) => {
-    //             if (item.id === id) {
-    //                 return { ...item, stock: newStock };
-    //             }
-    //             return item;
-    //         }),
-    //     }));
-    // },
     // checkout: () => {
     //     set(state => ({
     //         cart: [],
     //     }));
     // },
-}))
-
+}));
