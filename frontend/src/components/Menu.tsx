@@ -7,7 +7,7 @@ import { useMenuStore } from "../store";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 
-export const MenuItemsDisplay = (props: { showImage: boolean }) => {
+export const MenuItemsDisplay = (props: { showImage: boolean, fontSize: string }) => {
   const menuItems = useMenuStore((state) => state.menuItems);
   const addtoCart = useMenuStore((state) => state.addCartEntry);
   const [tabValue, setTabValue] = useState(2);
@@ -42,13 +42,13 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
           >
             <Grid
               container
-              spacing={2}
+              spacing={0}
               sx={{ height: "90vh", overflow: "scroll" }}
             >
               {menuItems
                 .filter((menuItem) => menuItem.categoryId === category.id + 1)
                 .map((menuItem) => (
-                  <Grid item key={menuItem.id} xs={12} sm={6} md={4}>
+                  <Grid item key={menuItem.id} xs={3} >
                     <Button
                       variant="text"
                       color="primary"
@@ -73,9 +73,16 @@ export const MenuItemsDisplay = (props: { showImage: boolean }) => {
                           ></div>
                         )}
                         <Typography variant="h6">
-                          <Box style={{ backgroundColor: "white" }}>
-                            {menuItem.name} ${menuItem.price.toFixed(2)}
-                          </Box>
+
+                          {props.fontSize === "small" ?
+                            <Box style={{ backgroundColor: "white", width: "100px", height: "50px", fontSize: "12px" }}>
+                              {menuItem.name} ${menuItem.price.toFixed(2)}
+                            </Box>
+                            :
+                            <Box style={{ backgroundColor: "white" }}>
+                              {menuItem.name} ${menuItem.price.toFixed(2)}
+                            </Box>
+                          }
                         </Typography>
                       </Paper>
                     </Button>
