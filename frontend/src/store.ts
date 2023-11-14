@@ -54,6 +54,7 @@ interface Store {
     menuItems: MenuItem[];
     cart: CartEntry[];
     itemCategories: ItemCategory[];
+    ingredients: Ingredient[];
 }
 
 const base = import.meta.env.PROD
@@ -64,10 +65,14 @@ let menuItems: MenuItem[] = await (await fetch(base + "/menuItems")).json();
 let itemCategories: ItemCategory[] = await (
     await fetch(base + "/itemCategories")
 ).json();
+let ingredients: Ingredient[] = await (
+    await fetch(base + "/ingredients")
+).json();
 export const useMenuStore = create<Store>((set) => ({
     cart: [],
     itemCategories: itemCategories,
     menuItems: menuItems,
+    ingredients: ingredients,
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
     addMenuItem: (item: MenuItem) => {
