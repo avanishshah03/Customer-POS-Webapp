@@ -23,7 +23,7 @@ public class Oauth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException
     {
         this.setAlwaysUseDefaultTargetUrl(true);
-        this.setDefaultTargetUrl("http://173.255.198.143");
+        this.setDefaultTargetUrl("http://localhost:5173/");
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }
