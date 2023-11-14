@@ -7,18 +7,14 @@ import { useState } from 'react';
 
 export const ManagerIngredients = () => {
     const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
-    const cart = useMenuStore(state => state.cart);
-    const menuitems = useMenuStore(state => state.menuItems);
-    const decrement = useMenuStore(state => state.decrementCartEntryQuantity);
-    const increment = useMenuStore(state => state.incrementCartEntryQuantity);
-    const changeItemPrice = useMenuStore(state => state.changeItemPrice);
-    const changeGF = useMenuStore(state => state.changeGF);
-    const changeVegan = useMenuStore(state => state.changeVegan);
-    const changeExtraSauce = useMenuStore(state => state.changeExtraSauce);
-    const changeSize = useMenuStore(state => state.changeSize);
-    const changeItemName = useMenuStore(state => state.changeItemName);
-
     const ingredients = useMenuStore(state => state.ingredients);
+    const changeIngredientName = useMenuStore(state => state.changeIngredientName);
+    const changeIngredientStock = useMenuStore(state => state.changeIngredientStock);
+    const changeIngredientRestock = useMenuStore(state => state.changeIngredientRestock);
+    const changeIngredientAmountOrdered = useMenuStore(state => state.changeAmountOrdered);
+    const changeIngredientPrice = useMenuStore(state => state.changeIngredientPrice);
+    const changeIngredientGF = useMenuStore(state => state.changeIngredientGF);
+    const changeIngredientVegan = useMenuStore(state => state.changeIngredientVegan);
 
     const tableStyle = {
         border: '1px solid #ddd',
@@ -47,10 +43,6 @@ export const ManagerIngredients = () => {
     };
 
 
-
-    const handleChange = (value: string, menuId: number) => {
-        changeSize(menuId, value);
-    };
 
     // };
 
@@ -95,34 +87,58 @@ export const ManagerIngredients = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {ingredients.map((menuItem, itemIndex) => (
+                        {ingredients.map((Ingredients, itemIndex) => (
                             <TableRow key={itemIndex}>
                                 <TableCell style={cellStyle} >
-                                    {menuItem.id}
+                                    {Ingredients.id}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     <TextField
                                         variant="outlined"
                                         type="string"
-                                        value={menuItem.name}
-                                        onChange={(e) => changeItemName(menuItem.id, e.target.value as any)}
+                                        value={Ingredients.name}
+                                        onChange={(e) => changeIngredientName(Ingredients.id, e.target.value as any)}
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     <TextField
                                         variant="outlined"
                                         type="number"
-                                        value={menuItem.price}
-                                        onChange={(e) => changeItemPrice(menuItem.id, e.target.value as any)}
+                                        value={Ingredients.stock}
+                                        onChange={(e) => changeIngredientStock(Ingredients.id, e.target.value as any)}
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    <Checkbox checked={menuItem.glutenFree}
-                                        onChange={(e) => changeGF(menuItem.id)} />
+                                    <TextField
+                                        variant="outlined"
+                                        type="number"
+                                        value={Ingredients.restock}
+                                        onChange={(e) => changeIngredientRestock(Ingredients.id, e.target.value as any)}
+                                    />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    <Checkbox checked={menuItem.vegan}
-                                        onChange={(e) => changeVegan(menuItem.id)} />
+                                    <TextField
+                                        variant="outlined"
+                                        type="number"
+                                        value={Ingredients.amountOrdered}
+                                        onChange={(e) => changeIngredientAmountOrdered(Ingredients.id, e.target.value as any)}
+                                    />
+                                </TableCell>
+                                <TableCell style={cellStyle} >
+                                    <TextField
+                                        variant="outlined"
+                                        type="number"
+                                        value={Ingredients.price}
+                                        onChange={(e) => changeIngredientPrice(Ingredients.id, e.target.value as any)}
+                                    />
+                                </TableCell>
+                                <TableCell style={cellStyle} >
+                                    <Checkbox checked={Ingredients.glutenFree}
+                                        onChange={(e) => changeIngredientGF(Ingredients.id)} />
+                                </TableCell>
+                                <TableCell style={cellStyle} >
+                                    <Checkbox checked={Ingredients.vegan}
+                                        onChange={(e) => changeIngredientVegan(Ingredients.id)} />
                                 </TableCell>
                             </TableRow>
                         ))}
