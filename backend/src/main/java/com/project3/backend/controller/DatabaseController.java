@@ -1,8 +1,14 @@
 package com.project3.backend.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,15 +17,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.project3.backend.entity.Ingredient;
 import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemCategory;
 import com.project3.backend.entity.Order;
+import com.project3.backend.entity.User;
 import com.project3.backend.service.IngredientServiceImpl;
 import com.project3.backend.service.ItemCategoryServiceImpl;
 import com.project3.backend.service.ItemServiceImpl;
 import com.project3.backend.service.ItemToIngredientServiceImpl;
 import com.project3.backend.service.OrderServiceImpl;
+import com.project3.backend.service.UserServiceImpl;
 
 @RestController
 public class DatabaseController {
@@ -33,12 +42,8 @@ public class DatabaseController {
     private ItemCategoryServiceImpl itemCategoryService;
     @Autowired
     private OrderServiceImpl orderService;
-
-    @GetMapping("/secured")
-    public String secured()
-    {
-        return "Hello, secured";
-    }
+    @Autowired
+    private UserServiceImpl userService;
 
     @GetMapping("/menuItems")
     public List<Item> getMenuItems() {
@@ -89,7 +94,20 @@ public class DatabaseController {
         return itemToIngredientService.fetchIngredientsByItemId(itemId);
     }
 
-    
-    
-    
+    @PostMapping("/auth/register")
+    public void registerUser(Authentication authentication) {
+        JwtAuthenticationToken clientAuthentication = (JwtAuthenticationToken) authentication;
+        
+    }
+        
+
+    @GetMapping("/auth/login")
+    public Map<String, String> getLoginInfo(Authentication authentication) {
+        JwtAuthenticationToken clientAuthentication = (JwtAuthenticationToken) authentication;
+        System.out.println("Client authentication: " + clientAuthentication.toString());
+        String name = authentication.getName();
+        Optional<? extends GrantedAuthority> roleOptional = authentication.getAuthorities().stream().findFirst();
+        String role = roleOptional.isPresent() ? roleOptional.get().getAuthority() : "";
+        return Map.of("user", name, "role", role);
+    }
 }

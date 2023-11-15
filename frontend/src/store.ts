@@ -1,5 +1,8 @@
 import { MenuItem } from "@mui/material";
 import { create } from "zustand";
+import { serverUrl } from './config/constant';
+import { useContext } from "react";
+import axios from "axios";
 
 interface CartEntry {
     itemId: number;
@@ -67,17 +70,33 @@ interface Store {
     ingredients: Ingredient[];
 }
 
-const base = import.meta.env.PROD
-    ? "https://mess-pos-backend.whitefield-0aeef37d.eastus.azurecontainerapps.io"
-    : "/api";
-
-let menuItems: MenuItem[] = await (await fetch(base + "/menuItems")).json();
-let itemCategories: ItemCategory[] = await (
-    await fetch(base + "/itemCategories")
-).json();
-let ingredients: Ingredient[] = await (
-    await fetch(base + "/ingredients")
-).json();
+let menuItemsResponse:Promise<MenuItem[]> = axios.get(serverUrl + "/menuItems").then((res) => {
+    return res.data;
+}).then((data) => {
+    return data;
+}, (error) => {
+    console.log(error);
+    return [];
+});
+let menuItems: MenuItem[] = await menuItemsResponse;
+let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get(serverUrl + "/itemCategories").then((res) => {
+    return res.data;
+}).then((data) => {
+    return data;
+}, (error) => {
+    console.log(error);
+    return [];
+});
+let itemCategories: ItemCategory[] = await itemCategoriesPromise;
+let ingredientsPromise:Promise<Ingredient[]> = axios.get(serverUrl + "/ingredients").then((res) => {
+    return res.data;
+}).then((data) => {
+    return data;
+}, (error) => {
+    console.log(error);
+    return [];
+});
+let ingredients: Ingredient[] = await ingredientsPromise;
 export const useMenuStore = create<Store>((set) => ({
     cart: [],
     itemCategories: itemCategories,
@@ -86,7 +105,7 @@ export const useMenuStore = create<Store>((set) => ({
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
     addMenuItem: (item: MenuItem) => {
-        fetch(base + "/menuItems", {
+        fetch(serverUrl + "/menuItems", {
             method: "POST",
             body: JSON.stringify({ ...item, ingredientIds: [], quantities: [] }),
         });
@@ -96,7 +115,7 @@ export const useMenuStore = create<Store>((set) => ({
     checkout: () => {
         set((state) => {
             // FIXME
-            fetch(base + "/orders", {
+            fetch(serverUrl + "/orders", {
                 method: "POST",
                 body: JSON.stringify({
                     price: state.cart.reduce((acc, entry) => {
