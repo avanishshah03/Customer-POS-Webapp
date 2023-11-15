@@ -26,7 +26,6 @@ export const ManagerIngredients = () => {
             margin: '10px',
             backgroundColor: '#f3f3f3',
         }}>
-            {/* <Button variant='contained'> Add Item +  </Button> */}
             <IngredientToAdd open={isAddItemDialogOpen} onClose={() => setAddItemDialogOpen(false)} />
             <Typography variant="h5" style={{ textAlign: 'center' }}>Point of Sale</Typography>
             <TableContainer>

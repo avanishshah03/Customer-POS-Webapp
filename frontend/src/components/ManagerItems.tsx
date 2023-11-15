@@ -50,7 +50,6 @@ export const ManagerItems = () => {
                 backgroundColor: "#f3f3f3",
             }}
         >
-            {/* <Button variant='contained'> Add Item +  </Button> */}
             <ItemToAdd
                 open={isAddItemDialogOpen}
                 onClose={() => setAddItemDialogOpen(false)}
