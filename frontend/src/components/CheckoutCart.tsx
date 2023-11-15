@@ -32,20 +32,6 @@ export const CheckoutCart = () => {
         border: "1px solid #ddd",
         padding: "8px",
     };
-    const buttonStyleplus = {
-        backgroundColor: "black",
-        color: "white",
-        padding: "8px 12px",
-        fontSize: "12px",
-    };
-    const buttonStyleminus = {
-        backgroundColor: "white",
-        color: "black",
-        padding: "1px 1px",
-        margin: "1px",
-        border: "1px solid black",
-        fontSize: "15px",
-    };
     return (
         <Paper
             style={{
@@ -90,16 +76,18 @@ export const CheckoutCart = () => {
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <Button
-                                        variant="contained"
-                                        style={buttonStyleminus}
+                                        color="error"
+                                        size="small"
+                                        variant="outlined"
                                         onClick={() => decrement(item.itemId)}
                                     >
                                         -
                                     </Button>
                                     {item.quantity}
                                     <Button
-                                        variant="contained"
-                                        style={buttonStyleplus}
+                                        color="success"
+                                        size="small"
+                                        variant="outlined"
                                         onClick={() => increment(item.itemId)}
                                     >
                                         +
