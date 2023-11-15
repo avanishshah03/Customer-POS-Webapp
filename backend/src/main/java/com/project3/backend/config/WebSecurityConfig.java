@@ -61,12 +61,12 @@ public class WebSecurityConfig {
 		return http
 		.csrf(AbstractHttpConfigurer::disable)
 		.cors(cors->cors.configurationSource(corsConfigurationSource()))
-		.authorizeHttpRequests(auth ->{
-			auth.anyRequest().authenticated();
-		})
-		.oauth2ResourceServer(oauth2ResourceServer ->{
-			oauth2ResourceServer.jwt(Customizer.withDefaults());
-		})
+		.authorizeHttpRequests(auth ->
+			auth.anyRequest().authenticated()
+		)
+		.oauth2ResourceServer(oauth2 ->
+			oauth2.jwt(Customizer.withDefaults())
+		)
 		.build();
 		
 	}

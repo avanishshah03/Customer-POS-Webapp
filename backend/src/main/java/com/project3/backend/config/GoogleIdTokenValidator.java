@@ -1,15 +1,11 @@
 package com.project3.backend.config;
 
-import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
 import org.springframework.security.oauth2.core.OAuth2Error;
-import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
+import org.springframework.security.oauth2.jwt.Jwt;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
-import com.google.api.client.http.HttpTransport;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 
@@ -24,7 +20,7 @@ import java.util.*;
 /**
  * JwtTokenValidator
  */
-public class GoogleIdTokenValidator implements OAuth2TokenValidator {
+public class GoogleIdTokenValidator implements OAuth2TokenValidator<Jwt> {
 
     OAuth2Error error = new OAuth2Error("custom_code", "Custom error message", null);
     GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
@@ -34,21 +30,18 @@ public class GoogleIdTokenValidator implements OAuth2TokenValidator {
     .build();
     
     @Override
-    public OAuth2TokenValidatorResult validate(OAuth2Token token) {
+    public OAuth2TokenValidatorResult validate(Jwt token) {
         // (Receive idTokenString by HTTPS POST)
-
         String idTokenString = token.getTokenValue();
         GoogleIdToken idToken;
         try {
             idToken = verifier.verify(idTokenString);
         } catch (GeneralSecurityException | IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             idToken = null;
         }
         if (idToken != null) {
             return OAuth2TokenValidatorResult.success();
- 
         }
         return OAuth2TokenValidatorResult.failure();
     }

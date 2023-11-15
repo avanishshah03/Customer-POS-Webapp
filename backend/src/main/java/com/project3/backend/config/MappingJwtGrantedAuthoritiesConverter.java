@@ -31,7 +31,7 @@ public class MappingJwtGrantedAuthoritiesConverter implements Converter<Jwt, Col
         }
         
         return tokenScopes.stream()
-          .map(s -> userServiceImpl.fetchRole(s))
+          .map(s -> this.userServiceImpl.fetchRole(s))
           .map(s -> this.authorityPrefix + s)
           .map(SimpleGrantedAuthority::new)
           .collect(Collectors.toCollection(HashSet::new));
