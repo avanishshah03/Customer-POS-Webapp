@@ -38,31 +38,9 @@ export const ManagerItems = () => {
     const changeSize = useMenuStore((state) => state.changeSize);
     const changeItemName = useMenuStore((state) => state.changeItemName);
     const deleteMenuItem = useMenuStore((state) => state.deleteMenuItem);
-    const tableStyle = {
-        border: "1px solid #ddd",
-        width: "100%",
-    };
 
-    const cellStyle = {
-        border: "1px solid #ddd",
-        padding: "8px",
-    };
-
-    const buttonStyleplus = {
-        backgroundColor: "black",
-        color: "white",
-        padding: "8px 12px",
-        fontSize: "12px",
-    };
-
-    const buttonStyleminus = {
-        backgroundColor: "white",
-        color: "black",
-        padding: "1px 1px",
-        margin: "1px",
-        border: "1px solid black",
-        fontSize: "15px",
-    };
+    const tableStyle = { width: "100%", };
+    const cellStyle = { padding: "8px", };
 
     return (
         <Paper
@@ -176,10 +154,11 @@ export const ManagerItems = () => {
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <Button
-                                        style={buttonStyleminus}
+                                        variant="contained"
+                                        color="error"
                                         onClick={() => deleteMenuItem(menuItem.id)}
                                     >
-                                        {"Delete Item"}
+                                        Delete Item
                                     </Button>
                                 </TableCell>
                             </TableRow>
