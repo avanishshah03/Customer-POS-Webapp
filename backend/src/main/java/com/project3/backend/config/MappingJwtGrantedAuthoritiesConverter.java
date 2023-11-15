@@ -2,10 +2,12 @@ package com.project3.backend.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.stereotype.Component;
 
 import com.project3.backend.service.UserServiceImpl;
 
@@ -18,16 +20,18 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
-public class MappingJwtGrantedAuthoritiesConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
+@Component
+public class MappingJwtGrantedAuthoritiesConverter implements Converter<Jwt, AbstractAuthenticationToken> {
     private String authoritiesClaimName = "email";
     private String authorityPrefix = "ROLE_";
     private Logger logger = Logger.getLogger(MappingJwtGrantedAuthoritiesConverter.class.getName());
     private FileHandler fh;
 
-    private final UserServiceImpl userServiceImpl = new UserServiceImpl();
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     @Override
-    public Collection<GrantedAuthority> convert(Jwt source) {
+    public AbstractAuthenticationToken convert(Jwt source) {
         try 
         {
             fh = new FileHandler("MappingJwtGrantedAuthoritiesConverter.log");
@@ -39,17 +43,22 @@ public class MappingJwtGrantedAuthoritiesConverter implements Converter<Jwt, Col
         {
             e.printStackTrace();
         }
-        logger.info(source.getClaims().toString());
         Collection<String> tokenScopes = parseScopesClaim(source);
+        Collection<GrantedAuthority> authorities;
         if (tokenScopes.isEmpty()) {
-            return Collections.emptyList();
+            authorities = Collections.emptyList();
         }
         
-        return tokenScopes.stream()
+        for (String s : tokenScopes)
+        {
+            logger.info(userServiceImpl.fetchRole(s));
+        }
+        authorities = tokenScopes.stream()
           .map(this.userServiceImpl::fetchRole)
           .map(s -> this.authorityPrefix + s)
           .map(SimpleGrantedAuthority::new)
           .collect(Collectors.toCollection(HashSet::new));
+        return new JwtAuthenticationToken(source, authorities);
     }
 
     private Collection<String> parseScopesClaim(Jwt jwt) {

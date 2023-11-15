@@ -4,6 +4,7 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.stereotype.Component;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 
@@ -20,6 +21,7 @@ import java.util.*;
 /**
  * JwtTokenValidator
  */
+@Component
 public class GoogleIdTokenValidator implements OAuth2TokenValidator<Jwt> {
 
     OAuth2Error error = new OAuth2Error("custom_code", "Custom error message", null);

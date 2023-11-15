@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.project3.backend.entity.User;
 import com.project3.backend.repository.UserRepository;
 
+import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -13,12 +14,13 @@ public class UserServiceImpl implements UserService {
 
     public String fetchRoleOrCreate(String email)
     {
-        User user = userRepository.findByEmail(email);
+        List<User> userList = userRepository.findByEmail(email);
+        User user = userList.size() > 0 ? userList.get(0) : null;
         if (user == null)
         {
             user = new User();
             user.setEmail(email);
-            user.setRole("USER");
+            user.setRole("customer");
             userRepository.save(user);
         }
         return user.getRole();
@@ -26,7 +28,12 @@ public class UserServiceImpl implements UserService {
 
     public String fetchRole(String email)
     {
-        User user = userRepository.findByEmail(email);
+        List<User> userList = userRepository.findByEmail(email);
+        User user = userList.size() > 0 ? userList.get(0) : null;
+        if (user == null)
+        {
+            return "customer";
+        }
         return user.getRole();
     }
 

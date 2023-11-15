@@ -2,26 +2,19 @@ package com.project3.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
-import org.springframework.security.oauth2.jwt.JwtIssuerValidator;
-import org.springframework.security.oauth2.jwt.JwtTimestampValidator;
 import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -65,7 +58,9 @@ public class WebSecurityConfig {
 			auth.anyRequest().authenticated()
 		)
 		.oauth2ResourceServer(oauth2 ->
-			oauth2.jwt(Customizer.withDefaults())
+			oauth2.jwt(jwt ->
+				jwt.jwtAuthenticationConverter(MappingJwtGrantedAuthoritiesConverter())
+			)
 		)
 		.build();
 		
@@ -88,20 +83,6 @@ public class WebSecurityConfig {
 		return new GoogleIdTokenValidator();
 	}
 
-	
-
-	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails user =
-			 User.withDefaultPasswordEncoder()
-				.username("user")
-				.password("password")
-				.roles("USER")
-				.build();
-
-		return new InMemoryUserDetailsManager(user);
-	}
-
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
@@ -116,11 +97,8 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	public JwtAuthenticationConverter jwtAuthenticationConverter() {
-		MappingJwtGrantedAuthoritiesConverter mappingJwtGrantedAuthoritiesConverter = new MappingJwtGrantedAuthoritiesConverter();
-		JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-		jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(mappingJwtGrantedAuthoritiesConverter);
-		return jwtAuthenticationConverter;
+	public Converter<Jwt, ? extends AbstractAuthenticationToken> MappingJwtGrantedAuthoritiesConverter() {
+		return new MappingJwtGrantedAuthoritiesConverter();
 	}
 	
 }
