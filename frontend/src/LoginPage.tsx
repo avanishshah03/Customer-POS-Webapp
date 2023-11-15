@@ -12,13 +12,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { LoginButton } from './auth';
+
 
 function Copyright(props: any) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Mess Waffles Etc.
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -90,6 +92,7 @@ export default function SignIn() {
             >
               Sign In
             </Button>
+            <LoginButton />
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
