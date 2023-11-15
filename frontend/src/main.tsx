@@ -5,7 +5,7 @@ import SignIn from './LoginPage.tsx'
 import LandingPage from './LandingPage.tsx'
 import { ManagerItems } from "./components/ManagerItems";
 import { ManagerIngredients } from "./components/ManagerIngredients";
-import { Link, Route } from 'wouter'; // Remove Route and import Link
+import { Route } from 'wouter';
 import { Server } from './components/Server.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -16,6 +16,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Route path="/server"><Server /></Route>
     <Route path="/managerIngredients"><ManagerIngredients /></Route>
     <Route path="/"><LandingPage /></Route>
-
   </React.StrictMode>,
 )

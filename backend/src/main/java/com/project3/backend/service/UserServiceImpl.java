@@ -11,9 +11,23 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public String fetchRoleOrCreate(String email)
+    {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+        {
+            user = new User();
+            user.setEmail(email);
+            user.setRole("USER");
+            userRepository.save(user);
+        }
+        return user.getRole();
+    }
+
     public String fetchRole(String email)
     {
-        return userRepository.findByEmail(email).getRole();
+        User user = userRepository.findByEmail(email);
+        return user.getRole();
     }
 
     public void saveUser(User user)
