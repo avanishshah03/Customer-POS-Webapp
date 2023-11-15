@@ -1,8 +1,7 @@
 import { MenuItem } from "@mui/material";
 import { create } from "zustand";
 import { serverUrl } from './config/constant';
-import { useContext } from "react";
-import axios from "axios";
+import axios from './config/axiosConfig';
 
 interface CartEntry {
     itemId: number;
@@ -70,7 +69,7 @@ interface Store {
     ingredients: Ingredient[];
 }
 
-let menuItemsResponse:Promise<MenuItem[]> = axios.get(serverUrl + "/menuItems").then((res) => {
+let menuItemsResponse:Promise<MenuItem[]> = axios.get("/menuItems").then((res) => {
     return res.data;
 }).then((data) => {
     return data;
@@ -79,7 +78,7 @@ let menuItemsResponse:Promise<MenuItem[]> = axios.get(serverUrl + "/menuItems").
     return [];
 });
 let menuItems: MenuItem[] = await menuItemsResponse;
-let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get(serverUrl + "/itemCategories").then((res) => {
+let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get("/itemCategories").then((res) => {
     return res.data;
 }).then((data) => {
     return data;
@@ -88,7 +87,7 @@ let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get(serverUrl + "/item
     return [];
 });
 let itemCategories: ItemCategory[] = await itemCategoriesPromise;
-let ingredientsPromise:Promise<Ingredient[]> = axios.get(serverUrl + "/ingredients").then((res) => {
+let ingredientsPromise:Promise<Ingredient[]> = axios.get("/ingredients").then((res) => {
     return res.data;
 }).then((data) => {
     return data;
