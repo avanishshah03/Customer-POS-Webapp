@@ -46,6 +46,7 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
             label="Item Name"
             variant="outlined"
             fullWidth
+            required
             value={itemName}
             onChange={(e) => setItemName(e.target.value)}
             margin="normal"
@@ -54,6 +55,8 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
             label="Item Price"
             variant="outlined"
             fullWidth
+            required
+            type="number"
             value={itemPrice}
             onChange={(e) => setItemPrice(e.target.value)}
             margin="normal"
@@ -71,6 +74,7 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
             <Select
               labelId="size-select-label"
               id="size-select-label"
+              required
               value={undefined}
               label="menuitem.size"
               onChange={(e) => setSize(e.target.value)} //idk what this useState does but it works
