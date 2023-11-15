@@ -36,7 +36,7 @@ export const ManagerIngredients = () => {
             backgroundColor: '#f3f3f3',
         }}>
             <IngredientToAdd open={isAddItemDialogOpen} onClose={() => setAddItemDialogOpen(false)} />
-            <Typography variant="h5" style={{ textAlign: 'center' }}>Point of Sale</Typography>
+            <Typography variant="h5" style={{ textAlign: 'center' }}>Ingredients</Typography>
             <Pagination count={Math.ceil(ingredients.length / pageSize)} onChange={(e, v) => setPage(v)} />
             <TableContainer>
                 <Table style={tableStyle}>
@@ -58,7 +58,7 @@ export const ManagerIngredients = () => {
                                 <Typography variant="h6">{"Amount Ordered"}</Typography>
                             </TableCell>
                             <TableCell style={cellStyle} >
-                                <Typography variant="h6">{"Prize"}</Typography>
+                                <Typography variant="h6">{"Price"}</Typography>
                             </TableCell>
                             <TableCell style={cellStyle} >
                                 <Typography variant="h6">{"Gluten Free"}</Typography>
