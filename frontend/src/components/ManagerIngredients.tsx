@@ -1,12 +1,21 @@
-import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, MenuItem, Select, Checkbox } from '@mui/material';
+import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, MenuItem, Select, Checkbox, Pagination } from '@mui/material';
 import { useMenuStore } from '../store';
 import { IngredientToAdd } from './IngredientToAdd';
 import { useState } from 'react';
+
+// https://stackoverflow.com/questions/42761068/paginate-javascript-array
+function paginate<T>(array: T[], pageSize: number, pageNumber: number): T[] {
+    // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+    return array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
+}
+
+const pageSize = 10;
 
 
 
 export const ManagerIngredients = () => {
     const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
+    const [page, setPage] = useState(1);
     const ingredients = useMenuStore(state => state.ingredients);
     const changeIngredientName = useMenuStore(state => state.changeIngredientName);
     const changeIngredientStock = useMenuStore(state => state.changeIngredientStock);
@@ -29,6 +38,7 @@ export const ManagerIngredients = () => {
             {/* <Button variant='contained'> Add Item +  </Button> */}
             <IngredientToAdd open={isAddItemDialogOpen} onClose={() => setAddItemDialogOpen(false)} />
             <Typography variant="h5" style={{ textAlign: 'center' }}>Point of Sale</Typography>
+            <Pagination count={Math.ceil(ingredients.length / pageSize)} onChange={(e, v) => setPage(v)} />
             <TableContainer>
                 <Table style={tableStyle}>
                     <TableHead>
@@ -61,7 +71,8 @@ export const ManagerIngredients = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {ingredients.map((Ingredients, itemIndex) => (
+                        
+                        {paginate(ingredients, pageSize, page).map((Ingredients, itemIndex) => (
                             <TableRow key={itemIndex}>
                                 <TableCell style={cellStyle} >
                                     {Ingredients.id}
