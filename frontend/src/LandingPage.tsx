@@ -2,9 +2,6 @@ import React from 'react';
 import './LandingPage.css';
 import { Button } from '@mui/material';
 import { Link, Route } from 'wouter';
-import App from './Customer';
-import SignIn from "./LoginPage";
-import { ManagerItems } from "./components/ManagerItems";
 
 const LandingPage: React.FC = () => {
     const customButtonStyle = {
@@ -34,6 +31,11 @@ const LandingPage: React.FC = () => {
                 <Link to="/managerIngredients">
                     <Button style={customButtonStyle}>
                         manager ingredients
+                    </Button>
+                </Link>
+                <Link to="/server">
+                    <Button style={customButtonStyle}>
+                        Server page
                     </Button>
                 </Link>
 
