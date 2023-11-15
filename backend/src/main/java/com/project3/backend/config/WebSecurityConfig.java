@@ -87,7 +87,7 @@ public class WebSecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.addAllowedOrigin("http://173.255.198.143"); 
+		configuration.addAllowedOrigin("https://closedfuture.com"); 
 		configuration.addAllowedMethod("*"); 
 		configuration.addAllowedHeader("*"); 
 		configuration.setAllowCredentials(true);
