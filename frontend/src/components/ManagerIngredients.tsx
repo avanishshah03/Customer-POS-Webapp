@@ -1,6 +1,6 @@
 import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, MenuItem, Select, Checkbox } from '@mui/material';
 import { useMenuStore } from '../store';
-import { ItemToAdd } from './ItemToAdd';
+import { IngredientToAdd } from './IngredientToAdd';
 import { useState } from 'react';
 
 
@@ -51,7 +51,7 @@ export const ManagerIngredients = () => {
             backgroundColor: '#f3f3f3',
         }}>
             {/* <Button variant='contained'> Add Item +  </Button> */}
-            <ItemToAdd open={isAddItemDialogOpen} onClose={() => setAddItemDialogOpen(false)} />
+            <IngredientToAdd open={isAddItemDialogOpen} onClose={() => setAddItemDialogOpen(false)} />
             <Typography variant="h5" style={{ textAlign: 'center' }}>Point of Sale</Typography>
             <TableContainer>
                 <Table style={tableStyle}>
