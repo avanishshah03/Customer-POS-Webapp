@@ -48,3 +48,44 @@ button {
     cursor: pointer;
     border-radius: 5px;
 }
+
+/* .button-hover-effect:hover {
+    transform: scale(1.1);
+    border: 2px solid white;
+    padding: 10px;
+    transition: transform 0.3s ease, border 0.3s ease, padding 0.3s ease;
+} */
+
+.button-hover-effect {
+    position: relative;
+    overflow: hidden;
+    /* Ensure the overflow is hidden for the border effect */
+}
+
+.button-hover-effect::before,
+.button-hover-effect::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    /* Thickness of the line */
+    background-color: transparent;
+    /* Initial transparent background color */
+    transition: background-color 0.3s ease;
+    /* Transition for the background color */
+}
+
+.button-hover-effect::before {
+    top: 0;
+}
+
+.button-hover-effect::after {
+    bottom: 0;
+}
+
+.button-hover-effect:hover::before,
+.button-hover-effect:hover::after {
+    background-color: white;
+    /* Updated background color on hover */
+}
