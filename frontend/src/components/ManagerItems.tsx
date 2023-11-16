@@ -155,6 +155,8 @@ export const ManagerItems = () => {
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <DeleteConfirm
+                                        id={menuItem.id}
+                                        name={menuItem.name}
                                         open={isAddItemDialogOpen}
                                         onClose={() => setAddItemDialogOpen(false)}
                                     />
