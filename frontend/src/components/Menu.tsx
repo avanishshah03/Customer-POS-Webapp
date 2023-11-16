@@ -7,7 +7,7 @@ import { useMenuStore } from "../store";
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 
-export const MenuItemsDisplay = (props: { showImage: boolean, fontSize: string }) => {
+export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string }) => {
   const menuItems = useMenuStore((state) => state.menuItems);
   const addtoCart = useMenuStore((state) => state.addCartEntry);
   const [tabValue, setTabValue] = useState(2);
