@@ -26,8 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WebSecurityConfig {
 	String issuerUri = "https://accounts.google.com";
 
-	@Autowired
-	private Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
