@@ -20,7 +20,7 @@ interface DeleteConfirmProps {
     onClose: () => void;
 }
 
-export const DeleteConfirm: React.FC<DeleteConfirmProps> = ({ id, name }) => {
+export const DeleteConfirmItems: React.FC<DeleteConfirmProps> = ({ id, name }) => {
     // const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
     const menuitems = useMenuStore((state) => state.menuItems);
     const changeSize = useMenuStore((state) => state.changeSize);

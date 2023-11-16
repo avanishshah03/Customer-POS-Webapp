@@ -17,7 +17,7 @@ import {
 import { useMenuStore } from "../store";
 import { ItemToAdd } from "./ItemToAdd";
 import { useState } from "react";
-import { DeleteConfirm } from "./DeleteConformation";
+import { DeleteConfirmItems } from "./DeleteConfirmItems";
 
 // https://stackoverflow.com/questions/42761068/paginate-javascript-array
 function paginate<T>(array: T[], pageSize: number, pageNumber: number): T[] {
@@ -154,7 +154,7 @@ export const ManagerItems = () => {
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle}>
-                                    <DeleteConfirm
+                                    <DeleteConfirmItems
                                         id={menuItem.id}
                                         name={menuItem.name}
                                         open={isAddItemDialogOpen}
