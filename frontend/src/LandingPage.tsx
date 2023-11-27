@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import './LandingPage.css';
 import { AuthContext } from './Auth';
 import { Button } from '@mui/material';
-import { Link, Route } from 'wouter';
+import { Link} from 'wouter';
 
 const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
     };
 
-    const employeeLogin = () => {
+    const EmployeeLogin = () => {
         const { role } = useContext(AuthContext);
         if (role === '') 
         {
@@ -35,7 +35,7 @@ const LandingPage: React.FC = () => {
                     </a>
 
                 </Link>
-                
+                <EmployeeLogin />
                 <Link to="/managerItems">
                     <Button style={customButtonStyle} className="button-hover-effect">
                         manager temp
