@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useMenuStore } from "../store";
 import { ItemToAdd } from "./ItemToAdd";
+import { EditItemIngredients } from "./EditItemIngredients";
 import { useState } from "react";
 
 // https://stackoverflow.com/questions/42761068/paginate-javascript-array
@@ -85,6 +86,9 @@ export const ManagerItems = () => {
                                 <Typography variant="h6">{"Extra Sauce"}</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
+                                <Typography variant="h6">{"Edit Item"}</Typography>
+                            </TableCell>
+                            <TableCell style={cellStyle}>
                                 <Typography variant="h6">{"Delete Item"}</Typography>
                             </TableCell>
                         </TableRow>
@@ -151,6 +155,13 @@ export const ManagerItems = () => {
                                         checked={menuItem.extrasauce}
                                         onChange={(e) => changeExtraSauce(menuItem.id)}
                                     />
+                                </TableCell>
+                                <TableCell style={cellStyle}>
+
+                                   <EditItemIngredients open={false} menuItem={menuItem} onClose={function (): void {
+                                        throw new Error("Function not implemented.");
+                                    } }></EditItemIngredients>
+                                    
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <Button
