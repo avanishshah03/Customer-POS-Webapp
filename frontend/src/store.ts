@@ -54,6 +54,7 @@ interface Store {
     changeExtraSauce: (id: number) => void;
     deleteMenuItem: (id: number) => void;
     changeSize: (id: number, sizein: string) => void;
+    setIngredients: (ingredients: Ingredient[]) => void;
     changeIngredientName: (id: number, newName: string) => void;
     changeIngredientStock: (id: number, newStock: number) => void;
     changeIngredientRestock: (id: number, newRestock: number) => void;
@@ -87,20 +88,12 @@ let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get("/itemCategories")
     return [];
 });
 let itemCategories: ItemCategory[] = await itemCategoriesPromise;
-let ingredientsPromise:Promise<Ingredient[]> = axios.get("/ingredients").then((res) => {
-    return res.data;
-}).then((data) => {
-    return data;
-}, (error) => {
-    console.log(error);
-    return [];
-});
-let ingredients: Ingredient[] = await ingredientsPromise;
 export const useMenuStore = create<Store>((set) => ({
     cart: [],
     itemCategories: itemCategories,
     menuItems: menuItems,
-    ingredients: ingredients,
+    ingredients: [],
+    setIngredients: (ingredients: Ingredient[]) => set({ingredients}),
     setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
     addMenuItem: (item: MenuItem) => {

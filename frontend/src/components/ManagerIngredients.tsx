@@ -1,8 +1,9 @@
 import { Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, MenuItem, Select, Checkbox, Pagination } from '@mui/material';
-import { useMenuStore } from '../store';
+import { Ingredient, useMenuStore } from '../store';
 import { IngredientToAdd } from './IngredientToAdd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DeleteConfirmIngredient } from './DeleteConfirmIngrdient';
+import axios from '../config/axiosConfig';
 
 // https://stackoverflow.com/questions/42761068/paginate-javascript-array
 function paginate<T>(array: T[], pageSize: number, pageNumber: number): T[] {
@@ -18,6 +19,7 @@ export const ManagerIngredients = () => {
     const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
     const [page, setPage] = useState(1);
     const ingredients = useMenuStore(state => state.ingredients);
+    const setIngredients = useMenuStore(state => state.setIngredients);
     const changeIngredientName = useMenuStore(state => state.changeIngredientName);
     const changeIngredientStock = useMenuStore(state => state.changeIngredientStock);
     const changeIngredientRestock = useMenuStore(state => state.changeIngredientRestock);
@@ -29,6 +31,16 @@ export const ManagerIngredients = () => {
 
     const tableStyle = { width: '100%', };
     const cellStyle = { padding: '8px', };
+
+    useEffect(() => {
+        axios.get("/ingredients").then((res) => {
+            return res.data;
+        }).then((data) => {
+            setIngredients(data)
+        }, (error) => {
+            console.log(error);
+        });
+    }, [])
 
     return (
         <Paper style={{
