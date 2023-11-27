@@ -26,8 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class WebSecurityConfig {
 	String issuerUri = "https://accounts.google.com";
 
-	@Autowired
-	private Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -56,6 +54,7 @@ public class WebSecurityConfig {
 		.cors(cors->cors.configurationSource(corsConfigurationSource()))
 		.authorizeHttpRequests(auth ->
 			auth.requestMatchers("/menuItems", "/itemCategories").permitAll()
+			.requestMatchers("/orders", "/ingredients", "/itemToIngredient").hasAuthority("ROLE_manager")
 			.anyRequest().authenticated()
 		)
 		.oauth2ResourceServer(oauth2 ->
@@ -87,7 +86,7 @@ public class WebSecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.addAllowedOrigin("http://173.255.198.143"); 
+		configuration.addAllowedOrigin("https://closedfuture.com"); 
 		configuration.addAllowedMethod("*"); 
 		configuration.addAllowedHeader("*"); 
 		configuration.setAllowCredentials(true);

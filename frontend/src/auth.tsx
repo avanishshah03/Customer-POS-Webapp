@@ -1,33 +1,34 @@
 import { useEffect, useState, createContext, useCallback, FC, PropsWithChildren, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { serverUrl } from './config/constant';
-import axios from 'axios';
+import axios from './config/axiosConfig';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 
 axios.defaults.withCredentials = true;
 
 type AuthContextType = {
-    loggedIn: boolean;
+    role: string;
     checkLoginState: () => Promise<void>;
     user: string; 
 };
 
-const AuthContext = createContext<AuthContextType>({ loggedIn: false, checkLoginState: async () => {}, user: "" });
+export const AuthContext = createContext<AuthContextType>({ role: "", checkLoginState: async () => {}, user: "" });
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const [role, setRole] = useState<string>('');
     const [user, setUser] = useState<string>('');
     const IdToken = localStorage.getItem('IdToken');
 
     const checkLoginState = useCallback(async () => {
         try {
-        const { data: { user, role }} = await axios.get(`${serverUrl}/auth/login`, { headers: { Authorization: `Bearer ${IdToken}` } });
-        const logged_in = role !== '';
-        setLoggedIn(logged_in);
+        const { data: { user, role }} = await axios.get(`/auth/login`, { headers: { Authorization: `Bearer ${IdToken}` } });
+        role && setRole(role);
         user && setUser(user);
         axios.defaults.headers.common['Authorization'] = `Bearer ${IdToken}`
         } catch (err) {
-        console.error(err);
+            setRole('');
+            setUser('');
+            localStorage.removeItem('IdToken');
+            console.error(err);
         }
     }, []);
 
@@ -36,7 +37,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }, [checkLoginState]);
 
     return (
-        <AuthContext.Provider value={{ loggedIn, checkLoginState, user }}>
+        <AuthContext.Provider value={{ role, checkLoginState, user }}>
         {children}
         </AuthContext.Provider>
     );

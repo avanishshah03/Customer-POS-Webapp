@@ -1,38 +1,33 @@
-import * as React from "react";
-import axios from 'axios';
+import { TableContainer } from "@mui/material";
 import Button from "@mui/material/Button";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Typography from "@mui/material/Typography";
-import { TableContainer } from "@mui/material";
+import * as React from "react";
 
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather?lat=30.626310&lon=-96.337876&appid=5672abd6804fb54e885e9c6c6246e716';
 
 function createData(
-    name: string,
-    number: number,    
+  name: string,
+  number: number,
 ) {
-    return { name, number };
+  return { name, number };
 }
 
 const initialRows = [
-    createData('Temperature', 0),
-    createData('Feels like', 0),
-    createData('Today\'s max', 0),
-    createData('Today\'s min', 0),
-    createData('Wind speed', 0),
-    createData('Humidity', 0),
-    
-    // Add more rows as needed
+  createData('Temperature', 0),
+  createData('Feels like', 0),
+  createData('Today\'s max', 0),
+  createData('Today\'s min', 0),
+  createData('Wind speed', 0),
+  createData('Humidity', 0),
+
+  // Add more rows as needed
 ];
 
 export interface SimpleDialogProps {
@@ -53,17 +48,16 @@ function SimpleDialog(props: SimpleDialogProps) {
     // Function to make the API call and update the rows
     const fetchData = async () => {
       try {
-        const response = await axios.get(API_URL);
-        const apiData = response.data;
+        const apiData = await (await fetch(API_URL)).json();
 
         // Update the rows with real data from the API
         const updatedRows = [
-            createData('Temperature', Math.round((apiData.main.temp - 273.15) * 9/5 + 32)),
-            createData('Feels like', Math.round((apiData.main.feels_like - 273.15) * 9/5 + 32)),
-            createData('Today\'s max', Math.round((apiData.main.temp_max - 273.15) * 9/5 + 32)),
-            createData('Today\'s min', Math.round((apiData.main.temp_min - 273.15) * 9/5 + 32)),
-            createData('Wind speed', Math.round(apiData.wind.speed * 2.237)),
-            createData('Humidity', apiData.main.humidity),
+          createData('Temperature', Math.round((apiData.main.temp - 273.15) * 9 / 5 + 32)),
+          createData('Feels like', Math.round((apiData.main.feels_like - 273.15) * 9 / 5 + 32)),
+          createData('Today\'s max', Math.round((apiData.main.temp_max - 273.15) * 9 / 5 + 32)),
+          createData('Today\'s min', Math.round((apiData.main.temp_min - 273.15) * 9 / 5 + 32)),
+          createData('Wind speed', Math.round(apiData.wind.speed * 2.237)),
+          createData('Humidity', apiData.main.humidity),
           // Add more rows as needed
         ];
 
