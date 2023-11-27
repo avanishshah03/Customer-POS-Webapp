@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './LandingPage.css';
+import { AuthContext } from './Auth';
 import { Button } from '@mui/material';
 import { Link, Route } from 'wouter';
 
@@ -7,6 +8,19 @@ const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
     };
+
+    const employeeLogin = () => {
+        const { role } = useContext(AuthContext);
+        if (role === '') 
+        {
+            return  <Link to="/login">
+                        <Button style={customButtonStyle} className="button-hover-effect">
+                            Employee Login
+                        </Button>
+                    </Link>
+        }
+        return <div></div>
+    }
 
     return (
 
@@ -21,11 +35,7 @@ const LandingPage: React.FC = () => {
                     </a>
 
                 </Link>
-                <Link to="/login">
-                    <Button style={customButtonStyle} className="button-hover-effect">
-                        Employee Login
-                    </Button>
-                </Link>
+                
                 <Link to="/managerItems">
                     <Button style={customButtonStyle} className="button-hover-effect">
                         manager temp

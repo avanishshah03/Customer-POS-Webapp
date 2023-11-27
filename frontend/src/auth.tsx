@@ -1,6 +1,5 @@
 import { useEffect, useState, createContext, useCallback, FC, PropsWithChildren, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { serverUrl } from './config/constant';
 import axios from './config/axiosConfig';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 
@@ -12,7 +11,7 @@ type AuthContextType = {
     user: string; 
 };
 
-const AuthContext = createContext<AuthContextType>({ role: "", checkLoginState: async () => {}, user: "" });
+export const AuthContext = createContext<AuthContextType>({ role: "", checkLoginState: async () => {}, user: "" });
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const [role, setRole] = useState<string>('');
@@ -26,7 +25,10 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         user && setUser(user);
         axios.defaults.headers.common['Authorization'] = `Bearer ${IdToken}`
         } catch (err) {
-        console.error(err);
+            setRole('');
+            setUser('');
+            localStorage.removeItem('IdToken');
+            console.error(err);
         }
     }, []);
 
