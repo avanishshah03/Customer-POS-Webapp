@@ -13,6 +13,7 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>({ role: "", checkLoginState: async () => {}, user: "" });
 
+
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const [role, setRole] = useState<string>('');
     const [user, setUser] = useState<string>('');
@@ -51,6 +52,7 @@ export const LoginButton = () => {
         localStorage.setItem('IdToken', IdToken);
         await checkLoginState();
         navigate('/');
+        
     }
     const errorMessage = () => {
         console.error('Error logging in');
@@ -58,4 +60,6 @@ export const LoginButton = () => {
     return (
         <GoogleLogin onSuccess={login} onError={errorMessage} />
     );
+
+    
 }
