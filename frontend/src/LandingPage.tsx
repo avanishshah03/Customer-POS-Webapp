@@ -55,6 +55,11 @@ const LandingPage: React.FC = () => {
                                 manager ingredients
                             </Button>
                         </Link>
+                        <Link to="/server">
+                        <Button style={customButtonStyle} className="button-hover-effect">
+                            Server page
+                        </Button>
+                    </Link>
                     </div>
                     
                 )
@@ -76,7 +81,7 @@ const LandingPage: React.FC = () => {
                     <div></div>
                 )
                 }
-                 
+
                 {role === '' ? 
                 (
                     <EmployeeLogin />
