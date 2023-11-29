@@ -23,7 +23,6 @@ const LandingPage: React.FC = () => {
     }
 
     return (
-
         <div className="landing-page background-image">
             <div className="content">
                 <h1>MESS WAFFLES</h1>
@@ -35,6 +34,22 @@ const LandingPage: React.FC = () => {
                     </a>
 
                 </Link>
+                {!isLoggedin ? (
+                <Link to="/login">
+                    <Button style={customButtonStyle} className="button-hover-effect">
+                        Employee Login
+                    </Button>
+                </Link>
+
+                )
+                :
+                (
+                    <Link to="/logout">
+                    <Button style={customButtonStyle} className="button-hover-effect">
+                        Logout Here
+                    </Button>
+                </Link>
+                )}
                 <EmployeeLogin />
                 <Link to="/managerItems">
                     <Button style={customButtonStyle} className="button-hover-effect">
