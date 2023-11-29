@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { MenuItem, useMenuStore } from "../store";
 
-export const CheckoutCart = () => {
+export const CheckoutCart = ({ backgroundColor }: { backgroundColor?: string }) => {
     const cart = useMenuStore((state) => state.cart);
     const menuitems = useMenuStore((state) => state.menuItems);
     const decrement = useMenuStore((state) => state.decrementCartEntryQuantity);
@@ -25,11 +25,9 @@ export const CheckoutCart = () => {
         }
     }
     const tableStyle = {
-        border: "1px solid #ddd",
         width: "100%",
     };
     const cellStyle = {
-        border: "1px solid #ddd",
         padding: "8px",
     };
     return (
@@ -37,7 +35,7 @@ export const CheckoutCart = () => {
             style={{
                 padding: "20px",
                 textAlign: "center",
-                backgroundColor: "#f3f3f3",
+                backgroundColor: backgroundColor ?? "#f3f3f3",
             }}
         >
             <Typography variant="h5">Point of Sale</Typography>

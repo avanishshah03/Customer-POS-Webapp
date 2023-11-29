@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useMenuStore } from "../store";
 import { ItemToAdd } from "./ItemToAdd";
+import { EditItemIngredients } from "./EditItemIngredients";
 import { useState } from "react";
 import { DeleteConfirmItems } from "./DeleteConfirmItems";
 
