@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext, useCallback, FC, PropsWithChildren, useContext} from 'react';
+import { useEffect, useState, createContext, useCallback, FC, PropsWithChildren, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from './config/axiosConfig';
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
@@ -8,10 +8,10 @@ axios.defaults.withCredentials = true;
 type AuthContextType = {
     role: string;
     checkLoginState: () => Promise<void>;
-    user: string; 
+    user: string;
 };
 
-export const AuthContext = createContext<AuthContextType>({ role: "", checkLoginState: async () => {}, user: "" });
+export const AuthContext = createContext<AuthContextType>({ role: "", checkLoginState: async () => { }, user: "" });
 
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -21,10 +21,11 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const checkLoginState = useCallback(async () => {
         try {
-        const { data: { user, role }} = await axios.get(`/auth/login`, { headers: { Authorization: `Bearer ${IdToken}` } });
-        role && setRole(role);
-        user && setUser(user);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${IdToken}`
+            const { data: { user, role } } = await axios.get(`/auth/login`, { headers: { Authorization: `Bearer ${IdToken}` } });
+            localStorage.setItem('role', role);
+            role && setRole(role);
+            user && setUser(user);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${IdToken}`
         } catch (err) {
             setRole('');
             setUser('');
@@ -39,7 +40,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ role, checkLoginState, user }}>
-        {children}
+            {children}
         </AuthContext.Provider>
     );
 }
@@ -51,8 +52,18 @@ export const LoginButton = () => {
         const IdToken = response.credential ?? '';
         localStorage.setItem('IdToken', IdToken);
         await checkLoginState();
+        const role = localStorage.getItem('role');
+        console.log(role);
+
+        if (role === "ROLE_manager") {
+            navigate('/manager');
+            return;
+        } else if (role === "ROLE_server") {
+            navigate('/server');
+            return;
+        }
         navigate('/');
-        
+
     }
     const errorMessage = () => {
         console.error('Error logging in');
@@ -61,5 +72,5 @@ export const LoginButton = () => {
         <GoogleLogin onSuccess={login} onError={errorMessage} />
     );
 
-    
+
 }
