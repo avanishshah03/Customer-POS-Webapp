@@ -13,6 +13,8 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>({ role: "", checkLoginState: async () => {}, user: "" });
 
+const [isLoggedin, setIsLoggedin] = useState(false);
+
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const [role, setRole] = useState<string>('');
     const [user, setUser] = useState<string>('');
@@ -51,6 +53,7 @@ export const LoginButton = () => {
         localStorage.setItem('IdToken', IdToken);
         await checkLoginState();
         navigate('/');
+        setIsLoggedin(true);
     }
     const errorMessage = () => {
         console.error('Error logging in');
@@ -58,4 +61,15 @@ export const LoginButton = () => {
     return (
         <GoogleLogin onSuccess={login} onError={errorMessage} />
     );
+
+    
 }
+export const LogoutButton = () => {
+    
+    const { checkLoginState } = useContext(AuthContext);
+    const logout = async (response: CredentialResponse) => {
+        localStorage.removeItem("IdToken");
+        setIsLoggedin(false);
+    }
+    
+};
