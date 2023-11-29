@@ -9,6 +9,10 @@ const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
     };
+    const mapStyles = {
+        border: 'none',
+        filter: 'brightness(0.7)',
+    };
 
     const { role } = useContext(AuthContext);
     const EmployeeLogin = () => {
@@ -32,6 +36,14 @@ const LandingPage: React.FC = () => {
     return (
         <div className="landing-page background-image">
             <div className="content">
+
+                <iframe
+                    width="450"
+                    height="250"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDcZD_C1oXCSy1uDSqquetSFBqgcv7d0SQ&q=Mess+Waffles,College+Station,TX"
+                    allowFullScreen
+                    style={mapStyles}
+                ></iframe>
                 <h1>MESS WAFFLES</h1>
                 <Link to="/customer">
                     <a>
