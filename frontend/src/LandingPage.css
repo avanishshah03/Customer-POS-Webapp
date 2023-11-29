@@ -27,6 +27,13 @@
     z-index: 1;
     color: white;
     backdrop-filter: brightness(0.5);
+    
+}
+
+iframe {
+    position: absolute;
+    top: 22%;
+    left: 2%;
 }
 
 h1 {
