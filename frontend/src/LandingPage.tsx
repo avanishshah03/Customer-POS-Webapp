@@ -4,13 +4,15 @@ import { AuthContext } from './Auth';
 import { Button } from '@mui/material';
 import { Link} from 'wouter';
 
+
 const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
     };
 
+    const { role } = useContext(AuthContext);
     const EmployeeLogin = () => {
-        const { role } = useContext(AuthContext);
+        
         if (role === '') 
         {
             return  <Link to="/login">
@@ -22,6 +24,11 @@ const LandingPage: React.FC = () => {
         return <div></div>
     }
 
+    const logout = () =>{
+        localStorage.clear();
+        document.location.reload();
+
+    }
     return (
         <div className="landing-page background-image">
             <div className="content">
@@ -32,25 +39,24 @@ const LandingPage: React.FC = () => {
                             Order Here
                         </Button>
                     </a>
+                </Link>
 
-                </Link>
-                {!isLoggedin ? (
-                <Link to="/login">
-                    <Button style={customButtonStyle} className="button-hover-effect">
-                        Employee Login
-                    </Button>
-                </Link>
+                {role === '' ? 
+                (
+                    <EmployeeLogin />
 
                 )
                 :
                 (
-                    <Link to="/logout">
-                    <Button style={customButtonStyle} className="button-hover-effect">
-                        Logout Here
-                    </Button>
-                </Link>
-                )}
-                <EmployeeLogin />
+                    <Link to="/">
+                        <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
+                            Logout 
+                        </Button>
+                    </Link>
+                )
+                }
+
+                
                 <Link to="/managerItems">
                     <Button style={customButtonStyle} className="button-hover-effect">
                         manager temp
