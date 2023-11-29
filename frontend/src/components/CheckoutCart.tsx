@@ -25,11 +25,9 @@ export const CheckoutCart = ({ backgroundColor }: { backgroundColor?: string }) 
         }
     }
     const tableStyle = {
-        border: "1px solid #ddd",
         width: "100%",
     };
     const cellStyle = {
-        border: "1px solid #ddd",
         padding: "8px",
     };
     return (
