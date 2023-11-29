@@ -27,14 +27,17 @@ const LandingPage: React.FC = () => {
         <div className="landing-page background-image">
             <div className="content">
                 <h1>MESS WAFFLES</h1>
-                <Link to="/customer">
-                    <a>
-                        <Button style={customButtonStyle} className="button-hover-effect">
-                            Order Here
-                        </Button>
-                    </a>
+                <div id='customer-button-container'>
+                    <Link to="/customer">
+                        <a>
+                            <Button id='customer-button'style={customButtonStyle} className="button-hover-effect">
+                                Order Here
+                            </Button>
+                        </a>
 
-                </Link>
+                    </Link>
+                </div>
+                
                 <EmployeeLogin />
                 <Link to="/managerItems">
                     <Button style={customButtonStyle} className="button-hover-effect">
