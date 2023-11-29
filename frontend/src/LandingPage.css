@@ -56,15 +56,27 @@ button {
     transition: transform 0.3s ease, border 0.3s ease, padding 0.3s ease;
 } */
 
-#customer-button-container {
+#order-here-comp {
     display: flex;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 5%;
     margin-bottom: 20px;
+    font-size: 30%;
+}
+
+#order-here {
+    font-size: 2rem;
+}
+
+#login-container {
+    display: flex;
+    justify-content: right;
+    margin-right: 60px;
+    margin-top: 20%;
 }
 
 #customer-button {
-    font-size: large;
+    font-size: 100%;
 }
 
 .button-hover-effect {

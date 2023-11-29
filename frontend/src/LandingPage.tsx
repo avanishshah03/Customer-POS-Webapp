@@ -16,9 +16,12 @@ const LandingPage: React.FC = () => {
         if (role === '') 
         {
             return  <Link to="/login">
-                        <Button style={customButtonStyle} className="button-hover-effect">
-                            Login
-                        </Button>
+                        <div id='login-container'>
+                            <Button style={customButtonStyle} className="button-hover-effect">
+                                Login
+                            </Button>
+                        </div>
+                        
                     </Link>
         }
         return <div></div>
@@ -35,11 +38,11 @@ const LandingPage: React.FC = () => {
             <div className="content">
                 <h1>MESS WAFFLES</h1>
                 <Link to="/customer">
-                    <a>
-                        <Button style={customButtonStyle} className="button-hover-effect">
+                    <div id='order-here-comp'>
+                        <Button style={customButtonStyle} id="order-here" className="button-hover-effect">
                             Order Here
                         </Button>
-                    </a>
+                    </div>
                 </Link>
 
                 {role === "ROLE_manager" ?
