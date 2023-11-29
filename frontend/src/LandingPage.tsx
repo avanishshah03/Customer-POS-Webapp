@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import './LandingPage.css';
 import { AuthContext } from './Auth';
 import { Button } from '@mui/material';
-import { Link} from 'wouter';
+import { Link } from 'wouter';
 
 
 const LandingPage: React.FC = () => {
@@ -12,24 +12,23 @@ const LandingPage: React.FC = () => {
 
     const { role } = useContext(AuthContext);
     const EmployeeLogin = () => {
-        
-        if (role === '') 
-        {
-            return  <Link to="/login">
-                        <Button style={customButtonStyle} className="button-hover-effect">
-                            Login
-                        </Button>
-                    </Link>
+
+        if (role === '') {
+            return <Link to="/login">
+                <Button style={customButtonStyle} className="button-hover-effect">
+                    Login
+                </Button>
+            </Link>
         }
         return <div></div>
     }
 
-    const logout = () =>{
+    const logout = () => {
         localStorage.clear();
         document.location.reload();
 
     }
-    
+
     return (
         <div className="landing-page background-image">
             <div className="content">
@@ -42,54 +41,25 @@ const LandingPage: React.FC = () => {
                     </a>
                 </Link>
 
-                {role === "ROLE_manager" ?
-                (
-                    <div>
-                        <Link to="/managerItems">
-                        <Button style={customButtonStyle} className="button-hover-effect">
-                            manager temp
-                        </Button>
-
-                        </Link><Link to="/managerIngredients">
+                {role !== "" ?
+                    (
+                        <Link to="/server">
                             <Button style={customButtonStyle} className="button-hover-effect">
-                                manager ingredients
+                                Server page
                             </Button>
                         </Link>
-                    </div>
-                    
-                )
-                :
-                (
-                    <div></div>
-                )
+                    )
+                    : (<div></div>)
                 }
-                { role === 'ROLE_server' ?
-                (
-                    <Link to="/server">
-                        <Button style={customButtonStyle} className="button-hover-effect">
-                            Server page
-                        </Button>
-                    </Link>
-                )
-                :
-                (
-                    <div></div>
-                )
-                }
-                 
-                {role === '' ? 
-                (
-                    <EmployeeLogin />
-
-                )
-                :
-                (
-                    <Link to="/">
-                        <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
-                            Logout 
-                        </Button>
-                    </Link>
-                )
+                {role === '' ?
+                    (<EmployeeLogin />)
+                    : (
+                        <Link to="/">
+                            <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
+                                Logout
+                            </Button>
+                        </Link>
+                    )
                 }
 
             </div>
