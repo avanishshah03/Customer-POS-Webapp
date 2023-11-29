@@ -1,41 +1,58 @@
-import { Button, Grid, Paper, Typography } from "@mui/material";
-import { useState } from "react";
-import { Link } from "wouter";
+import { ThemeProvider } from "@emotion/react";
+import { Grid, Paper, Typography, createTheme } from "@mui/material";
 import { CheckoutCart } from "./components/CheckoutCart";
 import { MenuItemsDisplay } from "./components/Menu";
 import Weather from "./components/WeatherWindow"; // Import the WeatherWindow component
+import "./Customer.css";
+
+
+const orange = "#f47b20"
+const brown = "#5e4433"
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: orange,
+    },
+    secondary: {
+      main: "#FF0000",
+    },
+    text: {
+      primary: "#FFF",
+      secondary: "#FFF",
+    }
+  }
+});
 
 export default function App() {
-  const [tabValue, setTabValue] = useState(0);
   const paperStyle = {
     padding: "20px",
     margin: "20px",
     textAlign: "center",
-    backgroundColor: "#f3f3f3",
+    backgroundColor: brown,
   } as any;
 
-  const tabContainerStyle = {
-    marginTop: "20px",
-  };
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Paper style={{ ...paperStyle, display: "flex" }}>
-          <Weather />
-          <div style={{ margin: "auto" }}>
-            <Typography variant="h4">Mess Waffles</Typography>
-            <Typography variant="subtitle1">
-              MESSin around with waffles
-            </Typography>
-          </div>
-        </Paper>
+    <ThemeProvider theme={theme}>
+      <Grid container spacing={2} style={{
+        backgroundColor: "#c7a17a",
+        color: orange,
+      }}>
+        <Grid item xs={12}>
+          <Paper style={{ ...paperStyle, display: "flex" }}>
+            <Weather />
+            <div style={{ margin: "auto", color: orange }}>
+              <Typography variant="h4">Mess Waffles</Typography>
+            </div>
+          </Paper>
+        </Grid>
+        <Grid item xs={8}>
+          <MenuItemsDisplay showImage={true} backgroundColor={brown} />
+        </Grid>
+        <Grid item xs={4}>
+          <CheckoutCart backgroundColor={brown} />
+        </Grid>
       </Grid>
-      <Grid item xs={8}>
-        <MenuItemsDisplay showImage={true} />
-      </Grid>
-      <Grid item xs={4}>
-        <CheckoutCart />
-      </Grid>
-    </Grid>
+    </ThemeProvider>
   );
 }
