@@ -76,16 +76,20 @@ export const CheckoutCart = ({ backgroundColor }: { backgroundColor?: string }) 
                                     <Button
                                         color="error"
                                         size="small"
-                                        variant="outlined"
+                                        variant="contained"
+                                        style={{ marginRight: "0.4em" }}
                                         onClick={() => decrement(item.itemId)}
                                     >
                                         -
                                     </Button>
-                                    {item.quantity}
+                                    <span style={{ fontSize: "1.2em" }}>
+                                        {item.quantity}
+                                    </span>
                                     <Button
                                         color="success"
                                         size="small"
-                                        variant="outlined"
+                                        variant="contained"
+                                        style={{ marginLeft: "0.4em" }}
                                         onClick={() => increment(item.itemId)}
                                     >
                                         +
