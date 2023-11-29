@@ -17,7 +17,7 @@ const LandingPage: React.FC = () => {
         {
             return  <Link to="/login">
                         <Button style={customButtonStyle} className="button-hover-effect">
-                            Employee Login
+                            Login
                         </Button>
                     </Link>
         }
@@ -29,6 +29,7 @@ const LandingPage: React.FC = () => {
         document.location.reload();
 
     }
+    
     return (
         <div className="landing-page background-image">
             <div className="content">
@@ -41,6 +42,41 @@ const LandingPage: React.FC = () => {
                     </a>
                 </Link>
 
+                {role === "ROLE_manager" ?
+                (
+                    <div>
+                        <Link to="/managerItems">
+                        <Button style={customButtonStyle} className="button-hover-effect">
+                            manager temp
+                        </Button>
+
+                        </Link><Link to="/managerIngredients">
+                            <Button style={customButtonStyle} className="button-hover-effect">
+                                manager ingredients
+                            </Button>
+                        </Link>
+                    </div>
+                    
+                )
+                :
+                (
+                    <div></div>
+                )
+                }
+                { role === 'ROLE_server' ?
+                (
+                    <Link to="/server">
+                        <Button style={customButtonStyle} className="button-hover-effect">
+                            Server page
+                        </Button>
+                    </Link>
+                )
+                :
+                (
+                    <div></div>
+                )
+                }
+                 
                 {role === '' ? 
                 (
                     <EmployeeLogin />
@@ -55,23 +91,6 @@ const LandingPage: React.FC = () => {
                     </Link>
                 )
                 }
-
-                
-                <Link to="/managerItems">
-                    <Button style={customButtonStyle} className="button-hover-effect">
-                        manager temp
-                    </Button>
-                </Link>
-                <Link to="/managerIngredients">
-                    <Button style={customButtonStyle} className="button-hover-effect">
-                        manager ingredients
-                    </Button>
-                </Link>
-                <Link to="/server">
-                    <Button style={customButtonStyle} className="button-hover-effect">
-                        Server page
-                    </Button>
-                </Link>
 
             </div>
         </div>
