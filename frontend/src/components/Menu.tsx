@@ -75,7 +75,8 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string,
                           style={{ height: "100px", width: "100px" }}
                         ></div>
                       )}
-                      <Typography variant="h6">
+                      <Typography variant="h6" style={{color: 'black',
+                                                      backgroundColor: 'white'}}>
 
                         {menuItem.name} ${menuItem.price.toFixed(2)}
                         {/* {props.fontSize === "small" ?
@@ -87,6 +88,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string,
                               {menuItem.name} ${menuItem.price.toFixed(2)}
                             </Box>
                           } */}
+                          
                       </Typography>
                     </Paper>
                   </Button>
