@@ -66,8 +66,7 @@ button {
 #order-here-comp {
     display: flex;
     justify-content: center;
-    margin-top: 5%;
-    margin-bottom: 20px;
+    margin-bottom: 10%;
     font-size: 30%;
 }
 
@@ -78,8 +77,9 @@ button {
 #login-container {
     display: flex;
     justify-content: right;
-    margin-right: 60px;
-    margin-top: 20%;
+    margin: 2em;
+    /* margin-right: 60px;
+    margin-top: 20%; */
 }
 
 #customer-button {

@@ -16,17 +16,16 @@ const LandingPage: React.FC = () => {
 
     const { role } = useContext(AuthContext);
     const EmployeeLogin = () => {
-        
-        if (role === '') 
-        {
-            return  <Link to="/login">
-                        <div id='login-container'>
-                            <Button style={customButtonStyle} className="button-hover-effect">
-                                Login
-                            </Button>
-                        </div>
-                        
-                    </Link>
+
+        if (role === '') {
+            return <Link to="/login">
+                <div id='login-container'>
+                    <Button style={customButtonStyle} className="button-hover-effect">
+                        Login
+                    </Button>
+                </div>
+
+            </Link>
         }
         return <div></div>
     }
@@ -39,7 +38,7 @@ const LandingPage: React.FC = () => {
 
     return (
         <div className="landing-page background-image">
-            <div className="content">
+            <div className="content" style={{ display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
 
                 <iframe
                     width="450"
@@ -84,13 +83,3 @@ const LandingPage: React.FC = () => {
 };
 
 export default LandingPage;
-
-
-
-
-
-
-
-
-
-
