@@ -2,7 +2,7 @@ import { ThemeProvider } from "@emotion/react";
 import { Grid, Paper, Typography, createTheme } from "@mui/material";
 import { CheckoutCart } from "./components/CheckoutCart";
 import { MenuItemsDisplay } from "./components/Menu";
-import Weather from "./components/WeatherWindow"; // Import the WeatherWindow component
+import Weather from "./components/WeatherWindow";
 import "./Customer.css";
 
 

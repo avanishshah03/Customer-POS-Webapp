@@ -1,4 +1,5 @@
-import { TableContainer } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
+import { TableContainer, createTheme } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -11,6 +12,16 @@ import TableRow from '@mui/material/TableRow';
 import * as React from "react";
 
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather?lat=30.626310&lon=-96.337876&appid=5672abd6804fb54e885e9c6c6246e716';
+
+const theme = createTheme({
+  palette: {
+    text: {
+      primary: "#000",
+      secondary: "#000",
+    }
+  }
+});
+
 
 function createData(
   name: string,
@@ -74,32 +85,31 @@ function SimpleDialog(props: SimpleDialogProps) {
   }, [open]);
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Weather in College Station, TX</DialogTitle>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="left">Value</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="left">{row.number}</TableCell>
+    <ThemeProvider theme={theme}>
+      <Dialog onClose={handleClose} open={open}>
+        <DialogTitle>Weather in College Station, TX</DialogTitle>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="left">Value</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Dialog>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="left">{row.number}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Dialog>
+    </ThemeProvider>
   );
 }
 
