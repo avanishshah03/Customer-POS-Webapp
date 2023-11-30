@@ -9,16 +9,24 @@ const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
     };
+    const mapStyles = {
+        border: 'none',
+        filter: 'brightness(0.7)',
+    };
 
     const { role } = useContext(AuthContext);
     const EmployeeLogin = () => {
-
-        if (role === '') {
-            return <Link to="/login">
-                <Button style={customButtonStyle} className="button-hover-effect">
-                    Login
-                </Button>
-            </Link>
+        
+        if (role === '') 
+        {
+            return  <Link to="/login">
+                        <div id='login-container'>
+                            <Button style={customButtonStyle} className="button-hover-effect">
+                                Login
+                            </Button>
+                        </div>
+                        
+                    </Link>
         }
         return <div></div>
     }
@@ -32,13 +40,21 @@ const LandingPage: React.FC = () => {
     return (
         <div className="landing-page background-image">
             <div className="content">
+
+                <iframe
+                    width="450"
+                    height="250"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDcZD_C1oXCSy1uDSqquetSFBqgcv7d0SQ&q=Mess+Waffles,College+Station,TX"
+                    allowFullScreen
+                    style={mapStyles}
+                ></iframe>
                 <h1>MESS WAFFLES</h1>
                 <Link to="/customer">
-                    <a>
-                        <Button style={customButtonStyle} className="button-hover-effect">
+                    <div id='order-here-comp'>
+                        <Button style={customButtonStyle} id="order-here" className="button-hover-effect">
                             Order Here
                         </Button>
-                    </a>
+                    </div>
                 </Link>
 
                 {role !== "" ?
