@@ -1,4 +1,3 @@
-import { ThemeProvider } from "@emotion/react";
 import { TableContainer, createTheme } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -12,7 +11,6 @@ import TableRow from '@mui/material/TableRow';
 import * as React from "react";
 
 const API_URL = 'https://api.openweathermap.org/data/2.5/weather?lat=30.626310&lon=-96.337876&appid=5672abd6804fb54e885e9c6c6246e716';
-
 const theme = createTheme({
   palette: {
     text: {
@@ -21,13 +19,11 @@ const theme = createTheme({
     }
   }
 });
-
-
 function createData(
   name: string,
-  number: number,
+  value: number | string,
 ) {
-  return { name, number };
+  return { name, value };
 }
 
 const initialRows = [
@@ -37,7 +33,6 @@ const initialRows = [
   createData('Today\'s min', 0),
   createData('Wind speed', 0),
   createData('Humidity', 0),
-
   // Add more rows as needed
 ];
 
@@ -49,19 +44,20 @@ export interface SimpleDialogProps {
 
 function SimpleDialog(props: SimpleDialogProps) {
   const { onClose, selectedValue, open } = props;
-  const [rows, setRows] = React.useState(initialRows); // State to store the API data
+  const [rows, setRows] = React.useState(initialRows);
+  const [weatherIcon, setWeatherIcon] = React.useState<string | null>(null); // State to store the weather icon URL
 
   const handleClose = () => {
     onClose(selectedValue);
   };
 
   React.useEffect(() => {
-    // Function to make the API call and update the rows
     const fetchData = async () => {
       try {
         const apiData = await (await fetch(API_URL)).json();
 
-        // Update the rows with real data from the API
+        setWeatherIcon(`http://openweathermap.org/img/w/${apiData.weather[0]?.icon}.png`);
+
         const updatedRows = [
           createData('Temperature', Math.round((apiData.main.temp - 273.15) * 9 / 5 + 32)),
           createData('Feels like', Math.round((apiData.main.feels_like - 273.15) * 9 / 5 + 32)),
@@ -78,38 +74,49 @@ function SimpleDialog(props: SimpleDialogProps) {
       }
     };
 
-    // Call the API when the dialog is opened
     if (open) {
       fetchData();
     }
   }, [open]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>Weather in College Station, TX</DialogTitle>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="left">Value</TableCell>
+    <Dialog onClose={handleClose} open={open} >
+      <DialogTitle style={{ display: 'flex', alignItems: 'center', color: 'black' }}>
+        {weatherIcon && (
+          <img
+            src={weatherIcon}
+            alt="Weather Icon"
+            width="50"
+            height="50"
+            style={{ marginRight: '10px', verticalAlign: 'middle' }}
+          />
+        )}
+        Weather in College Station, TX
+      </DialogTitle>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell style={{ color: 'black' }}>Name</TableCell>
+              <TableCell align="left" style={{ color: 'black' }}>Value</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row" style={{ color: 'black' }}>
+                  {row.name}
+                </TableCell>
+                <TableCell align="left" style={{ color: 'black' }}>{row.value}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="left">{row.number}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Dialog>
-    </ThemeProvider>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Dialog>
   );
 }
 
@@ -135,3 +142,5 @@ export default function SimpleDialogDemo() {
     </div>
   );
 }
+
+
