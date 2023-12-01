@@ -18,14 +18,13 @@ const LandingPage: React.FC = () => {
     const EmployeeLogin = () => {
 
         if (role === '') {
-            return <Link to="/login">
-                <div id='login-container'>
+            return <div id='login-container'>
+                <Link to="/login">
                     <Button style={customButtonStyle} className="button-hover-effect">
                         Login
                     </Button>
-                </div>
-
-            </Link>
+                </Link>
+            </div>
         }
         return <div></div>
     }
@@ -48,32 +47,32 @@ const LandingPage: React.FC = () => {
                     style={mapStyles}
                 ></iframe>
                 <h1>MESS WAFFLES</h1>
-                <Link to="/customer">
-                    <div id='order-here-comp'>
+                <div id='order-here-comp'>
+                    <Link to="/customer">
                         <Button style={customButtonStyle} id="order-here" className="button-hover-effect">
                             Order Here
                         </Button>
-                    </div>
-                </Link>
+                    </Link>
+                </div>
 
                 {role !== "" ?
                     (
-                        <Link to="/server">
-                            <Button style={customButtonStyle} className="button-hover-effect">
+                        <Button style={customButtonStyle} className="button-hover-effect">
+                            <Link to="/server">
                                 Server page
-                            </Button>
-                        </Link>
+                            </Link>
+                        </Button>
                     )
                     : (<div></div>)
                 }
                 {role === '' ?
                     (<EmployeeLogin />)
                     : (
-                        <Link to="/">
-                            <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
+                        <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
+                            <Link to="/">
                                 Logout
-                            </Button>
-                        </Link>
+                            </Link>
+                        </Button>
                     )
                 }
 
