@@ -27,73 +27,80 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string,
         textColor="primary"
         variant="fullWidth"
         aria-label="basic tabs example"
+        sx={{ marginBottom: '32px' }}
       >
         {itemCategories.map((category) => (
           <Tab label={category.name} key={category.id} />
         ))}
       </Tabs>
 
-      {itemCategories.map((category) => (
-        <div
-          key={category.id}
-          style={{ display: tabValue === category.id ? "block" : "none" }}
-        >
-          <Grid
-            container
-            spacing={4}
-            rowGap={4}
-            sx={{ height: "90vh", overflowY: "scroll" }}
-            alignItems="stretch"
+      {
+        itemCategories.map((category) => (
+          <div
+            key={category.id}
+            style={{ display: tabValue === category.id ? "block" : "none" }}
           >
-            {menuItems
-              .filter((menuItem) => menuItem.categoryId === category.id + 1)
-              .filter((v, i, a) => a.map(v => v.name).indexOf(v.name) === i) // https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
-              .map((menuItem) => (
-                <Grid item key={menuItem.id} xs={3} style={{ height: "250px" }} >
-                  <Button
-                    variant="text"
-                    color="primary"
-                    style={{ height: "100%" }}
-                    onClick={() => {
-                      addtoCart(menuItem.id);
-                    }}
-                  >
-                    <div style={{display: 'flex', flexDirection: 'column'}}><Paper
-                      elevation={3}
-                      style={{
-                        padding: "30px",
-                        height: "100%",
-                        textAlign: "center",
-                        backgroundImage: props.showImage
-                          ? `url(${menuItem.imageUrl})`
-                          : "none",
-                        backgroundSize: "cover",
+            <Grid
+              container
+              spacing={4}
+              rowGap={4}
+              sx={{ height: "90vh", overflowY: "scroll" }}
+              alignItems="stretch"
+            >
+              {menuItems
+                .filter((menuItem) => menuItem.categoryId === category.id + 1)
+                .filter((v, i, a) => a.map(v => v.name).indexOf(v.name) === i) // https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
+                .map((menuItem) => (
+                  <Grid item key={menuItem.id} xs={3} style={{ height: "250px" }} >
+                    <Button
+                      variant="text"
+                      color="primary"
+                      style={{ height: "100%" }}
+                      onClick={() => {
+                        addtoCart(menuItem.id);
                       }}
                     >
-                      {props.showImage && (
-                        <div
-                          style={{ height: "100px", width: "100px" }}
-                        ></div>
-                      )}
-                    </Paper>
-                    <Typography variant="h6" style={{color: 'white',
-                                                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                                      height: '100px',
-                                                      width: '200px',
-                                              
-                                                      borderRadius: '5px',}}
-                                                      >
+                      <div style={{ display: 'flex', flexDirection: 'column' }}><Paper
+                        elevation={3}
+                        style={{
+                          padding: "30px",
+                          height: "100%",
+                          textAlign: "center",
+                          backgroundImage: props.showImage
+                            ? `url(${menuItem.imageUrl})`
+                            : "none",
+                          backgroundSize: "cover",
+                        }}
+                      >
+                        {props.showImage && (
+                          <div
+                            style={{ height: "100px", width: "100px" }}
+                          ></div>
+                        )}
+                      </Paper>
+                        <Typography variant="h6" style={{
+                          color: 'white',
+                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                          height: '120px',
+                          width: '200px',
+                          borderRadius: '5px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                        >
 
-                        {menuItem.name} ${menuItem.price.toFixed(2)}
-                          
-                      </Typography></div>
-                    
-                  </Button>
-                </Grid>
-              ))}
-          </Grid>
-        </div>
-      ))}
-    </Paper>
+                          {menuItem.name} <br />${menuItem.price.toFixed(2)}
+
+                        </Typography></div>
+
+                    </Button>
+                  </Grid>
+                ))}
+            </Grid>
+          </div>
+        ))
+      }
+    </Paper >
   );
 };
