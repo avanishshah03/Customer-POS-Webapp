@@ -42,7 +42,7 @@ const LandingPage: React.FC = () => {
                     </Link>
                 </div>
 
-                <div style={{ gridColumn: 3, gridRow: 3, alignSelf: "center" }}>
+                <div style={{ gridColumn: 3, gridRow: 1, alignSelf: "start", justifySelf: "end", margin: '1.5em' }}>
                     {role !== "" ?
                         (
                             <Button style={customButtonStyle} className="button-hover-effect">
