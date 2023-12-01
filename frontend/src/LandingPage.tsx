@@ -5,6 +5,8 @@ import { Button } from '@mui/material';
 import { Link } from 'wouter';
 
 
+console.log(import.meta.env.VITE_REACT_APP_API_KEY);
+
 const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
@@ -28,7 +30,7 @@ const LandingPage: React.FC = () => {
                 <iframe
                     // width="450"
                     // height="250"
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDcZD_C1oXCSy1uDSqquetSFBqgcv7d0SQ&q=Mess+Waffles,College+Station,TX"
+                    src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_REACT_APP_API_KEY}&q=Mess+Waffles,College+Station,TX`}
                     allowFullScreen
                     style={{ filter: 'brightness(0.8)', gridColumn: 1, gridRow: 2, width: "100%", height: "100%", borderRadius: '10px', margin: "1em" }}
                 ></iframe>
