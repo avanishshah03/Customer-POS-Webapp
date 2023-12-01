@@ -86,9 +86,9 @@ function SimpleDialog(props: SimpleDialogProps) {
           <img
             src={weatherIcon}
             alt="Weather Icon"
-            width="50"
-            height="50"
-            style={{ marginRight: '10px', verticalAlign: 'middle' }}
+            width="70"
+            height="70"
+            style={{ boxShadow: '0 0 5px 2px #000', marginRight: '10px', border: '2px solid #000', borderRadius: '50%', verticalAlign: 'middle' }}
           />
         )}
         Weather in College Station, TX
