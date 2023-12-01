@@ -9,26 +9,7 @@ const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
     };
-    const mapStyles = {
-        border: 'none',
-        filter: 'brightness(0.7)',
-    };
-
     const { role } = useContext(AuthContext);
-    const EmployeeLogin = () => {
-
-        if (role === '') {
-            return <div id='login-container'>
-                <Link to="/login">
-                    <Button style={customButtonStyle} className="button-hover-effect">
-                        Login
-                    </Button>
-                </Link>
-            </div>
-        }
-        return <div></div>
-    }
-
     const logout = () => {
         localStorage.clear();
         document.location.reload();
@@ -37,17 +18,20 @@ const LandingPage: React.FC = () => {
 
     return (
         <div className="landing-page background-image">
-            <div className="content" style={{ display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
+            <div className="content">
 
+                <div style={{ gridColumn: 2, gridRow: 1 }}>
+                    <h1>MESS WAFFLES</h1>
+                    <h3>`Fall` in love with our Waffles.</h3>
+                </div>
                 <iframe
-                    width="450"
-                    height="250"
+                    // width="450"
+                    // height="250"
                     src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDcZD_C1oXCSy1uDSqquetSFBqgcv7d0SQ&q=Mess+Waffles,College+Station,TX"
                     allowFullScreen
-                    style={mapStyles}
+                    style={{ filter: 'brightness(0.8)', gridColumn: 1, gridRow: 2, width: "100%", height: "100%", borderRadius: '10px', margin: "1em" }}
                 ></iframe>
-                <h1>MESS WAFFLES</h1>
-                <div id='order-here-comp'>
+                <div style={{ gridColumn: 2, gridRow: 2 }}>
                     <Link to="/customer">
                         <Button style={customButtonStyle} id="order-here" className="button-hover-effect">
                             Order Here
@@ -55,29 +39,37 @@ const LandingPage: React.FC = () => {
                     </Link>
                 </div>
 
-                {role !== "" ?
-                    (
-                        <Button style={customButtonStyle} className="button-hover-effect">
-                            <Link to="/server">
-                                Server page
+                <div style={{ gridColumn: 3, gridRow: 3, alignSelf: "center" }}>
+                    {role !== "" ?
+                        (
+                            <Button style={customButtonStyle} className="button-hover-effect">
+                                <Link to="/server">
+                                    Server page
+                                </Link>
+                            </Button>
+                        )
+                        : (<div></div>)
+                    }
+                    {role === '' ?
+                        (
+                            <Link to="/login" >
+                                <Button style={customButtonStyle} className="button-hover-effect">
+                                    Login
+                                </Button>
                             </Link>
-                        </Button>
-                    )
-                    : (<div></div>)
-                }
-                {role === '' ?
-                    (<EmployeeLogin />)
-                    : (
-                        <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
-                            <Link to="/">
-                                Logout
-                            </Link>
-                        </Button>
-                    )
-                }
+                        )
+                        : (
+                            <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
+                                <Link to="/">
+                                    Logout
+                                </Link>
+                            </Button>
+                        )
+                    }
+                </div>
 
             </div>
-        </div>
+        </div >
     );
 };
 
