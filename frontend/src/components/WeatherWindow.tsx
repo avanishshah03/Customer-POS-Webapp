@@ -27,12 +27,12 @@ function createData(
 }
 
 const initialRows = [
-  createData('Temperature', 0),
-  createData('Feels like', 0),
-  createData('Today\'s max', 0),
-  createData('Today\'s min', 0),
-  createData('Wind speed', 0),
-  createData('Humidity', 0),
+  createData('Temperature (Farenheit)', 0),
+  createData('Feels like (Farenheit)', 0),
+  createData('Today\'s max (Farenheit)', 0),
+  createData('Today\'s min (Farenheit)', 0),
+  createData('Wind speed (Mph)', 0),
+  createData('Humidity (%)', 0),
   // Add more rows as needed
 ];
 
@@ -59,12 +59,12 @@ function SimpleDialog(props: SimpleDialogProps) {
         setWeatherIcon(`http://openweathermap.org/img/w/${apiData.weather[0]?.icon}.png`);
 
         const updatedRows = [
-          createData('Temperature', Math.round((apiData.main.temp - 273.15) * 9 / 5 + 32)),
-          createData('Feels like', Math.round((apiData.main.feels_like - 273.15) * 9 / 5 + 32)),
-          createData('Today\'s max', Math.round((apiData.main.temp_max - 273.15) * 9 / 5 + 32)),
-          createData('Today\'s min', Math.round((apiData.main.temp_min - 273.15) * 9 / 5 + 32)),
-          createData('Wind speed', Math.round(apiData.wind.speed * 2.237)),
-          createData('Humidity', apiData.main.humidity),
+          createData('Temperature (Farenheit)', Math.round((apiData.main.temp - 273.15) * 9 / 5 + 32)),
+          createData('Feels like (Farenheit)', Math.round((apiData.main.feels_like - 273.15) * 9 / 5 + 32)),
+          createData('Today\'s max (Farenheit)', Math.round((apiData.main.temp_max - 273.15) * 9 / 5 + 32)),
+          createData('Today\'s min (Farenheit)', Math.round((apiData.main.temp_min - 273.15) * 9 / 5 + 32)),
+          createData('Wind speed (Mph)', Math.round(apiData.wind.speed * 2.237)),
+          createData('Humidity (%)', apiData.main.humidity),
           // Add more rows as needed
         ];
 
@@ -81,17 +81,19 @@ function SimpleDialog(props: SimpleDialogProps) {
 
   return (
     <Dialog onClose={handleClose} open={open} >
-      <DialogTitle style={{ display: 'flex', alignItems: 'center', color: 'black' }}>
+      <DialogTitle style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'black' }}>
         {weatherIcon && (
-          <img
-            src={weatherIcon}
-            alt="Weather Icon"
-            width="70"
-            height="70"
-            style={{ boxShadow: '0 0 5px 2px #000', marginRight: '10px', border: '2px solid #000', borderRadius: '50%', verticalAlign: 'middle' }}
-          />
+          <div style={{ marginRight: '10px', position: 'relative' }}>
+            <img
+              src={weatherIcon}
+              alt="Weather Icon"
+              width="70"
+              height="70"
+              style={{ boxShadow: '0 0 5px 2px #000', marginRight: '10px', border: '2px solid #000', borderRadius: '50%', verticalAlign: 'middle', }}
+            />
+          </div>
         )}
-        Weather in College Station, TX
+        <span style={{ verticalAlign: 'middle' }}>Weather in College Station, TX</span>
       </DialogTitle>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
