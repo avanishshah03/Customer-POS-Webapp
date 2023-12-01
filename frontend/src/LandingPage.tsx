@@ -5,6 +5,8 @@ import { Button } from '@mui/material';
 import { Link } from 'wouter';
 
 
+console.log(import.meta.env.VITE_REACT_APP_API_KEY);
+
 const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
@@ -18,6 +20,7 @@ const LandingPage: React.FC = () => {
 
     return (
         <div className="landing-page background-image">
+            <div id="google_translate_element" ></div>
             <div className="content">
 
                 <div style={{ gridColumn: 2, gridRow: 1 }}>
@@ -27,7 +30,7 @@ const LandingPage: React.FC = () => {
                 <iframe
                     // width="450"
                     // height="250"
-                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDcZD_C1oXCSy1uDSqquetSFBqgcv7d0SQ&q=Mess+Waffles,College+Station,TX"
+                    src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_REACT_APP_API_KEY}&q=Mess+Waffles,College+Station,TX`}
                     allowFullScreen
                     style={{ filter: 'brightness(0.8)', gridColumn: 1, gridRow: 2, width: "100%", height: "100%", borderRadius: '10px', margin: "1em" }}
                 ></iframe>
@@ -39,7 +42,7 @@ const LandingPage: React.FC = () => {
                     </Link>
                 </div>
 
-                <div style={{ gridColumn: 3, gridRow: 3, alignSelf: "center" }}>
+                <div style={{ gridColumn: 3, gridRow: 1, alignSelf: "start", justifySelf: "end", margin: '1.5em' }}>
                     {role !== "" ?
                         (
                             <Button style={customButtonStyle} className="button-hover-effect">
@@ -69,7 +72,10 @@ const LandingPage: React.FC = () => {
                 </div>
 
             </div>
+           
         </div >
+
+        
     );
 };
 
