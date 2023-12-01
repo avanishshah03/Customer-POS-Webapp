@@ -45,11 +45,11 @@ const LandingPage: React.FC = () => {
                 <div style={{ gridColumn: 3, gridRow: 1, alignSelf: "start", justifySelf: "end", margin: '1.5em' }}>
                     {role !== "" ?
                         (
-                            <Button style={customButtonStyle} className="button-hover-effect">
-                                <Link to="/server">
+                            <Link to="/server">
+                                <Button style={customButtonStyle} className="button-hover-effect">
                                     Server page
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         )
                         : (<div></div>)
                     }
@@ -62,20 +62,20 @@ const LandingPage: React.FC = () => {
                             </Link>
                         )
                         : (
-                            <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
-                                <Link to="/">
+                            <Link to="/">
+                                <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
                                     Logout
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         )
                     }
                 </div>
 
             </div>
-           
+
         </div >
 
-        
+
     );
 };
 
