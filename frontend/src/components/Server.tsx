@@ -1,8 +1,12 @@
 import { Grid } from "@mui/material";
 import { CheckoutCart } from "./CheckoutCart";
 import { MenuItemsDisplay } from "./Menu";
+import Box from '@mui/material/Box';
+import { Tab, Tabs } from '@mui/material';
+import { useState } from "react";
+import { OrdersPage } from "./OrdersPage";
 
-export const Server = () => {
+export const POS = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={8}>
@@ -14,3 +18,21 @@ export const Server = () => {
     </Grid>
   );
 };
+
+
+
+export const Server = () => {
+  const [value, setValue] = useState(0);
+  return (
+    <>
+      <Box>
+        <Tabs value={value} onChange={(_, newValue) => setValue(newValue)}>
+          <Tab label="Point of Sale" />
+          <Tab label="Orders" />
+        </Tabs>
+      </Box>
+      <div hidden={value != 0}><POS /></div>
+      <div hidden={value != 1}><OrdersPage /></div>
+    </>
+  )
+}
