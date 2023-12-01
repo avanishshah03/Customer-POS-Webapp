@@ -18,6 +18,7 @@ const LandingPage: React.FC = () => {
 
     return (
         <div className="landing-page background-image">
+            <div id="google_translate_element" ></div>
             <div className="content">
 
                 <div style={{ gridColumn: 2, gridRow: 1 }}>
@@ -69,7 +70,10 @@ const LandingPage: React.FC = () => {
                 </div>
 
             </div>
+           
         </div >
+
+        
     );
 };
 
