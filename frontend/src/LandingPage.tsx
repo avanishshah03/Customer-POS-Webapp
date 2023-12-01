@@ -37,6 +37,7 @@ const LandingPage: React.FC = () => {
 
     return (
         <div className="landing-page background-image">
+            <div id="google_translate_element" ></div>
             <div className="content" style={{ display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
 
                 <iframe
@@ -77,7 +78,19 @@ const LandingPage: React.FC = () => {
                 }
 
             </div>
+            <script src="script.js"></script>
+      <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {pageLanguage: 'en'},
+                'google_translate_element'
+            );
+        } 
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
         </div>
+
+        
     );
 };
 
