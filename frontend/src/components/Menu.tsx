@@ -58,7 +58,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string,
                       addtoCart(menuItem.id);
                     }}
                   >
-                    <Paper
+                    <div style={{display: 'flex', flexDirection: 'column'}}><Paper
                       elevation={3}
                       style={{
                         padding: "30px",
@@ -75,22 +75,19 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string,
                           style={{ height: "100px", width: "100px" }}
                         ></div>
                       )}
-                      <Typography variant="h6" style={{color: 'black',
-                                                      backgroundColor: 'white'}}>
+                    </Paper>
+                    <Typography variant="h6" style={{color: 'white',
+                                                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                                      height: '100px',
+                                                      width: '200px',
+                                              
+                                                      borderRadius: '5px',}}
+                                                      >
 
                         {menuItem.name} ${menuItem.price.toFixed(2)}
-                        {/* {props.fontSize === "small" ?
-                            <Box style={{ backgroundColor: "white", width: "100px", height: "50px", fontSize: "12px" }}>
-                              {menuItem.name} ${menuItem.price.toFixed(2)}
-                            </Box>
-                            :
-                            <Box style={{ backgroundColor: "white" }}>
-                              {menuItem.name} ${menuItem.price.toFixed(2)}
-                            </Box>
-                          } */}
                           
-                      </Typography>
-                    </Paper>
+                      </Typography></div>
+                    
                   </Button>
                 </Grid>
               ))}
