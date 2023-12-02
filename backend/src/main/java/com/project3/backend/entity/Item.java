@@ -1,20 +1,40 @@
 package com.project3.backend.entity;
 
-import java.util.*;
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Transient;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import lombok.Data;
 
 /**
  * This class is an identical replication of the items table in the DB.
  * @author David Zhao
  */
+@Entity
 @Data
 public class Item {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "item_id_seq")
+    @SequenceGenerator(name = "item_id_seq", sequenceName = "item_id_seq", allocationSize = 1)
     private int id;
     private int categoryId;
     private String name;
@@ -25,12 +45,12 @@ public class Item {
     private boolean extraSauce;
     private String imageUrl;
     @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Map<Integer, Integer> ingredients; // ingredient id -> quantity
-
-    @Transient
-    private List<Integer> ingredientIds;
-    @Transient
-    private List<Integer> quantities;
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "ingredientId")
+    @JsonIgnore
+    private Set<ItemToIngredient> itemToIngredients;
     
     /**
      * Default constructor for the Item class.

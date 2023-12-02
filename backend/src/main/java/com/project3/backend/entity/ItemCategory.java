@@ -1,16 +1,20 @@
 package com.project3.backend.entity;
 
-import org.springframework.data.annotation.Id;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 /**
  * The `ItemCategory` class represents a category for items in a database.
  * It includes information such as the category's ID and name.
  */
+@Entity
 @Data
 public class ItemCategory {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     

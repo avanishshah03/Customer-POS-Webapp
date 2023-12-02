@@ -54,7 +54,8 @@ public class WebSecurityConfig {
 		.cors(cors->cors.configurationSource(corsConfigurationSource()))
 		.authorizeHttpRequests(auth ->
 			auth.requestMatchers("/menuItems", "/itemCategories").permitAll()
-			.requestMatchers("/orders", "/ingredients", "/itemToIngredient").hasAuthority("ROLE_manager")
+			.requestMatchers("/ingredients", "/itemToIngredient").hasAuthority("ROLE_manager")
+			.requestMatchers("/orders").hasAnyAuthority("ROLE_manager", "ROLE_server")
 			.anyRequest().authenticated()
 		)
 		.oauth2ResourceServer(oauth2 ->

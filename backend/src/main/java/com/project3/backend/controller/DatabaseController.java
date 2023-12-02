@@ -3,15 +3,15 @@ package com.project3.backend.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,10 +23,11 @@ import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemCategory;
 import com.project3.backend.entity.Order;
 import com.project3.backend.entity.User;
+import com.project3.backend.reports.IngredientUsageReport;
+import com.project3.backend.reports.SalesReport;
 import com.project3.backend.service.IngredientServiceImpl;
 import com.project3.backend.service.ItemCategoryServiceImpl;
 import com.project3.backend.service.ItemServiceImpl;
-import com.project3.backend.service.ItemToIngredientServiceImpl;
 import com.project3.backend.service.OrderServiceImpl;
 import com.project3.backend.service.UserServiceImpl;
 
@@ -36,8 +37,6 @@ public class DatabaseController {
     private ItemServiceImpl itemService;
     @Autowired
     private IngredientServiceImpl ingredientService;
-    @Autowired
-    private ItemToIngredientServiceImpl itemToIngredientService;
     @Autowired
     private ItemCategoryServiceImpl itemCategoryService;
     @Autowired
@@ -65,15 +64,15 @@ public class DatabaseController {
         return ingredientService.fetchIngredients();
     }
 
+    @GetMapping("/itemToIngredient")
+    public List<Ingredient> getIngredientsByItemId(@RequestParam int itemId) {
+        return ingredientService.fetchIngredientsByItemId(itemId);
+    }
+
     @PostMapping("/ingredients")
     public void saveIngredient(@RequestBody Ingredient ingredient) {
         System.out.println("Saving ingredient: " + ingredient.toString());
         ingredientService.saveIngredient(ingredient);
-    }
-
-    @DeleteMapping("/ingredients")
-    public void deleteIngredient(@RequestParam int id) {
-        ingredientService.deleteIngredient(id);
     }
 
     @PostMapping("/orders")
@@ -84,22 +83,42 @@ public class DatabaseController {
 
     @PostMapping("/menuItems")
     public void saveItem(@RequestBody Item item) {
-        //TODO: process POST request
         System.out.println("Saving item: " + item.toString());
         itemService.saveItem(item);
     }
 
-    @GetMapping("/itemToIngredient")
-    public List<Ingredient> getIngredientsByItemId(@RequestParam int itemId) {
-        return itemToIngredientService.fetchIngredientsByItemId(itemId);
+    @DeleteMapping("/menuItems")
+    public void deleteItem(@RequestParam int id) {
+        itemService.deleteItem(id);
+    }
+
+    @DeleteMapping("/ingredients")
+    public void deleteIngredient(@RequestParam int id) {
+        ingredientService.deleteIngredient(id);
+    }
+
+    @DeleteMapping("/orders")
+    public void deleteOrder(@RequestParam int id) {
+        orderService.deleteOrder(id);
+    }
+
+
+    @GetMapping("/salesReport")
+    public List<SalesReport> getSalesReport(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, 
+                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+        return itemService.salesReport(startDate, endDate);
+    }
+
+    @GetMapping("/ingredientUsageReport")
+    public List<IngredientUsageReport> getIngredientUsageReport(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, 
+                                                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+        return ingredientService.fetchIngredientUsageBetweenDates(startDate, endDate);
     }
 
     @PostMapping("/auth/register")
     public void registerUser(Authentication authentication) {
         JwtAuthenticationToken clientAuthentication = (JwtAuthenticationToken) authentication;
-        
     }
-        
 
     @GetMapping("/auth/login")
     public Map<String, String> getLoginInfo(Authentication authentication) {

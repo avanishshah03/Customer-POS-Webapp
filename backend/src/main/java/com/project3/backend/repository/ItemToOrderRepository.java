@@ -6,5 +6,6 @@ import com.project3.backend.entity.ItemToOrder;
 
 @Repository
 public interface ItemToOrderRepository extends CrudRepository<ItemToOrder, Integer> {
+    void deleteByOrderId(int id);
     
 }

@@ -1,15 +1,28 @@
 package com.project3.backend.entity;
 
-// import java.util.*;
-// import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import lombok.Data;
 
-import java.time.*;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Set;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Transient;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 
 /**
  * The `Order` class represents a customer order in an e-commerce system.
@@ -17,17 +30,18 @@ import org.springframework.data.annotation.Transient;
  * user ID,
  * as well as a list of ordered item IDs.
  */
+@Entity
 @Data
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "order_id_seq")
+    @SequenceGenerator(name = "order_id_seq", sequenceName = "order_id_seq", allocationSize = 1)
     private int id;
     private double price;
     private LocalDateTime time;
     private int userId;
     @Transient
-    private List<Integer> orderedItemIds;
-    @Transient
-    private List<Integer> quantities;
+    private Map<Integer, Integer> items; // item id -> quantity
 
     /**
      * Default constructor for creating an empty order.
@@ -37,6 +51,7 @@ public class Order {
         this.price = 0.0;
         this.time = LocalDateTime.now();
         this.userId = 0;
+        this.items = new HashMap<>();
     }
 
     /**
@@ -52,6 +67,7 @@ public class Order {
         this.price = price;
         this.time = time;
         this.userId = userId;
+        this.items = new HashMap<>();
     }
 
     // /**

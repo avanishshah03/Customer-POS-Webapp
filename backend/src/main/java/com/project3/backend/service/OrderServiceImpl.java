@@ -1,7 +1,7 @@
 package com.project3.backend.service;
 
-import java.util.stream.IntStream;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +27,21 @@ public class OrderServiceImpl implements OrderService{
     public void saveOrder(Order order)
     {
         Order savedOrder = orderRepository.save(order);
-        List<Integer> itemIds = order.getOrderedItemIds();
-        List<Integer> quantities = order.getQuantities();
-        List<ItemToOrder> itemsToOrder = IntStream.range(0, itemIds.size())
-        .mapToObj(i -> {
-            ItemToOrder itemToOrder = new ItemToOrder();
-            itemToOrder.setOrderId(savedOrder.getId());
-            itemToOrder.setItemId(itemIds.get(i));
-            itemToOrder.setQuantity(quantities.get(i));
-            return itemToOrder;
-        })
-        .collect(Collectors.toList());
+        List<ItemToOrder> itemsToOrder = savedOrder.getItems().entrySet().stream()
+            .map(entry -> {
+                ItemToOrder itemToOrder = new ItemToOrder();
+                itemToOrder.setOrderId(savedOrder.getId());
+                itemToOrder.setItemId(entry.getKey());
+                itemToOrder.setQuantity(entry.getValue());
+                return itemToOrder;
+            })
+            .collect(Collectors.toList());
         itemToOrderRepository.saveAll(itemsToOrder);
+    }
+
+    public void deleteOrder(int id)
+    {
+        orderRepository.deleteById(id);
+        itemToOrderRepository.deleteByOrderId(id);
     }
 }
