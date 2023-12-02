@@ -55,13 +55,14 @@ export const ManagerItems = () => {
                 padding: "20px",
                 margin: "10px",
                 backgroundColor: "#f3f3f3",
+                fontSize: "2.9em",
             }}
         >
             <ItemToAdd
                 open={isAddItemDialogOpen}
                 onClose={() => setAddItemDialogOpen(false)}
             />
-            <TextField variant="outlined" label="Search" onChange={(e) => setSearchText(e.target.value)} value={searchText} />
+            <TextField variant="outlined" label="Search" onChange={(e) => setSearchText(e.target.value)} value={searchText} margin="dense" />
             <Typography variant="h5" style={{ textAlign: "center" }}>
                 Items
             </Typography>
