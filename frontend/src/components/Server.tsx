@@ -10,7 +10,7 @@ export const POS = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={8}>
-        <MenuItemsDisplay showImage={false} fontSize={"small"} />
+        <MenuItemsDisplay showImage={false} fontSize={"small"} addPaddingToImage={false}/>
       </Grid>
       <Grid item xs={4}>
         <CheckoutCart />

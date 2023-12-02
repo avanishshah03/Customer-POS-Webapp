@@ -47,7 +47,7 @@ export default function App() {
           </Paper>
         </Grid>
         <Grid item xs={8}>
-          <MenuItemsDisplay showImage={true} backgroundColor={brown} />
+          <MenuItemsDisplay showImage={true} backgroundColor={brown} addPaddingToImage={true}/>
         </Grid>
         <Grid item xs={4}>
           <CheckoutCart backgroundColor={brown} />
