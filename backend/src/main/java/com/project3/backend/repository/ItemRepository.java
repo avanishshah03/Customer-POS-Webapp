@@ -16,7 +16,7 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
     @Query(value = "SELECT i.id, i.name AS itemName, COUNT(io.order_id) AS orderCount FROM \"item\" i " +
                    "LEFT JOIN \"item_to_order\" io ON i.id = io.item_id " + 
                    "LEFT JOIN \"order\" o ON io.order_id = o.id " + 
-                   "WHERE DATE(o.time) >= :startDate AND DATE(o.time) <= :endDate " +
+                   "WHERE o.time BETWEEN :startDate AND :endDate " +
                    "GROUP BY i.id, itemName " + 
                    "ORDER BY orderCount DESC", nativeQuery=true)
     List<SalesReport> findItemsWithOrderCount(@Param("startDate") LocalDateTime startDate, 
