@@ -3,6 +3,16 @@ import './LandingPage.css';
 import { AuthContext } from './Auth';
 import { Button } from '@mui/material';
 import { Link } from 'wouter';
+import Carousel from "./components/CarouselComponent";
+
+import image1 from "./components/assets/01.jpg";
+import image2 from "./components/assets/02.jpg";
+import image3 from "./components/assets/03.jpg";
+import image4 from "./components/assets/04.jpg";
+import image5 from "./components/assets/05.jpg";
+import image6 from "./components/assets/06.jpg";
+const imgs = [image1, image2, image3, image4, image5, image6];
+console.log(import.meta.env.VITE_REACT_APP_API_KEY);
 import { useEffect } from "react";
 
 
@@ -45,6 +55,7 @@ const LandingPage: React.FC = () => {
                     <h1>MESS WAFFLES</h1>
                     <h3>`Fall` in love with our Waffles.</h3>
                 </div>
+
                 <iframe
                     // width="450"
                     // height="250"
@@ -52,6 +63,10 @@ const LandingPage: React.FC = () => {
                     allowFullScreen
                     style={{ filter: 'brightness(0.8)', gridColumn: 1, gridRow: 2, width: "100%", height: "100%", borderRadius: '10px', margin: "1em" }}
                 ></iframe>
+                <div style={{ gridColumn: 2, gridRow: 3 }}>
+                    <Carousel slides={imgs} />
+                </div>
+
                 <div style={{ gridColumn: 2, gridRow: 2 }}>
                     <Link to="/customer">
                         <Button style={customButtonStyle} id="order-here" className="button-hover-effect">
@@ -63,11 +78,11 @@ const LandingPage: React.FC = () => {
                 <div style={{ gridColumn: 3, gridRow: 1, alignSelf: "start", justifySelf: "end", margin: '1.5em' }}>
                     {role !== "" ?
                         (
-                            <Button style={customButtonStyle} className="button-hover-effect">
-                                <Link to="/server">
+                            <Link to="/server">
+                                <Button style={customButtonStyle} className="button-hover-effect">
                                     Server page
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         )
                         : (<div></div>)
                     }
@@ -80,20 +95,20 @@ const LandingPage: React.FC = () => {
                             </Link>
                         )
                         : (
-                            <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
-                                <Link to="/">
+                            <Link to="/">
+                                <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
                                     Logout
-                                </Link>
-                            </Button>
+                                </Button>
+                            </Link>
                         )
                     }
                 </div>
 
             </div>
-           
+
         </div >
 
-        
+
     );
 };
 

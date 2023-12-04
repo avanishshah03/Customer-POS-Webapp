@@ -1,16 +1,34 @@
 package com.project3.backend.entity;
 
-import org.springframework.data.annotation.Id;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import lombok.Data;
+import java.util.Set;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * Represents an Ingredient used in the restaurant.
  */
+@Entity
 @Data
 public class Ingredient {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "ingredient_id_seq")
+    @SequenceGenerator(name = "ingredient_id_seq", sequenceName = "ingredient_id_seq", allocationSize = 1)
     private int id;
     private String name;
     private int stock;
@@ -19,6 +37,10 @@ public class Ingredient {
     private double price;
     private boolean glutenFree;
     private boolean vegan;
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "ingredientId")
+    @JsonIgnore
+    private Set<ItemToIngredient> itemToIngredients;
 
     /**
      * Default constructor for creating an Ingredient.

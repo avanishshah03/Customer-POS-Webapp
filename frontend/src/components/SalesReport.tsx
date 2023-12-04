@@ -15,7 +15,7 @@ const pageSize = 10;
 
 
 
-export const ManagerIngredients = () => {
+export const SalesReport = () => {
     const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
     const [page, setPage] = useState(1);
     const ingredients = useMenuStore(state => state.ingredients);
@@ -28,8 +28,7 @@ export const ManagerIngredients = () => {
     const changeIngredientGF = useMenuStore(state => state.changeIngredientGF);
     const changeIngredientVegan = useMenuStore(state => state.changeIngredientVegan);
     const deleteIngredient = useMenuStore(state => state.deleteIngredient);
-    const [searchText, setSearchText] = useState("");
-    const filteredIngredients = ingredients.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase()));
+
     const tableStyle = { width: '100%', };
     const cellStyle = { padding: '8px', };
 
@@ -48,13 +47,10 @@ export const ManagerIngredients = () => {
             padding: '20px',
             margin: '10px',
             backgroundColor: '#f3f3f3',
-            fontSize: "2.9em",
         }}>
             <IngredientToAdd open={isAddItemDialogOpen} onClose={() => setAddItemDialogOpen(false)} />
-            <TextField variant="outlined" label="Search" onChange={(e) => setSearchText(e.target.value)} value={searchText} margin="dense" />
             <Typography variant="h5" style={{ textAlign: 'center' }}>Ingredients</Typography>
-            <Pagination count={Math.ceil(filteredIngredients.length / pageSize)} onChange={(e, v) => setPage(v)} />
-            {/* <Pagination count={Math.ceil(ingredients.length / pageSize)} onChange={(e, v) => setPage(v)} /> */}
+            <Pagination count={Math.ceil(ingredients.length / pageSize)} onChange={(e, v) => setPage(v)} />
             <TableContainer>
                 <Table style={tableStyle}>
                     <TableHead>
@@ -88,7 +84,7 @@ export const ManagerIngredients = () => {
                     </TableHead>
                     <TableBody>
 
-                        {paginate(filteredIngredients, pageSize, page).map((Ingredients, itemIndex) => (
+                        {paginate(ingredients, pageSize, page).map((Ingredients, itemIndex) => (
                             <TableRow key={itemIndex}>
                                 <TableCell style={cellStyle} >
                                     {Ingredients.id}

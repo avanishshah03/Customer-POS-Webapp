@@ -9,5 +9,6 @@ import com.project3.backend.entity.ItemToIngredient;
 @Repository
 public interface ItemToIngredientRepository extends CrudRepository<ItemToIngredient, Integer>{
     List<ItemToIngredient> findByItemId(int itemId);
+    void deleteByItemId(int id);
 
 }

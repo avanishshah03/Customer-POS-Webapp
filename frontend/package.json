@@ -16,11 +16,13 @@
     "@mui/material": "^5.14.15",
     "@react-oauth/google": "^0.11.1",
     "@types/google-translate-api": "^2.3.5",
+    "@types/swiper": "^6.0.0",
     "axios": "^1.6.2",
     "dotenv": "^16.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.18.0",
+    "swiper": "^11.0.5",
     "wouter": "^2.12.1",
     "zustand": "^4.4.4"
   },

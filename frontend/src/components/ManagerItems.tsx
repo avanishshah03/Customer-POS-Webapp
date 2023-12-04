@@ -41,6 +41,10 @@ export const ManagerItems = () => {
     const changeItemName = useMenuStore((state) => state.changeItemName);
     const deleteMenuItem = useMenuStore((state) => state.deleteMenuItem);
 
+    const [searchText, setSearchText] = useState("");
+    const filteredMenuItems = menuitems.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase()));
+
+
     const tableStyle = { width: "100%", };
     const cellStyle = { padding: "8px", };
 
@@ -51,48 +55,53 @@ export const ManagerItems = () => {
                 padding: "20px",
                 margin: "10px",
                 backgroundColor: "#f3f3f3",
+                fontSize: "2.9em",
             }}
         >
             <ItemToAdd
                 open={isAddItemDialogOpen}
                 onClose={() => setAddItemDialogOpen(false)}
             />
+            <TextField variant="outlined" label="Search" onChange={(e) => setSearchText(e.target.value)} value={searchText} margin="dense" />
             <Typography variant="h5" style={{ textAlign: "center" }}>
                 Items
             </Typography>
-            <Pagination count={Math.ceil(menuitems.length / pageSize)} onChange={(e, v) => setPage(v)} />
+            <Pagination count={Math.ceil(filteredMenuItems.length / pageSize)} onChange={(e, v) => setPage(v)} />
             <TableContainer>
                 <Table style={tableStyle}>
                     <TableHead>
                         <TableRow>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">{"ID"}</Typography>
+                                <Typography variant="h6">ID</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">{"Names"}</Typography>
+                                <Typography variant="h6">Names</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">{"Price"}</Typography>
+                                <Typography variant="h6">Price</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">{"Gluten Free"}</Typography>
+                                <Typography variant="h6">Ingredients</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">{"Vegan"}</Typography>
+                                <Typography variant="h6">Gluten Free</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">{"Size"}</Typography>
+                                <Typography variant="h6">Vegan</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">{"Extra Sauce"}</Typography>
+                                <Typography variant="h6">Size</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">{"Delete Item"}</Typography>
+                                <Typography variant="h6">Extra Sauce</Typography>
+                            </TableCell>
+                            <TableCell style={cellStyle}>
+                                <Typography variant="h6">Delete Item</Typography>
                             </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {paginate(menuitems, pageSize, page).map((menuItem, itemIndex) => (
+                        {paginate(filteredMenuItems, pageSize, page).map((menuItem, itemIndex) => (
                             <TableRow key={itemIndex}>
                                 <TableCell style={cellStyle}>{menuItem.id}</TableCell>
                                 <TableCell style={cellStyle}>
@@ -114,6 +123,9 @@ export const ManagerItems = () => {
                                             changeItemPrice(menuItem.id, e.target.value as any)
                                         }
                                     />
+                                </TableCell>
+                                <TableCell style={cellStyle}>
+                                    <EditItemIngredients menuItem={menuItem} />
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <Checkbox

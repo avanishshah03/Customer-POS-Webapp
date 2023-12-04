@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useMenuStore } from "../store";
 
 
-export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string, backgroundColor?: string }) => {
+export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string, backgroundColor?: string, addPaddingToImage: boolean }) => {
   const menuItems = useMenuStore((state) => state.menuItems);
   const addtoCart = useMenuStore((state) => state.addCartEntry);
   const [tabValue, setTabValue] = useState(2);
@@ -63,7 +63,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string,
                       <div style={{ display: 'flex', flexDirection: 'column' }}><Paper
                         elevation={3}
                         style={{
-                          padding: "30px",
+                          padding: props.addPaddingToImage ? "30px" : "0px",
                           height: "100%",
                           textAlign: "center",
                           backgroundImage: props.showImage
