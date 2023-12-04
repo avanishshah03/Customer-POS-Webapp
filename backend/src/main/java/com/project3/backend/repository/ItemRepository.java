@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.project3.backend.entity.Item;
+import com.project3.backend.reports.OrderedTogetherReport;
 import com.project3.backend.reports.SalesReport;
 
 @Repository
@@ -53,4 +54,26 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
                     "WHERE rn = 1 AND total_sold = 0", nativeQuery = true)
     List<Item> findExcessItems(@Param("chosen_timestamp") LocalDateTime chosenTimestamp, 
                                @Param("current_timestamp") LocalDateTime currentTimestamp);
+
+    @Query(value = "WITH FilteredOrders AS (" +
+					"SELECT o.id AS order_id, io1.item_id AS item1_id, io2.item_id AS item2_id " +
+					"FROM \"order\" o " +
+					"JOIN item_to_order io1 ON o.id = io1.order_id " +
+					"JOIN item_to_order io2 ON o.id = io2.order_id " +
+					"JOIN item i1 ON io1.item_id = i1.id " +
+					"JOIN item i2 ON io2.item_id = i2.id " +
+					"WHERE o.time BETWEEN :startDate AND :endDate " +
+					"AND io1.item_id < io2.item_id " +
+					"AND i1.name < i2.name " +
+				") " +
+				
+				"SELECT i1.name AS item1Name, i2.name AS item2Name, COALESCE(COUNT(*), 0) AS pairCount " +
+				"FROM FilteredOrders " +
+				"JOIN item i1 ON FilteredOrders.item1_id = i1.id " +
+				"JOIN item i2 ON FilteredOrders.item2_id = i2.id " +
+				"GROUP BY i1.name, i2.name " +
+				"ORDER BY pairCount DESC", nativeQuery = true)
+                        
+    List<OrderedTogetherReport> findItemsOrderedTogether(@Param("startDate") LocalDateTime startDate, 
+                                                         @Param("endDate") LocalDateTime endDate);
 }

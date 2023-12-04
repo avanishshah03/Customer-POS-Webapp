@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project3.backend.entity.Ingredient;
 import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemToIngredient;
+import com.project3.backend.reports.OrderedTogetherReport;
 import com.project3.backend.reports.SalesReport;
 import com.project3.backend.repository.ItemRepository;
 import com.project3.backend.repository.ItemToIngredientRepository;
@@ -64,5 +65,10 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> excessItems(LocalDateTime startDate, LocalDateTime endDate)
     {
         return itemRepository.findExcessItems(startDate, endDate);
+    }
+
+    public List<OrderedTogetherReport> fetchItemsOrderedTogether(LocalDateTime startDate, LocalDateTime endDate)
+    {
+        return itemRepository.findItemsOrderedTogether(startDate, endDate);
     }
 }
