@@ -42,14 +42,14 @@ function Carousel({ slides }: Props) {
         >
             {slides.map((slide, index) => (
                 <SwiperSlide key={index} className="slide-inner">
-                    <img src={slide} alt="" />
+                    <img className={"Carousel"} src={slide} alt="" />
                 </SwiperSlide>
             ))}
             <div className="button-prev">
-                <img src={arrowLeft} alt="Left" />
+                <img className={"Carousel"} src={arrowLeft} alt="Left" />
             </div>
             <div className="button-next">
-                <img src={arrowRight} alt="Right" />
+                <img className={"Carousel"} src={arrowRight} alt="Right" />
             </div>
         </Swiper>
     );
