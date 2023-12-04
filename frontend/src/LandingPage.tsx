@@ -42,17 +42,12 @@ export const LandingPage: React.FC = () => {
 
     return (
         <div className="landing-page background-image" >
-            
-            <div className="content" id="google_translate_element" >
-
+            <div className="content" id="google_translate_element">
                 <div style={{ gridColumn: 2, gridRow: 1 }}>
-                    <h1>MESS WAFFLES</h1>
+                    <h1 className="notranslate">MESS WAFFLES</h1>
                     <h3>`Fall` in love with our Waffles.</h3>
                 </div>
-
                 <iframe
-                    // width="450"
-                    // height="250"
                     src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_REACT_APP_API_KEY}&q=Mess+Waffles,College+Station,TX`}
                     allowFullScreen
                     style={{ filter: 'brightness(0.8)', gridColumn: 1, gridRow: 2, width: "100%", height: "100%", borderRadius: '10px', margin: "1em" }}
@@ -60,7 +55,6 @@ export const LandingPage: React.FC = () => {
                 <div style={{ gridColumn: 2, gridRow: 3 }}>
                     <Carousel slides={imgs} />
                 </div>
-
                 <div style={{ gridColumn: 2, gridRow: 2 }}>
                     <Link to="/customer">
                         <Button style={customButtonStyle} id="order-here" className="button-hover-effect">
@@ -68,7 +62,6 @@ export const LandingPage: React.FC = () => {
                         </Button>
                     </Link>
                 </div>
-
                 <div style={{ gridColumn: 3, gridRow: 1, alignSelf: "start", justifySelf: "end", margin: '1.5em' }}>
                     {(role === "ROLE_manager" || role === "ROLE_server") ?
                         (
@@ -106,12 +99,8 @@ export const LandingPage: React.FC = () => {
                         )
                     }
                 </div>
-
             </div>
-
         </div >
-
-
     );
 };
 

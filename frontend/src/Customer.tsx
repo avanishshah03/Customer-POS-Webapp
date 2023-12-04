@@ -42,12 +42,12 @@ export default function Customer() {
           <Paper style={{ ...paperStyle, display: "flex" }}>
             <Weather />
             <div style={{ margin: "auto", color: orange }}>
-              <Typography variant="h4">Mess Waffles</Typography>
+              <Typography variant="h4" className="notranslate">Mess Waffles</Typography>
             </div>
           </Paper>
         </Grid>
         <Grid item xs={8}>
-          <MenuItemsDisplay showImage={true} backgroundColor={brown} addPaddingToImage={true}/>
+          <MenuItemsDisplay showImage={true} backgroundColor={brown} addPaddingToImage={true} />
         </Grid>
         <Grid item xs={4}>
           <CheckoutCart backgroundColor={brown} />
