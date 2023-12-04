@@ -24,6 +24,7 @@ import com.project3.backend.entity.ItemCategory;
 import com.project3.backend.entity.Order;
 import com.project3.backend.entity.User;
 import com.project3.backend.reports.IngredientUsageReport;
+import com.project3.backend.reports.RestockReport;
 import com.project3.backend.reports.SalesReport;
 import com.project3.backend.service.IngredientServiceImpl;
 import com.project3.backend.service.ItemCategoryServiceImpl;
@@ -113,6 +114,17 @@ public class DatabaseController {
     public List<IngredientUsageReport> getIngredientUsageReport(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, 
                                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
         return ingredientService.fetchIngredientUsageBetweenDates(startDate, endDate);
+    }
+
+    @GetMapping("/excessItems")
+    public List<Item> getExcessItems(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate, 
+                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+        return itemService.excessItems(startDate, endDate);
+    }
+
+    @GetMapping("/restockReport")
+    public List<RestockReport> getRestockReport() {
+        return ingredientService.fetchStockLessThanRestock();
     }
 
     @PostMapping("/auth/register")

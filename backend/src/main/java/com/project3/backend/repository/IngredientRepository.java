@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project3.backend.entity.Ingredient;
 import com.project3.backend.reports.IngredientUsageReport;
+import com.project3.backend.reports.RestockReport;
 
 @Repository
 public interface IngredientRepository extends CrudRepository <Ingredient, Integer> {
@@ -25,4 +26,7 @@ public interface IngredientRepository extends CrudRepository <Ingredient, Intege
                    "ORDER BY i.name", nativeQuery = true)
     List<IngredientUsageReport> findIngredientUsageBetweenDates(@Param("startDate") LocalDateTime startDate, 
                                                                 @Param("endDate") LocalDateTime endDate);
+
+    @Query(value = "SELECT new com.project3.backend.entity.Ingredient(i.id, i.name, i.stock, i.restock, i.amountOrdered, i.price, i.glutenFree, i.vegan) AS ingredient, (i.restock - i.stock) AS restockAmount FROM Ingredient AS i WHERE i.stock < i.restock")
+    List<RestockReport> findStockLessThanRestock();
 }

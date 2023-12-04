@@ -10,5 +10,5 @@ public interface ItemService {
     void saveItem(Item item);
     void deleteItem(int id);
     public List<SalesReport> salesReport(LocalDateTime startDate, LocalDateTime endDate);
-
+    public List<Item> excessItems(LocalDateTime startDate, LocalDateTime endDate);
 }

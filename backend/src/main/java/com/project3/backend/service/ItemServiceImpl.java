@@ -60,4 +60,9 @@ public class ItemServiceImpl implements ItemService {
     {
         return itemRepository.findItemsWithOrderCount(startDate, endDate);
     }
+
+    public List<Item> excessItems(LocalDateTime startDate, LocalDateTime endDate)
+    {
+        return itemRepository.findExcessItems(startDate, endDate);
+    }
 }

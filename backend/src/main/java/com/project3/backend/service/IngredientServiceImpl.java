@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project3.backend.entity.Ingredient;
 import com.project3.backend.reports.IngredientUsageReport;
+import com.project3.backend.reports.RestockReport;
 import com.project3.backend.repository.IngredientRepository;
 import com.project3.backend.repository.ItemToIngredientRepository;
 
@@ -46,5 +47,10 @@ public class IngredientServiceImpl {
     public List<IngredientUsageReport> fetchIngredientUsageBetweenDates(LocalDateTime startDate, LocalDateTime endDate)
     {
         return ingredientRepository.findIngredientUsageBetweenDates(startDate, endDate);
+    }
+
+    public List<RestockReport> fetchStockLessThanRestock()
+    {
+        return ingredientRepository.findStockLessThanRestock();
     }
 }
