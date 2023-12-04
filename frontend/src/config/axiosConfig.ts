@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { serverUrl } from './constant';
+import { useNavigate } from 'react-router-dom';
 
 const fetchClient = () => {
     const defaultOptions = {
@@ -23,3 +24,28 @@ const fetchClient = () => {
 };
 
 export default fetchClient();
+
+export const handleErrors = (error: any) => {
+    if (error.response) {
+        // Request made and server responded
+        // User is not authorized
+        if (error.response.status == 403) {
+            const navigate = useNavigate();
+            navigate('/unauthorized');
+        }
+        // User is not authenticated
+        if (error.response.status == 401 && localStorage.getItem('IdToken') != null) {
+            localStorage.removeItem('IdToken');
+        }
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+    } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+    } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+    }
+    console.log(error.config);
+}

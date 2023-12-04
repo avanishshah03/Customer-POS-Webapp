@@ -24,7 +24,7 @@ const theme = createTheme({
   }
 });
 
-export default function App() {
+export default function Customer() {
   const paperStyle = {
     padding: "20px",
     margin: "20px",
