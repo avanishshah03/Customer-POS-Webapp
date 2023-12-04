@@ -3,9 +3,8 @@ import './LandingPage.css';
 import { AuthContext } from './Auth';
 import { Button } from '@mui/material';
 import { Link } from 'wouter';
+import { useEffect } from "react";
 
-
-console.log(import.meta.env.VITE_REACT_APP_API_KEY);
 
 const LandingPage: React.FC = () => {
     const customButtonStyle = {
@@ -18,10 +17,29 @@ const LandingPage: React.FC = () => {
 
     }
 
+    const googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            autoDisplay: false
+          },
+          "google_translate_element"
+        );
+      };
+      useEffect(() => {
+        var addScript = document.createElement("script");
+        addScript.setAttribute(
+          "src",
+          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        );
+        document.body.appendChild(addScript);
+        window.googleTranslateElementInit = googleTranslateElementInit;
+      }, []);
+
     return (
-        <div className="landing-page background-image">
-            <div id="google_translate_element" ></div>
-            <div className="content">
+        <div className="landing-page background-image" >
+            
+            <div className="content" id="google_translate_element" >
 
                 <div style={{ gridColumn: 2, gridRow: 1 }}>
                     <h1>MESS WAFFLES</h1>
