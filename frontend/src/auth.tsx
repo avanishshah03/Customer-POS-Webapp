@@ -22,7 +22,6 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const checkLoginState = useCallback(async () => {
         try {
             const { data: { user, role } } = await axios.get(`/auth/login`, { headers: { Authorization: `Bearer ${IdToken}` } });
-            localStorage.setItem('role', role);
             role && setRole(role);
             user && setUser(user);
             axios.defaults.headers.common['Authorization'] = `Bearer ${IdToken}`
@@ -47,12 +46,11 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
 export const LoginButton = () => {
     const navigate = useNavigate();
-    const { checkLoginState } = useContext(AuthContext);
+    const { role, checkLoginState } = useContext(AuthContext);
     const login = async (response: CredentialResponse) => {
         const IdToken = response.credential ?? '';
         localStorage.setItem('IdToken', IdToken);
         await checkLoginState();
-        const role = localStorage.getItem('role');
         console.log(role);
 
         if (role === "ROLE_manager") {

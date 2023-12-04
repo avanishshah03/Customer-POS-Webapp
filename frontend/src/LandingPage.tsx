@@ -20,7 +20,7 @@ const LandingPage: React.FC = () => {
     };
     const { role } = useContext(AuthContext);
     const logout = () => {
-        localStorage.clear();
+        localStorage.removeItem('IdToken');
         document.location.reload();
 
     }
@@ -55,11 +55,21 @@ const LandingPage: React.FC = () => {
                 </div>
 
                 <div style={{ gridColumn: 3, gridRow: 1, alignSelf: "start", justifySelf: "end", margin: '1.5em' }}>
-                    {role !== "" ?
+                    {role === "ROLE_manager" || "ROLE_server" ?
                         (
                             <Link to="/server">
                                 <Button style={customButtonStyle} className="button-hover-effect">
                                     Server page
+                                </Button>
+                            </Link>
+                        )
+                        : (<div></div>)
+                    }
+                    {role === "ROLE_manager" ?
+                        
+                        (   <Link to="/manager">
+                                <Button style={customButtonStyle} className="button-hover-effect">
+                                    Manager page
                                 </Button>
                             </Link>
                         )

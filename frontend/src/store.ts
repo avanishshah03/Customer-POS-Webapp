@@ -70,23 +70,26 @@ interface Store {
     ingredients: Ingredient[];
 }
 
+const handleErrors = (error: any) => {
+    console.log(error);
+    if (error.response.status == 401 && localStorage.getItem('IdToken') != null) {
+        localStorage.removeItem('IdToken');
+    }
+    return [];
+    
+}
+
 let menuItemsResponse:Promise<MenuItem[]> = axios.get("/menuItems").then((res) => {
     return res.data;
 }).then((data) => {
     return data;
-}, (error) => {
-    console.log(error);
-    return [];
-});
+}, handleErrors);
 let menuItems: MenuItem[] = await menuItemsResponse;
 let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get("/itemCategories").then((res) => {
     return res.data;
 }).then((data) => {
     return data;
-}, (error) => {
-    console.log(error);
-    return [];
-});
+}, handleErrors);
 let itemCategories: ItemCategory[] = await itemCategoriesPromise;
 export const useMenuStore = create<Store>((set) => ({
     cart: [],
