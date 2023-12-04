@@ -1,14 +1,14 @@
-import { StrictMode } from 'react';
-import ReactDOM from 'react-dom/client'
-import { AuthContextProvider } from './Auth.tsx'
-import App from './Customer.tsx'
-import SignIn from './LoginPage.tsx'
-import LandingPage from './LandingPage.tsx'
-import { Route } from 'wouter';
-import { Server } from './components/Server.tsx'
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { StrictMode } from 'react';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { Route } from 'wouter';
+import { AuthContextProvider } from './Auth.tsx';
+import App from './Customer.tsx';
+import LandingPage from './LandingPage.tsx';
+import SignIn from './LoginPage.tsx';
 import { Manager } from './Manager.tsx';
+import { Server } from './components/Server.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
