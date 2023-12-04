@@ -1,7 +1,7 @@
 import { MenuItem } from "@mui/material";
 import { create } from "zustand";
 import { serverUrl } from './config/constant';
-import axios from './config/axiosConfig';
+import axios, { handleErrors } from './config/axiosConfig';
 
 interface CartEntry {
     itemId: number;
@@ -27,7 +27,10 @@ export interface ItemCategory {
 
 export interface Order {
     id: number;
-    name: string;
+    price: number;
+    time: string;
+    userId: number;
+    items: Map<number, number>;
 }
 
 export interface Ingredient {
@@ -70,26 +73,9 @@ interface Store {
     ingredients: Ingredient[];
 }
 
-const handleErrors = (error: any) => {
-    console.log(error);
-    if (error.response.status == 401 && localStorage.getItem('IdToken') != null) {
-        localStorage.removeItem('IdToken');
-    }
-    return [];
-    
-}
-
-let menuItemsResponse:Promise<MenuItem[]> = axios.get("/menuItems").then((res) => {
-    return res.data;
-}).then((data) => {
-    return data;
-}, handleErrors);
+let menuItemsResponse:Promise<MenuItem[]> = axios.get("/menuItems").then((res) => res.data, handleErrors);
 let menuItems: MenuItem[] = await menuItemsResponse;
-let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get("/itemCategories").then((res) => {
-    return res.data;
-}).then((data) => {
-    return data;
-}, handleErrors);
+let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get("/itemCategories").then((res) => res.data, handleErrors);
 let itemCategories: ItemCategory[] = await itemCategoriesPromise;
 export const useMenuStore = create<Store>((set) => ({
     cart: [],
@@ -110,25 +96,26 @@ export const useMenuStore = create<Store>((set) => ({
     checkout: () => {
         set((state) => {
             // FIXME
-            fetch(serverUrl + "/orders", {
-                method: "POST",
-                body: JSON.stringify({
-                    price: state.cart.reduce((acc, entry) => {
-                        const item = state.menuItems.find(
-                            (item) => item.id === entry.itemId
-                        );
-                        if (item) {
-                            return acc + item.price * entry.quantity;
-                        } else {
-                            return acc;
-                        }
-                    }, 0),
-                    time: new Date().toISOString(),
-                    userId: 0, // TODO: SETUP USER SYSTEM, IF IT IS JUST THE CUSTOMER THEN IT IS 0
-                    orderedItemIds: state.cart.map((entry) => entry.itemId),
-                    quantities: state.cart.map((entry) => entry.quantity),
-                }),
-            });
+            axios.post("/orders", {
+                price: state.cart.reduce((acc, entry) => {
+                    const item = state.menuItems.find(
+                        (item) => item.id === entry.itemId
+                    );
+                    if (item) {
+                        return acc + item.price * entry.quantity;
+                    } else {
+                        return acc;
+                    }
+                }, 0),
+                time: new Date().toISOString(),
+                userId: 0, // TODO: SETUP USER SYSTEM, IF IT IS JUST THE CUSTOMER THEN IT IS 0
+                items: state.cart.map((entry) => ({
+                    itemId: entry.itemId,
+                    quantity: entry.quantity,
+                })),
+            }).then((res) => {
+                console.log(res);
+            }, handleErrors);
             return {
                 cart: [],
             };

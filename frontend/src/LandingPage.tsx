@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import './LandingPage.css';
 import { AuthContext } from './Auth';
 import { Button } from '@mui/material';
-import { Link } from 'wouter';
 import Carousel from "./components/CarouselComponent";
 
 import image1 from "./components/assets/01.jpg";
@@ -13,17 +12,33 @@ import image5 from "./components/assets/05.jpg";
 import image6 from "./components/assets/06.jpg";
 const imgs = [image1, image2, image3, image4, image5, image6];
 console.log(import.meta.env.VITE_REACT_APP_API_KEY);
+import { useEffect } from "react";
+import { Link } from 'react-router-dom';
 
-const LandingPage: React.FC = () => {
+
+export const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
     };
-    const { role } = useContext(AuthContext);
-    const logout = () => {
-        localStorage.removeItem('IdToken');
-        document.location.reload();
-
-    }
+    const { role, signOut } = useContext(AuthContext);
+    const googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            autoDisplay: false
+          },
+          "google_translate_element"
+        );
+      };
+      useEffect(() => {
+        var addScript = document.createElement("script");
+        addScript.setAttribute(
+          "src",
+          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        );
+        document.body.appendChild(addScript);
+        window.googleTranslateElementInit = googleTranslateElementInit;
+      }, []);
 
     return (
         <div className="landing-page background-image" >
@@ -48,7 +63,7 @@ const LandingPage: React.FC = () => {
                     </Link>
                 </div>
                 <div style={{ gridColumn: 3, gridRow: 1, alignSelf: "start", justifySelf: "end", margin: '1.5em' }}>
-                    {role === "ROLE_manager" || "ROLE_server" ?
+                    {(role === "ROLE_manager" || role === "ROLE_server") ?
                         (
                             <Link to="/server">
                                 <Button style={customButtonStyle} className="button-hover-effect">
@@ -59,12 +74,11 @@ const LandingPage: React.FC = () => {
                         : (<div></div>)
                     }
                     {role === "ROLE_manager" ?
-
-                        (<Link to="/manager">
-                            <Button style={customButtonStyle} className="button-hover-effect">
-                                Manager page
-                            </Button>
-                        </Link>
+                        (   <Link to="/manager">
+                                <Button style={customButtonStyle} className="button-hover-effect">
+                                    Manager page
+                                </Button>
+                            </Link>
                         )
                         : (<div></div>)
                     }
@@ -78,7 +92,7 @@ const LandingPage: React.FC = () => {
                         )
                         : (
                             <Link to="/">
-                                <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={logout}>
+                                <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={signOut}>
                                     Logout
                                 </Button>
                             </Link>

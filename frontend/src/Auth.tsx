@@ -7,12 +7,14 @@ axios.defaults.withCredentials = true;
 
 type AuthContextType = {
     role: string;
-    checkLoginState: () => Promise<void>;
     user: string;
+    checkLoginState: () => Promise<void>;
+    signOut: () => Promise<void>;
 };
 
-export const AuthContext = createContext<AuthContextType>({ role: "", checkLoginState: async () => { }, user: "" });
+export const AuthContext = createContext<AuthContextType>({ role: "", user: "", checkLoginState: async () => { }, signOut: async () => { } });
 
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const [role, setRole] = useState<string>('');
@@ -33,12 +35,26 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
+    const signOut = useCallback(async () => {
+        try {
+            setRole('');
+            setUser('');
+            localStorage.removeItem('IdToken');
+        } catch (err) {
+            console.error(err);
+        }
+    }, []);
+
     useEffect(() => {
         checkLoginState();
     }, [checkLoginState]);
+    
+    useEffect(() => {
+        signOut();
+    }, [signOut]);
 
     return (
-        <AuthContext.Provider value={{ role, checkLoginState, user }}>
+        <AuthContext.Provider value={{ role, user, checkLoginState, signOut}}>
             {children}
         </AuthContext.Provider>
     );
@@ -69,6 +85,4 @@ export const LoginButton = () => {
     return (
         <GoogleLogin onSuccess={login} onError={errorMessage} />
     );
-
-
 }
