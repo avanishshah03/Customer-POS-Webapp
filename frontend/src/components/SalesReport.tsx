@@ -33,9 +33,8 @@ export const SalesReport = () => {
     const cellStyle = { padding: '8px', };
 
     useEffect(() => {
-        axios.get("/ingredients").then((res) => {
-            return res.data;
-        }).then((data) => {
+        axios.get("/ingredients").then((res) => res.data)
+        .then((data) => {
             setIngredients(data)
         }, (error) => {
             console.log(error);

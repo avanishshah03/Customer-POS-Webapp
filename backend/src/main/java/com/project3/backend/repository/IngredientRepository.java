@@ -14,8 +14,8 @@ import com.project3.backend.reports.RestockReport;
 
 @Repository
 public interface IngredientRepository extends CrudRepository <Ingredient, Integer> {
-
     List<Ingredient> findByItemToIngredients_itemId(int itemId);
+    
     @Query(value = "SELECT i.name AS ingredientName, SUM(iti.quantity) AS amountUsed " +
                    "FROM \"order\" O " +
                    "JOIN \"item_to_order\" ito ON ito.order_id = O.id " +

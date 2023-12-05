@@ -19,6 +19,7 @@ import { ItemToAdd } from "./ItemToAdd";
 import { EditItemIngredients } from "./EditItemIngredients";
 import { useState } from "react";
 import { DeleteConfirmItems } from "./DeleteConfirmItems";
+import { EditImage } from "./EditImage";
 
 // https://stackoverflow.com/questions/42761068/paginate-javascript-array
 function paginate<T>(array: T[], pageSize: number, pageNumber: number): T[] {
@@ -98,6 +99,9 @@ export const ManagerItems = () => {
                             <TableCell style={cellStyle}>
                                 <Typography variant="h6">Delete Item</Typography>
                             </TableCell>
+                            <TableCell style={cellStyle}>
+                                <Typography variant="h6">Image</Typography>
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -174,6 +178,12 @@ export const ManagerItems = () => {
                                         onClose={() => setAddItemDialogOpen(false)}
                                     />
                                 </TableCell>
+                                <TableCell style={cellStyle}>
+                                    {/* <img>menuitem.imageUrl</img> */}
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <EditImage menuItem={menuItem} />
+                                    </div>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -181,4 +191,4 @@ export const ManagerItems = () => {
             </TableContainer>
         </Paper>
     );
-};
+}

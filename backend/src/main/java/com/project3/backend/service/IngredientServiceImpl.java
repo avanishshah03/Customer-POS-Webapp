@@ -13,7 +13,7 @@ import com.project3.backend.repository.IngredientRepository;
 import com.project3.backend.repository.ItemToIngredientRepository;
 
 @Service
-public class IngredientServiceImpl {
+public class IngredientServiceImpl implements IngredientService{
     @Autowired
     private IngredientRepository ingredientRepository;
     @Autowired
@@ -29,9 +29,9 @@ public class IngredientServiceImpl {
         return (List<Ingredient>) ingredientRepository.findAllById(ids);
     }
 
-    public void saveIngredient(Ingredient ingredient)
+    public Ingredient saveIngredient(Ingredient ingredient)
     {
-        ingredientRepository.save(ingredient);
+        return ingredientRepository.save(ingredient);
     }
 
     public void deleteIngredient(int id)

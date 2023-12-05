@@ -1,5 +1,5 @@
 import { useAuth } from "../Auth";
-import { FC, ReactNode } from "react";
+import { FC, PropsWithChildren, ReactNode } from "react";
 import { Unauthorized } from "../Unauthorized";
 
 type ProtectedRouteProps = {
@@ -7,7 +7,7 @@ type ProtectedRouteProps = {
     auths: string[];
 };
 
-export const ProtectedRoute: FC<ProtectedRouteProps> = ({ element, auths }) => {
+export const ProtectedRoute: FC<PropsWithChildren<ProtectedRouteProps>> = ({ element, auths }) => {
     const { role } = useAuth();
     if (!auths.includes(role)) {
         // user is not authenticated

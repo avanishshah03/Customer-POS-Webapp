@@ -24,6 +24,7 @@ import com.project3.backend.entity.ItemCategory;
 import com.project3.backend.entity.Order;
 import com.project3.backend.entity.User;
 import com.project3.backend.reports.IngredientUsageReport;
+import com.project3.backend.reports.ItemToOrderwithQuantity;
 import com.project3.backend.reports.OrderedTogetherReport;
 import com.project3.backend.reports.RestockReport;
 import com.project3.backend.reports.SalesReport;
@@ -71,22 +72,27 @@ public class DatabaseController {
         return ingredientService.fetchIngredientsByItemId(itemId);
     }
 
+    @GetMapping("/itemToOrder")
+    public List<ItemToOrderwithQuantity> getItemsByOrderId(@RequestParam int orderId) {
+        return itemService.fetchItemsByOrderId(orderId);
+    }
+
     @PostMapping("/ingredients")
-    public void saveIngredient(@RequestBody Ingredient ingredient) {
+    public Ingredient saveIngredient(@RequestBody Ingredient ingredient) {
         System.out.println("Saving ingredient: " + ingredient.toString());
-        ingredientService.saveIngredient(ingredient);
+        return ingredientService.saveIngredient(ingredient);
     }
 
     @PostMapping("/orders")
-    public void saveOrder(@RequestBody Order order) {
+    public Order saveOrder(@RequestBody Order order) {
         System.out.println("Saving order: " + order.toString());
-        orderService.saveOrder(order);
+        return orderService.saveOrder(order);
     }
 
     @PostMapping("/menuItems")
-    public void saveItem(@RequestBody Item item) {
+    public Item saveItem(@RequestBody Item item) {
         System.out.println("Saving item: " + item.toString());
-        itemService.saveItem(item);
+        return itemService.saveItem(item);
     }
 
     @DeleteMapping("/menuItems")

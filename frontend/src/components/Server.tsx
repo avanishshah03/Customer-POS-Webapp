@@ -4,7 +4,7 @@ import { MenuItemsDisplay } from "./Menu";
 import Box from '@mui/material/Box';
 import { Tab, Tabs } from '@mui/material';
 import { useState } from "react";
-import { OrdersPage } from "./OrdersPage";
+import OrderTable from "./OrderTable";
 
 export const POS = () => {
   return (
@@ -32,7 +32,7 @@ export const Server = () => {
         </Tabs>
       </Box>
       <div hidden={value != 0}><POS /></div>
-      <div hidden={value != 1}><OrdersPage /></div>
+      <div hidden={value != 1}><OrderTable /></div>
     </>
   )
 }
