@@ -31,6 +31,8 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             setRole('');
             setUser('');
             localStorage.removeItem('IdToken');
+
+            console.log('inhere');
             console.error(err);
         }
     }, []);
@@ -47,14 +49,14 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     useEffect(() => {
         checkLoginState();
-    }, [checkLoginState]);
-    
+    }, []);
+
     useEffect(() => {
         signOut();
     }, [signOut]);
 
     return (
-        <AuthContext.Provider value={{ role, user, checkLoginState, signOut}}>
+        <AuthContext.Provider value={{ role, user, checkLoginState, signOut }}>
             {children}
         </AuthContext.Provider>
     );
