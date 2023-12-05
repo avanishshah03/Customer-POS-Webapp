@@ -98,6 +98,9 @@ export const ManagerItems = () => {
                             <TableCell style={cellStyle}>
                                 <Typography variant="h6">Delete Item</Typography>
                             </TableCell>
+                            <TableCell style={cellStyle}>
+                                <Typography variant="h6">Image</Typography>
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -174,6 +177,21 @@ export const ManagerItems = () => {
                                         onClose={() => setAddItemDialogOpen(false)}
                                     />
                                 </TableCell>
+                                <TableCell style={cellStyle}>
+                                    {/* <img>menuitem.imageUrl</img> */}
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <Paper
+                                            elevation={3}
+                                            style={{
+                                                padding: "30px",
+                                                height: "100%",
+                                                textAlign: "center",
+                                                backgroundImage: menuItem.imageUrl ? `url(${menuItem.imageUrl})` : "none",
+                                                backgroundSize: "cover",
+                                            }}
+                                        ></Paper>
+                                    </div>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -181,4 +199,4 @@ export const ManagerItems = () => {
             </TableContainer>
         </Paper>
     );
-};
+}
