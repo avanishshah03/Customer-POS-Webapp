@@ -22,9 +22,6 @@ const fetchClient = () => {
 
     return instance;
 };
-
-export default fetchClient();
-
 export const handleErrors = (error: any) => {
     if (error.response) {
         // Request made and server responded
@@ -49,3 +46,5 @@ export const handleErrors = (error: any) => {
     }
     console.log(error.config);
 }
+
+export default fetchClient();

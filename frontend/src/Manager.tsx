@@ -4,7 +4,7 @@ import React from 'react';
 import { ManagerIngredients } from './components/ManagerIngredients';
 import { SalesReport } from './components/SalesReport';
 import { ManagerItems } from './components/ManagerItems';
-import { OrdersPage } from './components/OrdersPage';
+import OrderTable from './components/OrderTable';
 
 export const Manager: React.FC = () => {
     const [value, setValue] = React.useState(0);
@@ -21,7 +21,7 @@ export const Manager: React.FC = () => {
             <div hidden={value != 0}><ManagerItems /></div>
             <div hidden={value != 1}><ManagerIngredients /></div>
             <div hidden={value != 2}><SalesReport /></div>
-            <div hidden={value != 3}><OrdersPage /></div>
+            <div hidden={value != 3}><OrderTable /></div>
         </>
     )
 }

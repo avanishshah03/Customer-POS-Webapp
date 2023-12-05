@@ -40,6 +40,7 @@ public class Order {
     private double price;
     private LocalDateTime time;
     private int userId;
+    private String status;
     @Transient
     private Map<Integer, Integer> items; // item id -> quantity
 

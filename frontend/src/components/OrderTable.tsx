@@ -21,8 +21,9 @@ import {
 } from '@mui/x-data-grid';
 import { Order } from '../store';
 import axios, {handleErrors} from '../config/axiosConfig';
+import { useEffect } from 'react';
 
-const initialRows: GridRowsProp = await axios.get<Order[]>('/orders').then((res) => res.data, handleErrors) ?? [];
+const initialRows: GridRowsProp = [];
 
 const saveOrder = () => {
   return React.useCallback(
@@ -44,7 +45,7 @@ function EditToolbar(props: EditToolbarProps) {
 
   const handleClick = () => {
     const id = Math.max(0, ...initialRows.map((row) => row.id)) + 1;
-    setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
+    setRows((oldRows) => [...oldRows, { id, name: '', userId: 0, time: '', price: 0, isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
@@ -61,7 +62,14 @@ function EditToolbar(props: EditToolbarProps) {
 }
 
 export default function FullFeaturedCrudGrid() {
+  
   const [rows, setRows] = React.useState(initialRows);
+  useEffect(() => {
+    axios.get("/orders").then((res) => res.data)
+    .then((data) => {
+      setRows(data)
+    }, handleErrors);
+  }, []);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
@@ -105,31 +113,36 @@ export default function FullFeaturedCrudGrid() {
   };
 
   const columns: GridColDef[] = [
-    { 
-      field: 'name', 
-      headerName: 'Name', 
-      width: 180, 
-      editable: true ,
-    },
     {
       field: 'userId',
       headerName: 'User ID',
-      width: 220,
-      editable: true,
       type: 'number',
+      flex: 0.2,
+      minWidth: 100,
+      editable: true,
+    },
+    {
+      field: 'status',
+      headerName: 'Order Status',
+      flex: 0.2,
+      minWidth: 150,
+      editable: true,
     },
     {
       field: 'time',
       headerName: 'Order Time',
+      valueGetter: ({ value }) => value && new Date(value),
       type: 'dateTime',
-      width: 180,
+      flex: 0.2,
+      minWidth: 150,
       editable: true,
     },
     {
       field: 'price',
       headerName: 'Price',
       type: 'number',
-      width: 80,
+      flex: 0.1,
+      minWidth: 100,
       align: 'left',
       headerAlign: 'left',
       editable: true,
@@ -138,7 +151,8 @@ export default function FullFeaturedCrudGrid() {
       field: 'actions',
       type: 'actions',
       headerName: 'Actions',
-      width: 100,
+      flex: 0.1,
+      minWidth: 100,
       cellClassName: 'actions',
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
@@ -185,7 +199,7 @@ export default function FullFeaturedCrudGrid() {
   return (
     <Box
       sx={{
-        height: 500,
+        height: '100%',
         width: '100%',
         '& .actions': {
           color: 'text.secondary',

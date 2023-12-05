@@ -23,10 +23,10 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     const checkLoginState = useCallback(async () => {
         try {
-            const { data: { user, role } } = await axios.get(`/auth/login`, { headers: { Authorization: `Bearer ${IdToken}` } });
+            const { data: { role, user} } = await axios.get('/auth/login', { headers: { Authorization: 'Bearer ${IdToken}' } });
             role && setRole(role);
             user && setUser(user);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${IdToken}`
+            axios.defaults.headers.common['Authorization'] = 'Bearer ${IdToken}'
         } catch (err) {
             setRole('');
             setUser('');
@@ -48,10 +48,6 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     useEffect(() => {
         checkLoginState();
     }, [checkLoginState]);
-    
-    useEffect(() => {
-        signOut();
-    }, [signOut]);
 
     return (
         <AuthContext.Provider value={{ role, user, checkLoginState, signOut}}>

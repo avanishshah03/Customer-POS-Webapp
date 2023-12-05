@@ -30,6 +30,7 @@ export interface Order {
     price: number;
     time: string;
     userId: number;
+    status: string;
     items: Map<number, number>;
 }
 
