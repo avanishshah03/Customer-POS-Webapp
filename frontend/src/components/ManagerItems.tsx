@@ -19,6 +19,7 @@ import { ItemToAdd } from "./ItemToAdd";
 import { EditItemIngredients } from "./EditItemIngredients";
 import { useState } from "react";
 import { DeleteConfirmItems } from "./DeleteConfirmItems";
+import { EditImage } from "./EditImage";
 
 // https://stackoverflow.com/questions/42761068/paginate-javascript-array
 function paginate<T>(array: T[], pageSize: number, pageNumber: number): T[] {
@@ -180,16 +181,7 @@ export const ManagerItems = () => {
                                 <TableCell style={cellStyle}>
                                     {/* <img>menuitem.imageUrl</img> */}
                                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <Paper
-                                            elevation={3}
-                                            style={{
-                                                padding: "30px",
-                                                height: "100%",
-                                                textAlign: "center",
-                                                backgroundImage: menuItem.imageUrl ? `url(${menuItem.imageUrl})` : "none",
-                                                backgroundSize: "cover",
-                                            }}
-                                        ></Paper>
+                                        <EditImage menuItem={menuItem} />
                                     </div>
                                 </TableCell>
                             </TableRow>
