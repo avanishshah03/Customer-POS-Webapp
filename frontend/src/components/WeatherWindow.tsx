@@ -97,12 +97,6 @@ function SimpleDialog(props: SimpleDialogProps) {
       </DialogTitle>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell style={{ color: 'black' }}>Name</TableCell>
-              <TableCell align="left" style={{ color: 'black' }}>Value</TableCell>
-            </TableRow>
-          </TableHead>
           <TableBody>
             {rows.map((row) => (
               <TableRow
