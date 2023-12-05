@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public interface IngredientService {
     List<Ingredient> fetchIngredients();
     List<Ingredient> fetchIngredientsById(List<Integer> ids);
-    void saveIngredient(Ingredient ingredient);
+    Ingredient saveIngredient(Ingredient ingredient);
     void deleteIngredient(int id);
     public List<Ingredient> fetchIngredientsByItemId(int itemId);
     public List<IngredientUsageReport> fetchIngredientUsageBetweenDates(LocalDateTime startDate, LocalDateTime endDate);

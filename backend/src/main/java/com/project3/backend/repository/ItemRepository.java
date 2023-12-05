@@ -9,11 +9,19 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.project3.backend.entity.Item;
+import com.project3.backend.reports.ItemToOrderwithQuantity;
 import com.project3.backend.reports.OrderedTogetherReport;
 import com.project3.backend.reports.SalesReport;
 
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Integer> {
+    @Query(value = "SELECT i.id, i.name, i.price, i.vegan, i.gluten_free AS glutenFree, i.category_id AS categoryId, i.size, i.extra_sauce AS extraSauce, i.image_url as imageUrl, io.quantity " +
+                   "FROM item i " +
+                   "JOIN item_to_order io ON i.id = io.item_id " +
+                   "JOIN \"order\" o ON io.order_id = o.id " +
+                   "WHERE o.id = :orderId", nativeQuery = true)
+    List<ItemToOrderwithQuantity> findByItemToOrders_orderId(int orderId);
+    
     @Query(value = "SELECT i.id, i.name AS itemName, COUNT(io.order_id) AS orderCount FROM item i " +
                    "LEFT JOIN item_to_order io ON i.id = io.item_id " + 
                    "LEFT JOIN \"order\" o ON io.order_id = o.id " + 

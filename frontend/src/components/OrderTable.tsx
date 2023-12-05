@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import InfoIcon from '@mui/icons-material/Info';
 import {
   GridRowsProp,
   GridRowModesModel,
@@ -18,19 +19,40 @@ import {
   GridRowId,
   GridRowModel,
   GridRowEditStopReasons,
+  GridValidRowModel,
+  useGridApiRef,
+  GridToolbarQuickFilter,
+  GridToolbar,
 } from '@mui/x-data-grid';
-import { Order } from '../store';
+import { Order, MenuItem } from '../store';
 import axios, {handleErrors} from '../config/axiosConfig';
 import { useEffect } from 'react';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 const initialRows: GridRowsProp = [];
 
-const saveOrder = () => {
-  return React.useCallback(
-    (order: Partial<Order>) =>
-      axios.post('/orders', order).then((res) => res.data, handleErrors),
-    [],
-  );
+async function saveOrder (order: Order) {
+  return axios.post('/orders', order).then((res) => res.data, handleErrors);
+}
+
+function mapGridRowToOrder(gridRow: GridValidRowModel): Order {
+  if (gridRow.id === Infinity) {
+    return {
+      userId: gridRow.userId,
+      time: gridRow.time,
+      price: gridRow.price,
+      status: gridRow.status,
+      items: gridRow.items,
+    };
+  }
+  return {
+    id: gridRow.id,
+    userId: gridRow.userId,
+    time: gridRow.time,
+    price: gridRow.price,
+    status: gridRow.status,
+    items: gridRow.items,
+  };
 }
 
 interface EditToolbarProps {
@@ -44,33 +66,126 @@ function EditToolbar(props: EditToolbarProps) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
-    const id = Math.max(0, ...initialRows.map((row) => row.id)) + 1;
-    setRows((oldRows) => [...oldRows, { id, name: '', userId: 0, time: '', price: 0, isNew: true }]);
+    const id = Infinity;
+    setRows((oldRows) => 
+      [...oldRows, { id: id, userId: 1, status: 'pending', time: new Date(), price: 0, items: [], isNew: true }]
+      );
+
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'userId' },
     }));
   };
 
   return (
-    <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+    <GridToolbarContainer style={{display: 'flex', justifyContent: 'space-between'}}>
+      <GridToolbar />
+      <Button color="primary" style={{display: 'flex', justifyContent: 'right'}} startIcon={<AddIcon />} onClick={handleClick}>
         Add record
       </Button>
     </GridToolbarContainer>
   );
 }
 
+const ItemTable: React.FC<{items: MenuItem[], handleClose: any}> = ({items, handleClose}) => {  
+  if (items.length === 0) {
+    return (
+      <React.Fragment>
+        <DialogTitle>{"Items"}</DialogTitle>
+        <DialogContent>
+          No items in this order.
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleClose}>Close</Button>
+        </DialogActions>
+      </React.Fragment>
+    );
+  }
+  const columns: GridColDef[] = [
+    {
+      field: 'name',
+      headerName: 'Item Name',
+      type: 'string',
+      flex: 0.2,
+      minWidth: 100,
+    },
+    {
+      field: 'glutenFree',
+      headerName: 'Gluten Free',
+      type: 'boolean',
+      flex: 0.1,
+      minWidth: 50,
+    },
+    {
+      field: 'vegan',
+      headerName: 'Vegan',
+      type: 'boolean',
+      flex: 0.1,
+      minWidth: 50,
+    },
+    {
+      field: 'extraSauce',
+      headerName: 'Extra Sauce',
+      type: 'boolean',
+      flex: 0.1,
+      minWidth: 50,
+    },
+    {
+      field: 'size',
+      headerName: 'Size',
+      type: 'string',
+      flex: 0.1,
+      minWidth: 50,
+    },
+    {
+      field: 'quantity',
+      headerName: 'Quantity',
+      type: 'number',
+      flex: 0.2,
+      minWidth: 50,
+      editable: true,
+    },
+    {
+      field: 'price',
+      headerName: 'Price',
+      type: 'number',
+      flex: 0.2,
+      minWidth: 50,
+    },
+  ];
+
+  return (
+    <React.Fragment>
+      <DialogTitle>{"Items"}</DialogTitle>
+      <DialogContent>
+        <DataGrid
+          rows={items}
+          columns={columns}
+          sx={{ height: '100%' }} />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Close</Button>
+      </DialogActions>
+    </React.Fragment>
+  );
+}
+
 export default function FullFeaturedCrudGrid() {
   
   const [rows, setRows] = React.useState(initialRows);
+
+  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
+
+  const [open, setOpen] = React.useState(false);
+
+  const [items, setItems] = React.useState([]);
+
   useEffect(() => {
     axios.get("/orders").then((res) => res.data)
     .then((data) => {
-      setRows(data)
+      setRows(data.map((order: Order) => ({...order, isNew: false})));
     }, handleErrors);
   }, []);
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -82,8 +197,13 @@ export default function FullFeaturedCrudGrid() {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  const handleSaveClick = (id: GridRowId) => async () => {
+    let rowValue: GridValidRowModel = rows.find((row) => row.id === id)!;
+    const newOrder: Order = await saveOrder(mapGridRowToOrder(rowValue));
+    setRows((oldRows) => 
+      oldRows.map((row) => (row.id === id ? { ...newOrder } : row))
+    );
+    setRowModesModel({ ...rowModesModel, [newOrder.id!]: { mode: GridRowModes.View } });
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
@@ -111,6 +231,10 @@ export default function FullFeaturedCrudGrid() {
   const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
     setRowModesModel(newRowModesModel);
   };
+
+  const handleClose = () => {
+    setOpen(false);
+  }
 
   const columns: GridColDef[] = [
     {
@@ -146,6 +270,43 @@ export default function FullFeaturedCrudGrid() {
       align: 'left',
       headerAlign: 'left',
       editable: true,
+    },
+    {
+      field: 'isNew',
+      type: 'boolean',
+      headerName: 'New',
+      flex: 0.1,
+      minWidth: 50,
+      editable: false,
+    },
+    {
+      field: 'items',
+      type: 'actions',
+      headerName: 'Items',
+      flex: 0.1,
+      minWidth: 50,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        return [
+          <GridActionsCellItem
+            icon={<InfoIcon />}
+            label="View Items"
+            sx={{
+              color: 'primary.main',
+            }}
+            onClick={() => {
+              axios.get("/itemToOrder", {params: {orderId: id}})
+                .then((res) => res.data)
+                .then((data) => {
+                  
+                  setItems(data);
+                  setOpen(true);
+                }, handleErrors)
+            }}
+            
+          />
+        ];
+      },
     },
     {
       field: 'actions',
@@ -209,7 +370,8 @@ export default function FullFeaturedCrudGrid() {
         },
       }}
     >
-      <DataGrid
+      <DataGrid 
+        autoHeight
         rows={rows}
         columns={columns}
         editMode="row"
@@ -217,6 +379,16 @@ export default function FullFeaturedCrudGrid() {
         onRowModesModelChange={handleRowModesModelChange}
         onRowEditStop={handleRowEditStop}
         processRowUpdate={processRowUpdate}
+        initialState={{
+          sorting: {
+            sortModel: [{ field: 'isNew', sort: 'desc' }],
+          },
+          columns: {
+            columnVisibilityModel: {
+              isNew: false,
+            }
+          }
+        }}
         slots={{
           toolbar: EditToolbar,
         }}
@@ -224,6 +396,11 @@ export default function FullFeaturedCrudGrid() {
           toolbar: { setRows, setRowModesModel },
         }}
       />
+      
+      <Dialog title='Items' open={open} onClose={handleClose} fullWidth={true} maxWidth='lg'>
+        <ItemTable items={items} handleClose={handleClose} />
+      </Dialog>
+  );
     </Box>
   );
 }

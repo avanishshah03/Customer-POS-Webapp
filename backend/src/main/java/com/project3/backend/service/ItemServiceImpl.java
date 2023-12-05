@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.project3.backend.entity.Ingredient;
 import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemToIngredient;
+import com.project3.backend.reports.ItemToOrderwithQuantity;
 import com.project3.backend.reports.OrderedTogetherReport;
 import com.project3.backend.reports.SalesReport;
 import com.project3.backend.repository.ItemRepository;
@@ -34,7 +35,7 @@ public class ItemServiceImpl implements ItemService {
         return (List<Item>) itemRepository.findAll();
     }
 
-    public void saveItem(Item item)
+    public Item saveItem(Item item)
     {
         Item savedItem = itemRepository.save(item);
 
@@ -48,6 +49,7 @@ public class ItemServiceImpl implements ItemService {
             })
             .collect(Collectors.toList());
         itemToIngredientRepository.saveAll(itemsToIngredient);
+        return savedItem;
     }
 
     @Transactional
@@ -55,6 +57,11 @@ public class ItemServiceImpl implements ItemService {
     {
         itemToIngredientRepository.deleteByItemId(id);
         itemRepository.deleteById(id);
+    }
+
+    public List<ItemToOrderwithQuantity> fetchItemsByOrderId(int orderId)
+    {
+        return itemRepository.findByItemToOrders_orderId(orderId);
     }
 
     public List<SalesReport> salesReport(LocalDateTime startDate, LocalDateTime endDate)

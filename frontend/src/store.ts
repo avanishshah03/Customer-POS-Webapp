@@ -1,7 +1,7 @@
 import { MenuItem } from "@mui/material";
 import { create } from "zustand";
 import { serverUrl } from './config/constant';
-import axios, { handleErrors } from './config/axiosConfig';
+import axios, { handleErrors, handleErrorsNoRedirect } from './config/axiosConfig';
 
 interface CartEntry {
     itemId: number;
@@ -26,7 +26,7 @@ export interface ItemCategory {
 }
 
 export interface Order {
-    id: number;
+    id?: number;
     price: number;
     time: string;
     userId: number;
@@ -74,9 +74,9 @@ interface Store {
     ingredients: Ingredient[];
 }
 
-let menuItemsResponse:Promise<MenuItem[]> = axios.get("/menuItems").then((res) => res.data, handleErrors);
+let menuItemsResponse:Promise<MenuItem[]> = axios.get("/menuItems").then((res) => res.data, handleErrorsNoRedirect);
 let menuItems: MenuItem[] = await menuItemsResponse;
-let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get("/itemCategories").then((res) => res.data, handleErrors);
+let itemCategoriesPromise:Promise<ItemCategory[]> = axios.get("/itemCategories").then((res) => res.data, handleErrorsNoRedirect);
 let itemCategories: ItemCategory[] = await itemCategoriesPromise;
 export const useMenuStore = create<Store>((set) => ({
     cart: [],

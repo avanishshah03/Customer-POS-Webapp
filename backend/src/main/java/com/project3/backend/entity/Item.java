@@ -51,7 +51,10 @@ public class Item {
     @JoinColumn(name = "ingredientId")
     @JsonIgnore
     private Set<ItemToIngredient> itemToIngredients;
-    
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "orderId")
+    @JsonIgnore
+    private Set<ItemToOrder> itemToOrders;
     /**
      * Default constructor for the Item class.
      * Initializes all attributes to default values.

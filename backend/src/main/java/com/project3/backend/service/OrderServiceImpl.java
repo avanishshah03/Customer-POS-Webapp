@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService{
         return (List<Order>) orderRepository.findAll();
     }
 
-    public void saveOrder(Order order)
+    public Order saveOrder(Order order)
     {
         Order savedOrder = orderRepository.save(order);
         List<ItemToOrder> itemsToOrder = savedOrder.getItems().entrySet().stream()
@@ -37,6 +37,7 @@ public class OrderServiceImpl implements OrderService{
             })
             .collect(Collectors.toList());
         itemToOrderRepository.saveAll(itemsToOrder);
+        return savedOrder;
     }
 
     public void deleteOrder(int id)
