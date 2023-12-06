@@ -36,6 +36,10 @@ async function saveOrder (order: Order) {
   return axios.post('/orders', order).then((res) => res.data, handleErrors);
 }
 
+async function deleteOrder (id: string | number) {
+  return axios.delete('/orders', {params: id}).then((res) => res.data, handleErrors);
+}
+
 function mapGridRowToOrder(gridRow: GridValidRowModel): Order {
   if (gridRow.id === Infinity) {
     return {
@@ -82,7 +86,7 @@ function EditToolbar(props: EditToolbarProps) {
     <GridToolbarContainer style={{display: 'flex', justifyContent: 'space-between'}}>
       <GridToolbar />
       <Button color="primary" style={{display: 'flex', justifyContent: 'right'}} startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
+        Add order
       </Button>
     </GridToolbarContainer>
   );
@@ -103,6 +107,14 @@ const ItemTable: React.FC<{items: MenuItem[], handleClose: any}> = ({items, hand
     );
   }
   const columns: GridColDef[] = [
+    {
+      field: 'id',
+      headerName: 'Item ID',
+      type: 'number',
+      flex: 0.1,
+      minWidth: 50,
+      editable: false,
+    },
     {
       field: 'name',
       headerName: 'Item Name',
@@ -156,7 +168,7 @@ const ItemTable: React.FC<{items: MenuItem[], handleClose: any}> = ({items, hand
         if (params.value == null) {
           return '';
         }
-        return '\$${params.value.toLocaleString()}';
+        return `$${params.value.toLocaleString()}`;
       }
     },
   ];
@@ -214,6 +226,7 @@ export default function FullFeaturedCrudGrid() {
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
+    deleteOrder(id.valueOf());
     setRows(rows.filter((row) => row.id !== id));
   };
 
@@ -245,6 +258,14 @@ export default function FullFeaturedCrudGrid() {
 
   const columns: GridColDef[] = [
     {
+      field: 'id',
+      headerName: 'Order ID',
+      type: 'number',
+      flex: 0.1,
+      minWidth: 50,
+      editable: false,
+    },
+    {
       field: 'userId',
       headerName: 'User ID',
       type: 'number',
@@ -255,7 +276,7 @@ export default function FullFeaturedCrudGrid() {
     {
       field: 'status',
       headerName: 'Order Status',
-      flex: 0.2,
+      flex: 0.1,
       minWidth: 150,
       editable: true,
     },
@@ -275,8 +296,13 @@ export default function FullFeaturedCrudGrid() {
       flex: 0.1,
       minWidth: 100,
       align: 'left',
-      headerAlign: 'left',
       editable: true,
+      valueFormatter: (params: GridValueFormatterParams<number>) => {
+        if (params.value == null) {
+          return '';
+        }
+        return `$${params.value.toLocaleString()}`;
+      }
     },
     {
       field: 'isNew',
@@ -407,7 +433,7 @@ export default function FullFeaturedCrudGrid() {
       <Dialog title='Items' open={open} onClose={handleClose} fullWidth={true} maxWidth='lg'>
         <ItemTable items={items} handleClose={handleClose} />
       </Dialog>
-  );
+    );
     </Box>
   );
 }

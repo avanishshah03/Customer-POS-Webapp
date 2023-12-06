@@ -77,6 +77,11 @@ public class DatabaseController {
         return itemService.fetchItemsByOrderId(orderId);
     }
 
+    @GetMapping("/users")
+    public List<User> getUsers() {
+        return userService.fetchUsers();
+    }
+
     @PostMapping("/ingredients")
     public Ingredient saveIngredient(@RequestBody Ingredient ingredient) {
         System.out.println("Saving ingredient: " + ingredient.toString());
@@ -95,6 +100,12 @@ public class DatabaseController {
         return itemService.saveItem(item);
     }
 
+    @PostMapping("/users")
+    public User saveUser(@RequestBody User user) {
+        System.out.println("Saving user: " + user.toString());
+        return userService.saveUser(user);
+    }
+
     @DeleteMapping("/menuItems")
     public void deleteItem(@RequestParam int id) {
         itemService.deleteItem(id);
@@ -108,6 +119,11 @@ public class DatabaseController {
     @DeleteMapping("/orders")
     public void deleteOrder(@RequestParam int id) {
         orderService.deleteOrder(id);
+    }
+
+    @DeleteMapping("/users")
+    public void deleteUser(@RequestParam int id) {
+        userService.deleteUser(id);
     }
 
     @GetMapping("/salesReport")

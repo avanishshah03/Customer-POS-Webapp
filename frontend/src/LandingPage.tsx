@@ -16,10 +16,11 @@ import { Link } from 'react-router-dom';
 
 
 export const LandingPage: React.FC = () => {
+    const { role, signOut } = useContext(AuthContext);
     const customButtonStyle = {
         color: 'white',
     };
-    const { role, signOut } = useContext(AuthContext);
+    
     return (
         <div className="landing-page background-image" >
             <div className="content">
@@ -43,7 +44,7 @@ export const LandingPage: React.FC = () => {
                     </Link>
                 </div>
                 <div style={{ gridColumn: 3, gridRow: 1, alignSelf: "start", justifySelf: "end", margin: '1.5em' }}>
-                    {(role === "ROLE_manager" || role === "ROLE_server") ?
+                    {( role === "ROLE_admin" || role === "ROLE_manager" || role === "ROLE_server") ?
                         (
                             <Link to="/server">
                                 <Button style={customButtonStyle} className="button-hover-effect">
@@ -53,7 +54,7 @@ export const LandingPage: React.FC = () => {
                         )
                         : (<div></div>)
                     }
-                    {role === "ROLE_manager" ?
+                    {(role === "ROLE_admin" || role === "ROLE_manager") ?
                         (<Link to="/manager">
                             <Button style={customButtonStyle} className="button-hover-effect">
                                 Manager page
@@ -61,6 +62,16 @@ export const LandingPage: React.FC = () => {
                         </Link>
                         )
                         : (<div></div>)
+                    }
+                    {
+                        (role === "ROLE_admin") ?
+                            (<Link to="/admin">
+                                <Button style={customButtonStyle} className="button-hover-effect">
+                                    Admin page
+                                </Button>
+                            </Link>
+                            )
+                            : (<div></div>)
                     }
                     {role === '' ?
                         (
