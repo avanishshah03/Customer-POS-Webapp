@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from '../config/axiosConfig';
 import {
     Paper,
@@ -10,34 +9,36 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    Button,
     TextField,
-    MenuItem,
-    Select,
-    Checkbox,
-    Pagination,
+    Button,
 } from "@mui/material";
-
-
 
 export const SalesReport = () => {
     const [salesData, setSalesData] = useState([]);
+    const [startDate, setStartDate] = useState("2022-10-01");
+    const [endDate, setEndDate] = useState("2023-12-05");
+
     useEffect(() => {
         axios.get("/salesReport", {
             params: {
-                startDate: new Date("2021-10-01").toISOString(),
-                endDate: new Date().toISOString(),
+                startDate: new Date(startDate).toISOString(),
+                endDate: new Date(endDate).toISOString(),
             }
         }).then((res) => {
             setSalesData(res.data);
         });
-    }, [])
+    }, [startDate, endDate]);
 
+    const tableStyle = { width: "100%" };
+    const cellStyle = { padding: "8px" };
 
+    const handleStartDateChange = (event) => {
+        setStartDate(event.target.value);
+    };
 
-    const tableStyle = { width: "100%", };
-    const cellStyle = { padding: "8px", };
-
+    const handleEndDateChange = (event) => {
+        setEndDate(event.target.value);
+    };
 
     return (
         <Paper
@@ -51,6 +52,26 @@ export const SalesReport = () => {
             <Typography variant="h5" style={{ textAlign: "center" }}>
                 Sales Report
             </Typography>
+            <div style={{ marginBottom: '10px' }}>
+                <TextField
+                    label="Start Date"
+                    type="date"
+                    defaultValue={startDate}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    onChange={handleStartDateChange}
+                />
+                <TextField
+                    label="End Date"
+                    type="date"
+                    defaultValue={endDate}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    onChange={handleEndDateChange}
+                />
+            </div>
             <TableContainer>
                 <Table style={tableStyle}>
                     <TableHead>
@@ -75,9 +96,8 @@ export const SalesReport = () => {
                             </TableRow>
                         ))}
                     </TableBody>
-
                 </Table>
             </TableContainer>
         </Paper>
     );
-}
+};

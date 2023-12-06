@@ -1,10 +1,11 @@
 import { ThemeProvider } from "@emotion/react";
-import { Grid, Paper, Typography, createTheme } from "@mui/material";
+import { Button, Grid, Paper, Typography, createTheme } from "@mui/material";
 import { CheckoutCart } from "./components/CheckoutCart";
 import { MenuItemsDisplay } from "./components/Menu";
 import Weather from "./components/WeatherWindow";
 import "./Customer.css";
 
+import { Link } from 'react-router-dom';
 
 const orange = "#f47b20"
 const brown = "#5e4433"
@@ -24,8 +25,14 @@ const theme = createTheme({
   }
 });
 
+const customButtonStyle = {
+  
+  fontSize: '18px'
+};
+
 export default function Customer() {
   const paperStyle = {
+    
     padding: "20px",
     margin: "20px",
     textAlign: "center",
@@ -44,6 +51,11 @@ export default function Customer() {
             <div style={{ margin: "auto", color: orange }}>
               <Typography variant="h4" className="notranslate">Mess Waffles</Typography>
             </div>
+            <Link to="/" >
+              <Button style={customButtonStyle} className="button-hover-effect">
+                  Home
+              </Button>
+          </Link>
           </Paper>
         </Grid>
         <Grid item xs={8}>

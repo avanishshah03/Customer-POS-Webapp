@@ -20,8 +20,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -30,34 +28,15 @@ public class WebSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		
-		
-		/*http.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/home", "/orders").permitAll()
-				.anyRequest().permitAll()
-			)
-			.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-			.cors(cors -> 
-				cors.configurationSource(corsConfigurationSource())
-			);
-		// 	.logout(LogoutConfigurer::permitAll);
-		// http
-		// 	.authorizeHttpRequests(auth -> {
-		// 		auth.requestMatchers("/").permitAll(); //for home route anyone can get to it
-		// 		auth.anyRequest().authenticated(); //other pages will require login
-		// 	})
-		// 	.oauth2Login(Customizer.withDefaults());
-
-		return http.build();*/
-
 		return http
 		.csrf(AbstractHttpConfigurer::disable)
 		.cors(cors->cors.configurationSource(corsConfigurationSource()))
 		.authorizeHttpRequests(auth ->
 			auth.requestMatchers("/menuItems", "/itemCategories").permitAll()
 			.requestMatchers(HttpMethod.POST, "/orders").permitAll()
-			.requestMatchers(HttpMethod.GET, "/orders").hasAnyAuthority("ROLE_server", "ROLE_manager")
-			.requestMatchers("/ingredients", "/itemToIngredient").hasAuthority("ROLE_manager")
+			.requestMatchers(HttpMethod.GET, "/orders").hasAnyAuthority("ROLE_server", "ROLE_manager", "ROLE_admin")
+			.requestMatchers("/ingredients", "/itemToIngredient").hasAnyAuthority("ROLE_manager", "ROLE_admin")
+			.requestMatchers("/users").hasAnyAuthority("ROLE_admin")
 			.anyRequest().authenticated()
 		)
 		.oauth2ResourceServer(oauth2 ->
@@ -66,7 +45,6 @@ public class WebSecurityConfig {
 			)
 		)
 		.build();
-		
 	}
 
 	@Bean
