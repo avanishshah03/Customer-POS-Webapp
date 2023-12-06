@@ -37,7 +37,7 @@ export const ManagerItems = () => {
     const changeItem = useMenuStore((state) => state.changeItem);
     const deleteMenuItem = useMenuStore((state) => state.deleteMenuItem);
     const [searchText, setSearchText] = useState("");
-    const filteredMenuItems = menuitems.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase()));
+    const filteredMenuItems = menuitems.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase())).sort((a, b) => b.id - a.id);
 
 
     const tableStyle = { width: "100%", };

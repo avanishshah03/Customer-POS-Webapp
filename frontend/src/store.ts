@@ -43,7 +43,6 @@ export interface Ingredient {
   name: string;
   stock: number;
   restock: number;
-  amount: number;
   amountOrdered: number;
   price: number;
   glutenFree: boolean;
@@ -66,15 +65,10 @@ interface Store {
   changeItem: (id: number, newItem: MenuItem) => void;
   deleteMenuItem: (id: number) => void;
   setIngredients: (ingredients: Ingredient[]) => void;
-  changeIngredientName: (id: number, newName: string) => void;
-  changeIngredientStock: (id: number, newStock: number) => void;
-  changeIngredientRestock: (id: number, newRestock: number) => void;
-  changeAmountOrdered: (id: number, newAmountOrdered: number) => void;
-  changeIngredientPrice: (id: number, newPrice: number) => void;
-  changeIngredientGF: (id: number) => void;
-  changeIngredientVegan: (id: number) => void;
+  changeIngredient: (id: number, newIngredient: Ingredient) => void;
   deleteIngredient: (id: number) => void;
   addMenuItem: (item: MenuItem) => void;
+  addIngredient: (ingredient: Ingredient) => void;
   menuItems: MenuItem[];
   cart: CartEntry[];
   itemCategories: ItemCategory[];
@@ -210,106 +204,32 @@ export const useMenuStore = create<Store>((set) => ({
     }));
   },
 
-  // deleteMenuItem: (id: number) => {
-  //     fetch(base + "/menuItems/" + id, {
-  //         method: "DELETE",
-  //     })
-  //         .then(response => {
-  //             if (!response.ok) {
-  //                 throw new Error("HTTP error " + response.status);
-  //             }
-  //             set((state) => ({
-  //                 menuItems: state.menuItems.filter((item) => item.id !== id),
-  //             }));
-  //         })
-  //         .catch(error => {
-  //             console.error("Failed to delete menu item: ", error);
-  //         });
-  // },
+  addIngredient: (ingredient: Ingredient) => {
+    axios.post("/ingredients", {
+      ...ingredient,
+    });
+    set((state) => ({ ingredients: [...state.ingredients, ingredient] }));
+  },
 
-  changeIngredientName: (id: number, newName: string) => {
+  changeIngredient: (id: number, newIngredient: Ingredient) => {
+    axios.post("/ingredients", {
+      ...newIngredient,
+      id,
+    });
     return set((state) => ({
-      ingredients: state.ingredients.map((item) => {
-        if (item.id === id) {
-          return { ...item, name: newName };
+      ingredients: state.ingredients.map((ingredient) => {
+        if (ingredient.id === id) {
+          return { ...newIngredient, id };
         }
-        return item;
+        return ingredient;
       }),
+      cart: state.cart,
+      itemCategories: state.itemCategories,
     }));
   },
-  changeIngredientStock: (id: number, newStock: number) => {
-    return set((state) => ({
-      ingredients: state.ingredients.map((item) => {
-        if (item.id === id) {
-          return { ...item, stock: newStock };
-        }
-        return item;
-      }),
-    }));
-  },
-  changeIngredientRestock: (id: number, newRestock: number) => {
-    return set((state) => ({
-      ingredients: state.ingredients.map((item) => {
-        if (item.id === id) {
-          return { ...item, restock: newRestock };
-        }
-        return item;
-      }),
-    }));
-  },
-  changeAmountOrdered: (id: number, newAmountOrdered: number) => {
-    return set((state) => ({
-      ingredients: state.ingredients.map((item) => {
-        if (item.id === id) {
-          return { ...item, amountOrdered: newAmountOrdered };
-        }
-        return item;
-      }),
-    }));
-  },
-  changeIngredientPrice: (id: number, newPrice: number) => {
-    return set((state) => ({
-      ingredients: state.ingredients.map((item) => {
-        if (item.id === id) {
-          return { ...item, price: newPrice };
-        }
-        return item;
-      }),
-    }));
-  },
-  changeIngredientGF: (id: number) => {
-    set((state) => ({
-      ingredients: state.ingredients.map((item) => {
-        if (item.glutenFree === true) {
-          if (item.id === id) {
-            return { ...item, glutenFree: false };
-          }
-        } else {
-          if (item.id === id) {
-            return { ...item, glutenFree: true };
-          }
-        }
-        return item;
-      }),
-    }));
-  },
-  changeIngredientVegan: (id: number) => {
-    set((state) => ({
-      ingredients: state.ingredients.map((item) => {
-        if (item.vegan === true) {
-          if (item.id === id) {
-            return { ...item, vegan: false };
-          }
-        } else {
-          if (item.id === id) {
-            return { ...item, vegan: true };
-          }
-        }
-        return item;
-      }),
-    }));
-  },
+
   deleteIngredient: (id: number) => {
+    axios.delete("/ingredients", { params: { id } });
     set((state) => ({
       ingredients: state.ingredients.filter((item) => item.id !== id),
     }));
