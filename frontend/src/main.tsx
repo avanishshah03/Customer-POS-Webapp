@@ -10,6 +10,7 @@ import { LandingPage } from './LandingPage.tsx'
 import { Manager } from './Manager.tsx';
 import { Unauthorized } from './Unauthorized.tsx'
 import { ProtectedRoute } from './components/ProtectedRoute.tsx';
+import { Admin } from './Admin.tsx';
 
 const router = createBrowserRouter([
   {
@@ -21,8 +22,16 @@ const router = createBrowserRouter([
     element: <Customer />,
   },
   {
+    path: '/server',
+    element: <ProtectedRoute element={<Server />} auths={['ROLE_admin', 'ROLE_manager', 'ROLE_server']} />,
+  },
+  {
     path: '/manager',
-    element: <ProtectedRoute element={<Manager />} auths={['ROLE_manager']} />,
+    element: <ProtectedRoute element={<Manager />} auths={['ROLE_admin', 'ROLE_manager']} />,
+  },
+  {
+    path: '/admin',
+    element: <ProtectedRoute element={<Admin />} auths={['ROLE_admin']} />,
   },
   {
     path: '/login',
@@ -32,18 +41,12 @@ const router = createBrowserRouter([
     path: '/unauthorized',
     element: <Unauthorized />,
   },
-  {
-    path: '/server',
-    element: <ProtectedRoute element={<Server />} auths={['ROLE_manager', 'ROLE_server']} />,
-  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <StrictMode>
     <GoogleOAuthProvider clientId="92522781514-n0k71ngp0e7efn0tptb2cp4p6ktgmbje.apps.googleusercontent.com">
       <AuthContextProvider>
         <RouterProvider router={router} />
       </AuthContextProvider>
     </GoogleOAuthProvider>
-  </StrictMode>
 )

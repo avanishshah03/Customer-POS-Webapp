@@ -9,7 +9,7 @@ interface CartEntry {
 }
 
 export interface MenuItem {
-    id: number;
+    id?: number;
     name: string;
     price: number;
     imageUrl: string;
@@ -21,7 +21,7 @@ export interface MenuItem {
 }
 
 export interface ItemCategory {
-    id: number;
+    id?: number;
     name: string;
 }
 
@@ -35,7 +35,7 @@ export interface Order {
 }
 
 export interface Ingredient {
-    id: number;
+    id?: number;
     name: string;
     stock: number;
     restock: number;
@@ -44,6 +44,14 @@ export interface Ingredient {
     price: number;
     glutenFree: boolean;
     vegan: boolean;
+}
+
+export interface User {
+    id?: number;
+    username: string;
+    password: string;
+    email: string;
+    role: string;
 }
 
 interface Store {
