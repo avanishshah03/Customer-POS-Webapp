@@ -13,6 +13,7 @@ import { RestockReport } from './components/RestockReport';
 import { OrderedTogetherReport } from './components/OrderedTogetherReport';
 import './LandingPage.css';
 
+
 export const Manager: React.FC = () => {
     const [value, setValue] = React.useState(0);
     const customButtonStyle = {
