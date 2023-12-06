@@ -30,7 +30,7 @@ export const IngredientUsageReport = () => {
         });
     }, [startDate, endDate])
 
-    const tableStyle = { width: "100%" };
+    const tableStyle = { width: "100%", align: "center" };
     const cellStyle = { padding: "8px" };
 
     const handleStartDateChange = (event) => {
@@ -52,6 +52,9 @@ export const IngredientUsageReport = () => {
         >
             <Typography variant="h5" style={{ textAlign: "center" }}>
                 Ingredient Usage Report
+            </Typography>
+            <Typography variant="h5" style={{ textAlign: "center", fontSize: "medium" }}>
+                Number of ingredients used between the selected dates
             </Typography>
             <div style={{ marginBottom: '10px' }}>
                 <TextField
@@ -78,10 +81,10 @@ export const IngredientUsageReport = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">Order Count</Typography>
+                                <Typography variant="h6">Usage Count</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">Item Name</Typography>
+                                <Typography variant="h6">Ingredient Name</Typography>
                             </TableCell>
                         </TableRow>
                     </TableHead>
