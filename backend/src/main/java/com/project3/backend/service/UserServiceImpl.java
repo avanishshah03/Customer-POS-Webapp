@@ -12,6 +12,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public List<User> fetchUsers()
+    {
+        return (List<User>) userRepository.findAll();
+    }
+
     public String fetchRoleOrCreate(String email)
     {
         List<User> userList = userRepository.findByEmail(email);
@@ -37,8 +42,13 @@ public class UserServiceImpl implements UserService {
         return user.getRole();
     }
 
-    public void saveUser(User user)
+    public User saveUser(User user)
     {
-        userRepository.save(user);
+        return userRepository.save(user);
+    }
+
+    public void deleteUser(int id)
+    {
+        userRepository.deleteById(id);
     }
 }

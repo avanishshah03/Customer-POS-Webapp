@@ -1,5 +1,7 @@
-import { Tab, Tabs } from '@mui/material';
+import { Button, Tab, Tabs } from '@mui/material';
+import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import { positions } from '@mui/system';
 import React from 'react';
 import { ManagerIngredients } from './components/ManagerIngredients';
 import { SalesReport } from './components/SalesReport';
@@ -9,12 +11,30 @@ import { IngredientUsageReport } from './components/IngredientUsageReport';
 import { ExcessItemsReport } from './components/ExcessItemsReport';
 import { RestockReport } from './components/RestockReport';
 import { OrderedTogetherReport } from './components/OrderedTogetherReport';
+import './LandingPage.css';
+
 
 export const Manager: React.FC = () => {
     const [value, setValue] = React.useState(0);
+    const customButtonStyle = {
+        zIndex: '999',
+        color: 'white',
+        top: '40px',
+        left: '95%',
+        padding: '10px',
+        backgroundColor: 'blue'
+
+    };
     return (
         <>
-            <Box>
+        
+                <Link to="/" >
+                    <Button style={customButtonStyle} className="button-hover-effect">
+                        Home
+                    </Button>
+                </Link>
+                <Box>
+                    
                 <Tabs value={value} onChange={(_, newValue) => setValue(newValue)}>
                     <Tab label="Items" />
                     <Tab label="Inventory" />

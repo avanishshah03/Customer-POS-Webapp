@@ -1,14 +1,13 @@
 import { Paper } from '@mui/material';
 import { useEffect } from 'react';
 import axios from '../config/axiosConfig';
-
-
+import { Ingredient } from '../store';
 
 
 export const RestockReport = () => {
 
     useEffect(() => {
-        axios.get("/salesReport", {
+        axios.get("/restockReport", {
             params: {
                 startDate: new Date("2021-10-01").toISOString(),
                 endDate: new Date().toISOString(),
