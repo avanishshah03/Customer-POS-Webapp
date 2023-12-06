@@ -1,17 +1,16 @@
 import { Button, Tab, Tabs } from '@mui/material';
-import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import { positions } from '@mui/system';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import './LandingPage.css';
+import { ExcessItemsReport } from './components/ExcessItemsReport';
+import { IngredientUsageReport } from './components/IngredientUsageReport';
 import { ManagerIngredients } from './components/ManagerIngredients';
-import { SalesReport } from './components/SalesReport';
 import { ManagerItems } from './components/ManagerItems';
 import OrderTable from './components/OrderTable';
-import { IngredientUsageReport } from './components/IngredientUsageReport';
-import { ExcessItemsReport } from './components/ExcessItemsReport';
-import { RestockReport } from './components/RestockReport';
 import { OrderedTogetherReport } from './components/OrderedTogetherReport';
-import './LandingPage.css';
+import { RestockReport } from './components/RestockReport';
+import { SalesReport } from './components/SalesReport';
 
 
 export const Manager: React.FC = () => {
@@ -27,14 +26,14 @@ export const Manager: React.FC = () => {
     };
     return (
         <>
-        
-                <Link to="/" >
-                    <Button style={customButtonStyle} className="button-hover-effect">
-                        Home
-                    </Button>
-                </Link>
-                <Box>
-                    
+
+            <Link to="/" >
+                <Button style={customButtonStyle} className="button-hover-effect">
+                    Home
+                </Button>
+            </Link>
+            <Box>
+
                 <Tabs value={value} onChange={(_, newValue) => setValue(newValue)}>
                     <Tab label="Items" />
                     <Tab label="Inventory" />

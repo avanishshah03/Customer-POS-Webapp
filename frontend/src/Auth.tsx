@@ -42,6 +42,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             setRole('');
             setUser('');
             localStorage.removeItem('IdToken');
+            document.location.reload();
         } catch (err) {
             console.error(err);
         }
@@ -69,13 +70,15 @@ export const LoginButton = () => {
 
         if (role === "ROLE_manager") {
             navigate('/manager');
+            document.location.reload();
             return;
         } else if (role === "ROLE_server") {
             navigate('/server');
+            document.location.reload();
             return;
         }
         navigate('/');
-
+        document.location.reload();
     }
     const errorMessage = () => {
         console.error('Error logging in');
