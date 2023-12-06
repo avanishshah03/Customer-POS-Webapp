@@ -97,10 +97,10 @@ export const ManagerItems = () => {
                                 <Typography variant="h6">Extra Sauce</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">Delete Item</Typography>
+                                <Typography variant="h6">Image</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">Image</Typography>
+                                <Typography variant="h6">Delete</Typography>
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -171,6 +171,12 @@ export const ManagerItems = () => {
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle}>
+                                    {/* <img>menuitem.imageUrl</img> */}
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <EditImage menuItem={menuItem} />
+                                    </div>
+                                </TableCell>
+                                <TableCell style={cellStyle}>
                                     <DeleteConfirmItems
                                         id={menuItem.id}
                                         name={menuItem.name}
@@ -178,12 +184,7 @@ export const ManagerItems = () => {
                                         onClose={() => setAddItemDialogOpen(false)}
                                     />
                                 </TableCell>
-                                <TableCell style={cellStyle}>
-                                    {/* <img>menuitem.imageUrl</img> */}
-                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <EditImage menuItem={menuItem} />
-                                    </div>
-                                </TableCell>
+
                             </TableRow>
                         ))}
                     </TableBody>
