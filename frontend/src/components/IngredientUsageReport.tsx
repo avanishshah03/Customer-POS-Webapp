@@ -78,10 +78,10 @@ export const IngredientUsageReport = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">Order Count</Typography>
+                                <Typography variant="h6">Usage Count</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">Item Name</Typography>
+                                <Typography variant="h6">Ingredient Name</Typography>
                             </TableCell>
                         </TableRow>
                     </TableHead>
