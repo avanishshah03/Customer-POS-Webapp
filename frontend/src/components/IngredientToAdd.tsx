@@ -20,8 +20,7 @@ interface IngredientToAddProps {
 
 export const IngredientToAdd: React.FC<IngredientToAddProps> = () => {
   // const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
-  const menuitems = useMenuStore((state) => state.menuItems);
-  const changeSize = useMenuStore((state) => state.changeSize);
+  const addIngredient = useMenuStore((state) => state.addIngredient);
   // const tableStyle = {
   //   border: "1px solid #ddd",
   //   width: "100%",
@@ -31,7 +30,7 @@ export const IngredientToAdd: React.FC<IngredientToAddProps> = () => {
   const [ingredientName, setIngredientName] = useState("");
   const [stockAmmount, setStockAmmount] = useState("");
   const [restockAmmount, setRestockAmmount] = useState("");
-  const [ammountOrdered, setAmmountOrdered] = useState("");
+  const [amountOrdered, setAmountOrdered] = useState("");
   const [price, setPrice] = useState("");
 
   const [glutenFree, setGlutenFree] = useState(false);
@@ -43,7 +42,7 @@ export const IngredientToAdd: React.FC<IngredientToAddProps> = () => {
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Add Ingredient</DialogTitle>
         <DialogContent>
-        <TextField
+          <TextField
             label="Ingredient Name"
             variant="outlined"
             fullWidth
@@ -62,7 +61,7 @@ export const IngredientToAdd: React.FC<IngredientToAddProps> = () => {
             onChange={(e) => setStockAmmount(e.target.value)}
             margin="normal"
           />
-           <TextField
+          <TextField
             label="Restock Ammount"
             variant="outlined"
             fullWidth
@@ -78,8 +77,8 @@ export const IngredientToAdd: React.FC<IngredientToAddProps> = () => {
             fullWidth
             required
             type="number"
-            value={ammountOrdered}
-            onChange={(e) => setAmmountOrdered(e.target.value)}
+            value={amountOrdered}
+            onChange={(e) => setAmountOrdered(e.target.value)}
             margin="normal"
           />
           <TextField
@@ -102,7 +101,17 @@ export const IngredientToAdd: React.FC<IngredientToAddProps> = () => {
 
           {/* Add more fields as needed */}
 
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={() => {
+            addIngredient({
+              amountOrdered: parseInt(amountOrdered),
+              glutenFree,
+              name: ingredientName,
+              price: parseInt(price),
+              restock: parseInt(restockAmmount),
+              stock: parseInt(stockAmmount),
+              vegan,
+            }); setOpen(false)
+          }}>
             Save
           </Button>
         </DialogContent>

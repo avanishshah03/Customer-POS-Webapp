@@ -20,16 +20,9 @@ export const ManagerIngredients = () => {
     const [page, setPage] = useState(1);
     const ingredients = useMenuStore(state => state.ingredients);
     const setIngredients = useMenuStore(state => state.setIngredients);
-    const changeIngredientName = useMenuStore(state => state.changeIngredientName);
-    const changeIngredientStock = useMenuStore(state => state.changeIngredientStock);
-    const changeIngredientRestock = useMenuStore(state => state.changeIngredientRestock);
-    const changeIngredientAmountOrdered = useMenuStore(state => state.changeAmountOrdered);
-    const changeIngredientPrice = useMenuStore(state => state.changeIngredientPrice);
-    const changeIngredientGF = useMenuStore(state => state.changeIngredientGF);
-    const changeIngredientVegan = useMenuStore(state => state.changeIngredientVegan);
-    const deleteIngredient = useMenuStore(state => state.deleteIngredient);
+    const changeIngredient = useMenuStore(state => state.changeIngredient);
     const [searchText, setSearchText] = useState("");
-    const filteredIngredients = ingredients.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase()));
+    const filteredIngredients = ingredients.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase())).sort((a, b) => b.id - a.id);
     const tableStyle = { width: '100%', };
     const cellStyle = { padding: '8px', };
 
@@ -88,63 +81,65 @@ export const ManagerIngredients = () => {
                     </TableHead>
                     <TableBody>
 
-                        {paginate(filteredIngredients, pageSize, page).map((Ingredients, itemIndex) => (
+                        {paginate(filteredIngredients, pageSize, page).map((ingredient, itemIndex) => (
                             <TableRow key={itemIndex}>
                                 <TableCell style={cellStyle} >
-                                    {Ingredients.id}
+                                    {ingredient.id}
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     <TextField
                                         variant="outlined"
                                         type="string"
-                                        value={Ingredients.name}
-                                        onChange={(e) => changeIngredientName(Ingredients.id, e.target.value as any)}
+                                        value={ingredient.name}
+                                        onChange={(e) => changeIngredient(ingredient.id, { ...ingredient, name: e.target.value as any })}
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     <TextField
                                         variant="outlined"
                                         type="number"
-                                        value={Ingredients.stock}
-                                        onChange={(e) => changeIngredientStock(Ingredients.id, e.target.value as any)}
+                                        value={ingredient.stock}
+                                        onChange={(e) => changeIngredient(ingredient.id, { ...ingredient, stock: e.target.value as any })}
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     <TextField
                                         variant="outlined"
                                         type="number"
-                                        value={Ingredients.restock}
-                                        onChange={(e) => changeIngredientRestock(Ingredients.id, e.target.value as any)}
+                                        value={ingredient.restock}
+                                        onChange={(e) => changeIngredient(ingredient.id, { ...ingredient, restock: e.target.value as any })}
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     <TextField
                                         variant="outlined"
                                         type="number"
-                                        value={Ingredients.amountOrdered}
-                                        onChange={(e) => changeIngredientAmountOrdered(Ingredients.id, e.target.value as any)}
+                                        value={ingredient.amountOrdered}
+                                        onChange={(e) => changeIngredient(ingredient.id, { ...ingredient, amountOrdered: e.target.value as any })}
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
                                     <TextField
                                         variant="outlined"
                                         type="number"
-                                        value={Ingredients.price}
-                                        onChange={(e) => changeIngredientPrice(Ingredients.id, e.target.value as any)}
+                                        value={ingredient.price}
+                                        onChange={(e) => changeIngredient(ingredient.id, { ...ingredient, price: e.target.value as any })}
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    <Checkbox checked={Ingredients.glutenFree}
-                                        onChange={(e) => changeIngredientGF(Ingredients.id)} />
+                                    <Checkbox checked={ingredient.glutenFree}
+                                        onChange={(e) => changeIngredient(ingredient.id, { ...ingredient, glutenFree: e.target.value === "on" ? true : false })}
+                                    />
                                 </TableCell>
                                 <TableCell style={cellStyle} >
-                                    <Checkbox checked={Ingredients.vegan}
-                                        onChange={(e) => changeIngredientVegan(Ingredients.id)} />
+                                    <Checkbox checked={ingredient.vegan}
+                                        onChange={(e) => changeIngredient(ingredient.id, { ...ingredient, glutenFree: e.target.value === "on" ? true : false })}
+                                    />
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <DeleteConfirmIngredient
-                                        id={Ingredients.id}
-                                        name={Ingredients.name}
+                                        id={ingredient.id}
+                                        name={ingredient.name}
                                         open={isAddItemDialogOpen}
                                         onClose={() => setAddItemDialogOpen(false)}
                                     />
