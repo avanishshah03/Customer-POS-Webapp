@@ -10,6 +10,7 @@ import { ExcessItemsReport } from './components/ExcessItemsReport';
 import { RestockReport } from './components/RestockReport';
 import { OrderedTogetherReport } from './components/OrderedTogetherReport';
 
+
 export const Manager: React.FC = () => {
     const [value, setValue] = React.useState(0);
     return (
