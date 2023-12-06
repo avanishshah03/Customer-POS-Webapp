@@ -52,6 +52,9 @@ export const SalesReport = () => {
             <Typography variant="h5" style={{ textAlign: "center" }}>
                 Sales Report
             </Typography>
+            <Typography variant="h5" style={{ textAlign: "center", fontSize: "medium" }}>
+                Number of Items sold between the selected dates
+            </Typography>
             <div style={{ marginBottom: '10px' }}>
                 <TextField
                     label="Start Date"
