@@ -12,6 +12,7 @@ import image5 from "./components/assets/05.jpg";
 import image6 from "./components/assets/06.jpg";
 const imgs = [image1, image2, image3, image4, image5, image6];
 console.log(import.meta.env.VITE_REACT_APP_API_KEY);
+import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 
@@ -23,7 +24,7 @@ export const LandingPage: React.FC = () => {
     
     return (
         <div className="landing-page background-image" >
-            <div className="content">
+            <div className="content" id="google_translate_element">
                 <div style={{ gridColumn: 2, gridRow: 1 }}>
                     <h1 className="notranslate">MESS WAFFLES</h1>
                     <h3>`Fall` in love with our Waffles.</h3>
