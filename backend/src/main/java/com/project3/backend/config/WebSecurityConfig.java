@@ -3,6 +3,7 @@ package com.project3.backend.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -54,8 +55,9 @@ public class WebSecurityConfig {
 		.cors(cors->cors.configurationSource(corsConfigurationSource()))
 		.authorizeHttpRequests(auth ->
 			auth.requestMatchers("/menuItems", "/itemCategories").permitAll()
+			.requestMatchers(HttpMethod.POST, "/orders").permitAll()
+			.requestMatchers(HttpMethod.GET, "/orders").hasAnyAuthority("ROLE_server", "ROLE_manager")
 			.requestMatchers("/ingredients", "/itemToIngredient").hasAuthority("ROLE_manager")
-			.requestMatchers("/orders").hasAnyAuthority("ROLE_manager", "ROLE_server")
 			.anyRequest().authenticated()
 		)
 		.oauth2ResourceServer(oauth2 ->

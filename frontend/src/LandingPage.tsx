@@ -74,7 +74,7 @@ export const LandingPage: React.FC = () => {
                         )
                         : (
                             <Link to="/">
-                                <Button style={customButtonStyle} className="button-hover-effect" onClickCapture={signOut}>
+                                <Button style={customButtonStyle} className="button-hover-effect" onClick={signOut}>
                                     Logout
                                 </Button>
                             </Link>
