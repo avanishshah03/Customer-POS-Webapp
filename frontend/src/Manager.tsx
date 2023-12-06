@@ -14,7 +14,7 @@ export const Manager: React.FC = () => {
                 <Tabs value={value} onChange={(_, newValue) => setValue(newValue)}>
                     <Tab label="Items" />
                     <Tab label="Inventory" />
-                    <Tab label="Slaes Report" />
+                    <Tab label="Sales Report" />
                     <Tab label="Orders" />
                 </Tabs>
             </Box>
