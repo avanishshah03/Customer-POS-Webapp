@@ -42,7 +42,6 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             setRole('');
             setUser('');
             localStorage.removeItem('IdToken');
-            document.location.reload();
         } catch (err) {
             console.error(err);
         }

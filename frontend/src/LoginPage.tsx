@@ -92,7 +92,9 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            <LoginButton />
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <LoginButton />
+            </div>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

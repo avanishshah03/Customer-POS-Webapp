@@ -22,17 +22,17 @@ import {
   GridToolbar,
 } from '@mui/x-data-grid';
 import { User } from '../store';
-import axios, {handleErrors} from '../config/axiosConfig';
+import axios, {handleErrors, handleErrorsNoRedirect} from '../config/axiosConfig';
 import { useEffect } from 'react';
 
 const initialRows: GridRowsProp = [];
 
 async function saveUser (user: User) {
-    return axios.post('/users', user).then((res) => res.data, handleErrors);
+    return axios.post('/users', user).then((res) => res.data, handleErrorsNoRedirect);
 }
 
 async function deleteUser (id: string | number) {
-    return axios.delete('/users', {params: id}).then((res) => res.data, handleErrors);
+    return axios.delete('/users', {params: {id: id}}).then((res) => res.data, handleErrorsNoRedirect);
 }
 
 function mapGridRowToUser(gridRow: GridValidRowModel): User {
@@ -71,7 +71,7 @@ function EditToolbar(props: EditToolbarProps) {
 
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'userId' },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'id' },
     }));
   };
 
@@ -107,13 +107,8 @@ export default function FullFeaturedCrudGrid() {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
-  const handleSaveClick = (id: GridRowId) => async () => {
-    let rowValue: GridValidRowModel = rows.find((row) => row.id === id)!;
-    const newUser: User = await saveUser(mapGridRowToUser(rowValue));
-    setRows((oldRows) => 
-      oldRows.map((row) => (row.id === id ? { ...newUser } : row))
-    );
-    setRowModesModel({ ...rowModesModel, [newUser.id!]: { mode: GridRowModes.View } });
+  const handleSaveClick = (id: GridRowId) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
@@ -133,8 +128,9 @@ export default function FullFeaturedCrudGrid() {
     }
   };
 
-  const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false };
+  const processRowUpdate = async (newRow: GridRowModel) => {
+    const newUser: User = await saveUser(mapGridRowToUser(newRow));
+    const updatedRow = { ...newUser, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
@@ -276,7 +272,6 @@ export default function FullFeaturedCrudGrid() {
           toolbar: { setRows, setRowModesModel },
         }}
       />
-  );
     </Box>
   );
 }
