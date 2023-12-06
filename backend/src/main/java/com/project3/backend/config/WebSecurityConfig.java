@@ -55,7 +55,6 @@ public class WebSecurityConfig {
 		.authorizeHttpRequests(auth ->
 			auth.requestMatchers("/menuItems", "/itemCategories").permitAll()
 			.requestMatchers("/ingredients", "/itemToIngredient").hasAuthority("ROLE_manager")
-			.requestMatchers("/orders").hasAnyAuthority("ROLE_manager", "ROLE_server")
 			.anyRequest().authenticated()
 		)
 		.oauth2ResourceServer(oauth2 ->
