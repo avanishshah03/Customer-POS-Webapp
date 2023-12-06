@@ -37,7 +37,7 @@ public class Ingredient {
     private double price;
     private boolean glutenFree;
     private boolean vegan;
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredientId")
     @JsonIgnore
     private Set<ItemToIngredient> itemToIngredients;

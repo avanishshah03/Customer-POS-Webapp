@@ -68,6 +68,7 @@ public class WebSecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.addAllowedOrigin("https://closedfuture.com"); 
+		configuration.addAllowedOrigin("http://localhost:5173");
 		configuration.addAllowedMethod("*"); 
 		configuration.addAllowedHeader("*"); 
 		configuration.setAllowCredentials(true);
