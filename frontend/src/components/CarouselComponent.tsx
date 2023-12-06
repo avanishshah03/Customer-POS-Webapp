@@ -15,9 +15,6 @@ interface Props {
 }
 
 function Carousel({ slides }: Props) {
-    // const swiperLeft = useRef<HTMLDivElement>(null);
-    // const swiperRight = useRef<HTMLDivElement>(null);
-
     return (
         <Swiper
             modules={[EffectCoverflow, Navigation, Pagination]}
@@ -39,6 +36,7 @@ function Carousel({ slides }: Props) {
                 modifier: 1,
                 slideShadows: true,
             }}
+            initialSlide={1} // Set the initial slide index to 1 (the second image)
         >
             {slides.map((slide, index) => (
                 <SwiperSlide key={index} className="slide-inner">
