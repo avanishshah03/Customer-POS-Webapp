@@ -23,6 +23,7 @@ import {
   useGridApiRef,
   GridToolbarQuickFilter,
   GridToolbar,
+  GridValueFormatterParams,
 } from '@mui/x-data-grid';
 import { Order, MenuItem } from '../store';
 import axios, {handleErrors} from '../config/axiosConfig';
@@ -151,6 +152,12 @@ const ItemTable: React.FC<{items: MenuItem[], handleClose: any}> = ({items, hand
       type: 'number',
       flex: 0.2,
       minWidth: 50,
+      valueFormatter: (params: GridValueFormatterParams<number>) => {
+        if (params.value == null) {
+          return '';
+        }
+        return '\$${params.value.toLocaleString()}';
+      }
     },
   ];
 
