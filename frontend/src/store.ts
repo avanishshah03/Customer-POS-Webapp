@@ -102,16 +102,16 @@ export const useMenuStore = create<Store>((set) => ({
   setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
   addMenuItem: (item: MenuItem) => {
-    fetch(serverUrl + "/menuItems", {
-      method: "POST",
-      body: JSON.stringify({ ...item, ingredientIds: [], quantities: [] }),
+    axios.post("/menuItems", {
+      ...item,
+      ingredientIds: [],
+      quantities: [],
     });
     set((state) => ({ menuItems: [...state.menuItems, item] }));
   },
 
   checkout: () => {
     set((state) => {
-      // FIXME
       let items: any = {};
       state.cart.map((entry) => {
         items[entry.itemId] = entry.quantity;
