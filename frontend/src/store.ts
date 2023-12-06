@@ -1,6 +1,5 @@
 import { MenuItem } from "@mui/material";
 import { create } from "zustand";
-import { serverUrl } from "./config/constant";
 import axios, {
   handleErrors,
   handleErrorsNoRedirect,
