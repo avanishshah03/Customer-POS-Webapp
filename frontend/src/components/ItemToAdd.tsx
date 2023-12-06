@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  // ButtonGroup,
   Checkbox,
   Dialog,
   DialogContent,
@@ -19,13 +18,7 @@ interface ItemToAddProps {
 }
 
 export const ItemToAdd: React.FC<ItemToAddProps> = () => {
-  // const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
-  const menuitems = useMenuStore((state) => state.menuItems);
-  const changeSize = useMenuStore((state) => state.changeSize);
-  // const tableStyle = {
-  //   border: "1px solid #ddd",
-  //   width: "100%",
-  // }
+  const addMenuItem = useMenuStore((state) => state.addMenuItem);
 
   const [open, setOpen] = useState(false);
   const [itemName, setItemName] = useState("");
@@ -33,7 +26,7 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
 
   const [glutenFree, setGlutenFree] = useState(false);
   const [vegan, setVegan] = useState(false);
-  const [size, setSize] = useState<string | undefined>("");
+  const [size, setSize] = useState<string>("");
   const [extraSauce, setExtraSauce] = useState(false);
 
   return (
@@ -99,11 +92,20 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
           </Typography>
           {/* Add more fields as needed */}
 
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={() => addMenuItem({
+            name: itemName,
+            price: parseFloat(itemPrice),
+            glutenFree: glutenFree,
+            vegan: vegan,
+            size: size,
+            extrasauce: extraSauce,
+            categoryId: 1, // FIXME
+            imageUrl: ""
+          })}>
             Save
           </Button>
         </DialogContent>
-      </Dialog>
+      </Dialog >
     </>
   );
 };

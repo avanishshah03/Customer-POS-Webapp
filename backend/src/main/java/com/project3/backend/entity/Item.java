@@ -47,11 +47,11 @@ public class Item {
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Map<Integer, Integer> ingredients; // ingredient id -> quantity
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredientId")
     @JsonIgnore
     private Set<ItemToIngredient> itemToIngredients;
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId")
     @JsonIgnore
     private Set<ItemToOrder> itemToOrders;

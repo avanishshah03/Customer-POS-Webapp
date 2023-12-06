@@ -43,7 +43,7 @@ public class Order {
     private String status;
     @Transient
     private Map<Integer, Integer> items; // item id -> quantity
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId")
     @JsonIgnore
     private Set<ItemToOrder> itemToOrders;

@@ -26,18 +26,18 @@ import {
   GridValueFormatterParams,
 } from '@mui/x-data-grid';
 import { Order, MenuItem } from '../store';
-import axios, {handleErrors} from '../config/axiosConfig';
+import axios, {handleErrors, handleErrorsNoRedirect} from '../config/axiosConfig';
 import { useEffect } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 const initialRows: GridRowsProp = [];
 
 async function saveOrder (order: Order) {
-  return axios.post('/orders', order).then((res) => res.data, handleErrors);
+  return axios.post('/orders', order).then((res) => res.data, handleErrorsNoRedirect);
 }
 
 async function deleteOrder (id: string | number) {
-  return axios.delete('/orders', {params: id}).then((res) => res.data, handleErrors);
+  return axios.delete('/orders', {params: {id: id}}).then((res) => res.data, handleErrorsNoRedirect);
 }
 
 function mapGridRowToOrder(gridRow: GridValidRowModel): Order {
@@ -73,7 +73,7 @@ function EditToolbar(props: EditToolbarProps) {
   const handleClick = () => {
     const id = Infinity;
     setRows((oldRows) => 
-      [...oldRows, { id: id, userId: 1, status: 'pending', time: new Date(), price: 0, items: [], isNew: true }]
+      [...oldRows, { id: id, userId: 1, status: 'pending', time: new Date(), price: 0, items: {}, isNew: true }]
       );
 
     setRowModesModel((oldModel) => ({
@@ -217,12 +217,7 @@ export default function FullFeaturedCrudGrid() {
   };
 
   const handleSaveClick = (id: GridRowId) => async () => {
-    let rowValue: GridValidRowModel = rows.find((row) => row.id === id)!;
-    const newOrder: Order = await saveOrder(mapGridRowToOrder(rowValue));
-    setRows((oldRows) => 
-      oldRows.map((row) => (row.id === id ? { ...newOrder } : row))
-    );
-    setRowModesModel({ ...rowModesModel, [newOrder.id!]: { mode: GridRowModes.View } });
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
   const handleDeleteClick = (id: GridRowId) => () => {
@@ -242,8 +237,9 @@ export default function FullFeaturedCrudGrid() {
     }
   };
 
-  const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false };
+  const processRowUpdate = async (newRow: GridRowModel) => {
+    const newUser: Order = await saveOrder(mapGridRowToOrder(newRow));
+    const updatedRow = { ...newUser, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
@@ -433,7 +429,6 @@ export default function FullFeaturedCrudGrid() {
       <Dialog title='Items' open={open} onClose={handleClose} fullWidth={true} maxWidth='lg'>
         <ItemTable items={items} handleClose={handleClose} />
       </Dialog>
-    );
     </Box>
   );
 }
