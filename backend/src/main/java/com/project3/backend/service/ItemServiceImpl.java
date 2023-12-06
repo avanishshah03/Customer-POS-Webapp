@@ -38,7 +38,7 @@ public class ItemServiceImpl implements ItemService {
     public Item saveItem(Item item)
     {
         Item savedItem = itemRepository.save(item);
-
+        
         List<ItemToIngredient> itemsToIngredient = savedItem.getIngredients().entrySet().stream()
             .map(entry -> {
                 ItemToIngredient itemToIngredient = new ItemToIngredient();
