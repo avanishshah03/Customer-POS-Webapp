@@ -1,14 +1,12 @@
 package com.project3.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.project3.backend.entity.Ingredient;
 import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemToIngredient;
-import com.project3.backend.reports.ItemToOrderwithQuantity;
+import com.project3.backend.reports.ItemToOrderWithQuantity;
 import com.project3.backend.reports.OrderedTogetherReport;
 import com.project3.backend.reports.SalesReport;
 import com.project3.backend.repository.ItemRepository;
@@ -19,7 +17,6 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.time.LocalDateTime;
 
 
@@ -38,17 +35,27 @@ public class ItemServiceImpl implements ItemService {
     public Item saveItem(Item item)
     {
         Item savedItem = itemRepository.save(item);
-        
-        List<ItemToIngredient> itemsToIngredient = savedItem.getIngredients().entrySet().stream()
-            .map(entry -> {
-                ItemToIngredient itemToIngredient = new ItemToIngredient();
-                itemToIngredient.setItemId(savedItem.getId());
-                itemToIngredient.setIngredientId(entry.getKey());
-                itemToIngredient.setQuantity(entry.getValue());
-                return itemToIngredient;
-            })
-            .collect(Collectors.toList());
-        itemToIngredientRepository.saveAll(itemsToIngredient);
+        System.out.println("ingredients: " + item.getIngredients());
+        if (item.getIngredients() != null) 
+        {
+            List<ItemToIngredient> itemsToIngredient = item.getIngredients().entrySet().stream()
+                .map(entry -> {
+                    ItemToIngredient itemToIngredient = itemToIngredientRepository.findByItemIdAndIngredientId(savedItem.getId(), entry.getKey());
+                    if (itemToIngredient == null) {
+                        itemToIngredient = new ItemToIngredient();
+                    }
+                    itemToIngredient.setItemId(savedItem.getId());
+                    itemToIngredient.setIngredientId(entry.getKey());
+                    itemToIngredient.setQuantity(entry.getValue());
+                    return itemToIngredient;
+                })
+                .collect(Collectors.toList());
+            List<ItemToIngredient> existingItemToIngredients = itemToIngredientRepository.findByItemId(savedItem.getId()).stream()
+                .filter(itemToIngredient -> !item.getIngredients().containsKey(itemToIngredient.getIngredientId()))
+                .collect(Collectors.toList());
+            itemToIngredientRepository.deleteAll(existingItemToIngredients);
+            itemToIngredientRepository.saveAll(itemsToIngredient);
+        }
         return savedItem;
     }
 
@@ -59,7 +66,7 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.deleteById(id);
     }
 
-    public List<ItemToOrderwithQuantity> fetchItemsByOrderId(int orderId)
+    public List<ItemToOrderWithQuantity> fetchItemsByOrderId(int orderId)
     {
         return itemRepository.findByItemToOrders_orderId(orderId);
     }

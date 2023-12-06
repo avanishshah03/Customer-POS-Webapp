@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project3.backend.entity.Ingredient;
+import com.project3.backend.reports.IngredientToItemWithQuantity;
 import com.project3.backend.reports.IngredientUsageReport;
+import com.project3.backend.reports.ItemToOrderWithQuantity;
 import com.project3.backend.reports.RestockReport;
 import com.project3.backend.repository.IngredientRepository;
 import com.project3.backend.repository.ItemToIngredientRepository;
@@ -39,7 +41,7 @@ public class IngredientServiceImpl implements IngredientService{
         ingredientRepository.deleteById(id);
     }
 
-    public List<Ingredient> fetchIngredientsByItemId(int itemId)
+    public List<IngredientToItemWithQuantity> fetchIngredientsByItemId(int itemId)
     {
         return ingredientRepository.findByItemToIngredients_itemId(itemId);
     }

@@ -49,10 +49,12 @@ public class Item {
     private Map<Integer, Integer> ingredients; // ingredient id -> quantity
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredientId")
+    @Transient
     @JsonIgnore
     private Set<ItemToIngredient> itemToIngredients;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId")
+    @Transient
     @JsonIgnore
     private Set<ItemToOrder> itemToOrders;
     /**

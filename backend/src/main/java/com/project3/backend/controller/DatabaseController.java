@@ -23,8 +23,9 @@ import com.project3.backend.entity.Item;
 import com.project3.backend.entity.ItemCategory;
 import com.project3.backend.entity.Order;
 import com.project3.backend.entity.User;
+import com.project3.backend.reports.IngredientToItemWithQuantity;
 import com.project3.backend.reports.IngredientUsageReport;
-import com.project3.backend.reports.ItemToOrderwithQuantity;
+import com.project3.backend.reports.ItemToOrderWithQuantity;
 import com.project3.backend.reports.OrderedTogetherReport;
 import com.project3.backend.reports.RestockReport;
 import com.project3.backend.reports.SalesReport;
@@ -68,12 +69,12 @@ public class DatabaseController {
     }
 
     @GetMapping("/itemToIngredient")
-    public List<Ingredient> getIngredientsByItemId(@RequestParam int itemId) {
+    public List<IngredientToItemWithQuantity> getIngredientsByItemId(@RequestParam int itemId) {
         return ingredientService.fetchIngredientsByItemId(itemId);
     }
 
     @GetMapping("/itemToOrder")
-    public List<ItemToOrderwithQuantity> getItemsByOrderId(@RequestParam int orderId) {
+    public List<ItemToOrderWithQuantity> getItemsByOrderId(@RequestParam int orderId) {
         return itemService.fetchItemsByOrderId(orderId);
     }
 

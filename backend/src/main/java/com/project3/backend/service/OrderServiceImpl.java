@@ -27,16 +27,29 @@ public class OrderServiceImpl implements OrderService{
     public Order saveOrder(Order order)
     {
         Order savedOrder = orderRepository.save(order);
-        List<ItemToOrder> itemsToOrder = savedOrder.getItems().entrySet().stream()
-            .map(entry -> {
-                ItemToOrder itemToOrder = new ItemToOrder();
-                itemToOrder.setOrderId(savedOrder.getId());
-                itemToOrder.setItemId(entry.getKey());
-                itemToOrder.setQuantity(entry.getValue());
-                return itemToOrder;
-            })
-            .collect(Collectors.toList());
-        itemToOrderRepository.saveAll(itemsToOrder);
+        System.out.println("items: " + order.getItems());
+        if (order.getItems() != null)
+        {
+            System.out.println("modifying itemsToOrder");
+            List<ItemToOrder> itemsToOrder = order.getItems().entrySet().stream()
+                .map(entry -> {
+                    ItemToOrder itemToOrder = itemToOrderRepository.findByItemIdAndOrderId(entry.getKey(), savedOrder.getId());
+                    if (itemToOrder == null) {
+                        itemToOrder = new ItemToOrder();
+                    }
+                    itemToOrder.setOrderId(savedOrder.getId());
+                    itemToOrder.setItemId(entry.getKey());
+                    itemToOrder.setQuantity(entry.getValue());
+                    return itemToOrder;
+                })
+                .collect(Collectors.toList());
+            
+            List<ItemToOrder> existingItemToOrders = itemToOrderRepository.findByOrderId(savedOrder.getId()).stream()
+                .filter(itemToOrder -> !order.getItems().containsKey(itemToOrder.getItemId()))
+                .collect(Collectors.toList());
+            itemToOrderRepository.deleteAll(existingItemToOrders);
+            itemToOrderRepository.saveAll(itemsToOrder);
+        }
         return savedOrder;
     }
 

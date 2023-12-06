@@ -6,7 +6,7 @@ import axios, {
   handleErrorsNoRedirect,
 } from "./config/axiosConfig";
 
-interface CartEntry {
+export interface CartEntry {
   itemId: number;
   quantity: number;
 }
@@ -21,6 +21,7 @@ export interface MenuItem {
   glutenFree: boolean;
   size: string;
   extrasauce: boolean;
+  quantity?: number;
 }
 
 export interface ItemCategory {
@@ -34,7 +35,7 @@ export interface Order {
   time: string;
   userId: number;
   status: string;
-  items: Map<number, number>;
+  items?: Record<number, number>;
 }
 
 export interface Ingredient {
@@ -47,6 +48,7 @@ export interface Ingredient {
   price: number;
   glutenFree: boolean;
   vegan: boolean;
+  quantity?: number;
 }
 
 export interface User {

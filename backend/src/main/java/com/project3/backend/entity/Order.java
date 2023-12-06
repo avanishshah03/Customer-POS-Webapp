@@ -12,6 +12,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
@@ -42,9 +43,11 @@ public class Order {
     private int userId;
     private String status;
     @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Map<Integer, Integer> items; // item id -> quantity
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId")
+    @Transient
     @JsonIgnore
     private Set<ItemToOrder> itemToOrders;
 

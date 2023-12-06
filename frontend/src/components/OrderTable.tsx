@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import CloseIcon from '@mui/icons-material/Close';
 import InfoIcon from '@mui/icons-material/Info';
 import {
   GridRowsProp,
@@ -25,10 +26,12 @@ import {
   GridToolbar,
   GridValueFormatterParams,
 } from '@mui/x-data-grid';
-import { Order, MenuItem } from '../store';
+import { Order, MenuItem, CartEntry } from '../store';
 import axios, {handleErrors, handleErrorsNoRedirect} from '../config/axiosConfig';
 import { useEffect } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Alert, AppBar, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Snackbar, Toolbar, Typography } from '@mui/material';
+import { CheckoutCart } from './OrderEditCart';
+import { MenuItemsDisplay } from './OrderMenuDisplay';
 
 const initialRows: GridRowsProp = [];
 
@@ -47,7 +50,7 @@ function mapGridRowToOrder(gridRow: GridValidRowModel): Order {
       time: gridRow.time,
       price: gridRow.price,
       status: gridRow.status,
-      items: gridRow.items,
+      items: null as any,
     };
   }
   return {
@@ -56,7 +59,7 @@ function mapGridRowToOrder(gridRow: GridValidRowModel): Order {
     time: gridRow.time,
     price: gridRow.price,
     status: gridRow.status,
-    items: gridRow.items,
+    items: null as any,
   };
 }
 
@@ -67,6 +70,7 @@ interface EditToolbarProps {
   ) => void;
 }
 
+// Toolbar with Add Row button
 function EditToolbar(props: EditToolbarProps) {
   const { setRows, setRowModesModel } = props;
 
@@ -92,7 +96,8 @@ function EditToolbar(props: EditToolbarProps) {
   );
 }
 
-const ItemTable: React.FC<{items: MenuItem[], handleClose: any}> = ({items, handleClose}) => {  
+// Dialog for viewing items in an order
+const ItemTable: React.FC<{items: MenuItem[]}> = ({items}) => {  
   if (items.length === 0) {
     return (
       <React.Fragment>
@@ -100,9 +105,6 @@ const ItemTable: React.FC<{items: MenuItem[], handleClose: any}> = ({items, hand
         <DialogContent>
           No items in this order.
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => handleClose}>Close</Button>
-        </DialogActions>
       </React.Fragment>
     );
   }
@@ -182,9 +184,6 @@ const ItemTable: React.FC<{items: MenuItem[], handleClose: any}> = ({items, hand
           columns={columns}
           sx={{ height: '100%' }} />
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Close</Button>
-      </DialogActions>
     </React.Fragment>
   );
 }
@@ -195,9 +194,17 @@ export default function FullFeaturedCrudGrid() {
 
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
 
-  const [open, setOpen] = React.useState(false);
+  const [openOrderItemTable, setOpenOrderItemTable] = React.useState<boolean>(false);
 
-  const [items, setItems] = React.useState([]);
+  const [openOrderItemEdit, setOpenOrderItemEdit] = React.useState<boolean>(false);
+
+  const [openOrderPlaced, setOpenOrderPlaced] = React.useState(false);
+
+  const [items, setItems] = React.useState<MenuItem[]>([]);
+
+  const [order, setOrder] = React.useState<Order>({} as Order);
+  
+  const [orderCart, setOrderCart] = React.useState<CartEntry[]>([]);
 
   useEffect(() => {
     axios.get("/orders").then((res) => res.data)
@@ -232,14 +239,15 @@ export default function FullFeaturedCrudGrid() {
     });
 
     const editedRow = rows.find((row) => row.id === id);
+    // Removes row if it was a cancelled new row
     if (editedRow!.isNew) {
       setRows(rows.filter((row) => row.id !== id));
     }
   };
 
   const processRowUpdate = async (newRow: GridRowModel) => {
-    const newUser: Order = await saveOrder(mapGridRowToOrder(newRow));
-    const updatedRow = { ...newUser, isNew: false };
+    const newOrder: Order = await saveOrder(mapGridRowToOrder(newRow));
+    const updatedRow = { ...newOrder, isNew: false };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
@@ -248,8 +256,28 @@ export default function FullFeaturedCrudGrid() {
     setRowModesModel(newRowModesModel);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleOrderItemEdit = () => {
+    setOrderCart(items.map((item) => ({itemId: item.id!, quantity: item.quantity!})));
+    setOpenOrderItemTable(false);
+    setOpenOrderItemEdit(true);
+  }
+
+  const handleOrderPlacedSuccess = (totalPrice: number) => {
+    const updatedRow = { ...order, price: totalPrice, isNew: false };
+    setRows(rows.map((row) => (row.id === updatedRow.id ? updatedRow : row)));
+    setOpenOrderPlaced(true);
+  }
+
+  const handleCloseOrderItemTable = () => {
+    setOpenOrderItemTable(false);
+  }
+
+  const handleCloseOrderItemEdit = () => {
+    setOpenOrderItemEdit(false);
+  }
+
+  const handleCloseOrderPlacedSuccess = () => {
+    setOpenOrderPlaced(false);
   }
 
   const columns: GridColDef[] = [
@@ -327,12 +355,11 @@ export default function FullFeaturedCrudGrid() {
               axios.get("/itemToOrder", {params: {orderId: id}})
                 .then((res) => res.data)
                 .then((data) => {
-                  
+                  setOrder({...rows.find((row) => row.id === id)!} as Order);
                   setItems(data);
-                  setOpen(true);
+                  setOpenOrderItemTable(true);
                 }, handleErrors)
             }}
-            
           />
         ];
       },
@@ -426,9 +453,45 @@ export default function FullFeaturedCrudGrid() {
         }}
       />
       
-      <Dialog title='Items' open={open} onClose={handleClose} fullWidth={true} maxWidth='lg'>
-        <ItemTable items={items} handleClose={handleClose} />
+      <Dialog title='Items' open={openOrderItemTable} onClose={handleCloseOrderItemTable} fullWidth={true} maxWidth='lg'>
+        <ItemTable items={items} />
+        <DialogActions>
+          <Button onClick={handleOrderItemEdit}>Edit</Button>
+          <Button onClick={handleCloseOrderItemTable}>Close</Button>
+        </DialogActions>
       </Dialog>
+      <Dialog title='Edit Items' open={openOrderItemEdit} onClose={handleCloseOrderItemEdit} fullScreen={true}>
+      <AppBar sx={{ position: 'relative' }}>
+          <Toolbar>
+              <IconButton
+                edge="start"
+                color="inherit"
+                onClick={handleCloseOrderItemEdit}
+                aria-label="close"
+                >
+                <CloseIcon />
+              </IconButton>
+
+              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                Editing the items of {(order.id === Infinity) ? "a new order" : "order " + order.id } at {new Date(order.time).toString()}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+            <MenuItemsDisplay showImage={false} fontSize={"small"} addPaddingToImage={false} cart={orderCart} setCart={setOrderCart}/>
+          </Grid>
+          <Grid item xs={4}>
+            <CheckoutCart cart={orderCart} setCart={setOrderCart} order={order} orderPlacedSuccess={handleOrderPlacedSuccess} />
+          </Grid>
+        </Grid>
+      </Dialog>
+      <Snackbar open={openOrderPlaced} autoHideDuration={6000} onClose={handleCloseOrderPlacedSuccess}>
+          <Alert onClose={handleCloseOrderPlacedSuccess} severity="success" sx={{ width: '100%' }}>
+              Order modified successfully
+          </Alert>
+      </Snackbar>
     </Box>
+    
   );
 }

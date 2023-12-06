@@ -1,6 +1,6 @@
 package com.project3.backend.reports;
 
-public interface ItemToOrderwithQuantity {
+public interface ItemToOrderWithQuantity {
     int getId();
     String getName();
     double getPrice();

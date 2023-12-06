@@ -4,14 +4,25 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { useMenuStore } from "../store";
+import { CartEntry, useMenuStore } from "../store";
 
 
-export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string, backgroundColor?: string, addPaddingToImage: boolean }) => {
+export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string, backgroundColor?: string, addPaddingToImage: boolean, cart: CartEntry[], setCart: React.Dispatch<React.SetStateAction<CartEntry[]>> }) => {
   const menuItems = useMenuStore((state) => state.menuItems);
-  const addtoCart = useMenuStore((state) => state.addCartEntry);
-  const [tabValue, setTabValue] = useState(0);
   const itemCategories = useMenuStore((state) => state.itemCategories);
+  const [tabValue, setTabValue] = useState(0);
+  const addtoCart = (id: number) => {
+    props.setCart(
+      props.cart.find((entry) => entry.itemId === id)
+        ? props.cart.map((entry) => {
+          if (entry.itemId === id) {
+            return { itemId: entry.itemId, quantity: entry.quantity + 1 };
+          }
+          return entry;
+        })
+        : [...props.cart, { itemId: id, quantity: 1 }]
+    );
+  };
 
   const paperStyle = {
     padding: "20px",
@@ -89,9 +100,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string,
                           justifyContent: 'center',
                         }}
                         >
-
                           {menuItem.name} <br />${menuItem.price.toFixed(2)}
-
                         </Typography></div>
 
                     </Button>

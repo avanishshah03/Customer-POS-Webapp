@@ -9,12 +9,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.project3.backend.entity.Ingredient;
+import com.project3.backend.reports.IngredientToItemWithQuantity;
 import com.project3.backend.reports.IngredientUsageReport;
 import com.project3.backend.reports.RestockReport;
 
 @Repository
 public interface IngredientRepository extends CrudRepository <Ingredient, Integer> {
-    List<Ingredient> findByItemToIngredients_itemId(int itemId);
+    @Query(value = "SELECT i.id, i.name, i.stock, i.restock, i.amount_ordered AS amountOrdered, i.price, i.gluten_free AS glutenFree, i.vegan, iti.quantity " +
+                   "FROM ingredient i " +
+                   "JOIN item_to_ingredient iti ON i.id = iti.ingredient_id " +
+                   "JOIN item it ON it.id = iti.item_id " +
+                   "WHERE it.id = :itemId", nativeQuery = true)
+    List<IngredientToItemWithQuantity> findByItemToIngredients_itemId(int itemId);
     
     @Query(value = "SELECT i.name AS ingredientName, SUM(iti.quantity) AS amountUsed " +
                    "FROM \"order\" O " +

@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Transient;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import lombok.Data;
@@ -39,6 +40,7 @@ public class Ingredient {
     private boolean vegan;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredientId")
+    @Transient
     @JsonIgnore
     private Set<ItemToIngredient> itemToIngredients;
 
