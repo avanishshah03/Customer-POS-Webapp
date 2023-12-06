@@ -81,6 +81,12 @@ public class DatabaseController {
     public List<User> getUsers() {
         return userService.fetchUsers();
     }
+    
+    @PostMapping("/menuItems")
+    public Item saveItem(@RequestBody Item item) {
+        System.out.println("Saving item: " + item.toString());
+        return itemService.saveItem(item);
+    }
 
     @PostMapping("/ingredients")
     public Ingredient saveIngredient(@RequestBody Ingredient ingredient) {
@@ -94,11 +100,6 @@ public class DatabaseController {
         return orderService.saveOrder(order);
     }
 
-    @PostMapping("/menuItems")
-    public Item saveItem(@RequestBody Item item) {
-        System.out.println("Saving item: " + item.toString());
-        return itemService.saveItem(item);
-    }
 
     @PostMapping("/users")
     public User saveUser(@RequestBody User user) {
