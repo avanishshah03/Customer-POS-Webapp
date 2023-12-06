@@ -21,6 +21,7 @@ export interface MenuItem {
   glutenFree: boolean;
   size: string;
   extrasauce: boolean;
+  ingredients: Ingredient[];
 }
 
 export interface ItemCategory {
@@ -62,13 +63,8 @@ interface Store {
   addCartEntry: (id: number) => void;
   incrementCartEntryQuantity: (id: number) => void;
   decrementCartEntryQuantity: (id: number) => void;
-  changeItemPrice: (id: number, newPrice: number) => void;
-  changeItemName: (id: number, newName: string) => void;
-  changeGF: (id: number) => void;
-  changeVegan: (id: number) => void;
-  changeExtraSauce: (id: number) => void;
+  changeItem: (id: number, newItem: MenuItem) => void;
   deleteMenuItem: (id: number) => void;
-  changeSize: (id: number, sizein: string) => void;
   setIngredients: (ingredients: Ingredient[]) => void;
   changeIngredientName: (id: number, newName: string) => void;
   changeIngredientStock: (id: number, newStock: number) => void;
@@ -93,11 +89,17 @@ let itemCategoriesPromise: Promise<ItemCategory[]> = axios
   .get("/itemCategories")
   .then((res) => res.data, handleErrorsNoRedirect);
 let itemCategories: ItemCategory[] = await itemCategoriesPromise;
+let ingredientsPromise: Promise<Ingredient[]> = axios
+  .get("/ingredients")
+  .then((res) => res.data, handleErrorsNoRedirect);
+let ingredients: Ingredient[] = await ingredientsPromise;
+console.log("ingredients", ingredients);
+
 export const useMenuStore = create<Store>((set) => ({
   cart: [],
   itemCategories: itemCategories,
   menuItems: menuItems,
-  ingredients: [],
+  ingredients: ingredients,
   setIngredients: (ingredients: Ingredient[]) => set({ ingredients }),
   setMenuItems: (items: MenuItem[]) => set({ menuItems: items }),
 
@@ -184,11 +186,15 @@ export const useMenuStore = create<Store>((set) => ({
         .filter((entry) => entry.quantity > 0),
     }));
   },
-  changeItemPrice: (id: number, newPrice: number) => {
+  changeItem: (id: number, newItem: MenuItem) => {
+    axios.post("/menuItems", {
+      ...newItem,
+      id,
+    });
     return set((state) => ({
       menuItems: state.menuItems.map((item) => {
         if (item.id === id) {
-          return { ...item, price: newPrice };
+          return { ...newItem, id };
         }
         return item;
       }),
@@ -197,80 +203,8 @@ export const useMenuStore = create<Store>((set) => ({
     }));
   },
 
-  changeItemName: (id: number, newName: string) => {
-    return set((state) => ({
-      menuItems: state.menuItems.map((item) => {
-        if (item.id === id) {
-          return { ...item, name: newName };
-        }
-        return item;
-      }),
-      cart: state.cart,
-      itemCategories: state.itemCategories,
-    }));
-  },
-
-  changeGF: (id: number) => {
-    set((state) => ({
-      menuItems: state.menuItems.map((item) => {
-        if (item.glutenFree === true) {
-          if (item.id === id) {
-            return { ...item, glutenFree: false };
-          }
-        } else {
-          if (item.id === id) {
-            return { ...item, glutenFree: true };
-          }
-        }
-        return item;
-      }),
-    }));
-  },
-
-  changeVegan: (id: number) => {
-    set((state) => ({
-      menuItems: state.menuItems.map((item) => {
-        if (item.vegan === true) {
-          if (item.id === id) {
-            return { ...item, vegan: false };
-          }
-        } else {
-          if (item.id === id) {
-            return { ...item, vegan: true };
-          }
-        }
-        return item;
-      }),
-    }));
-  },
-
-  changeExtraSauce: (id: number) => {
-    set((state) => ({
-      menuItems: state.menuItems.map((item) => {
-        if (item.extrasauce === true) {
-          if (item.id === id) {
-            return { ...item, extrasauce: false };
-          }
-        } else {
-          if (item.id === id) {
-            return { ...item, extrasauce: true };
-          }
-        }
-        return item;
-      }),
-    }));
-  },
-  changeSize: (id: number, sizein: string) => {
-    set((state) => ({
-      menuItems: state.menuItems.map((item) => {
-        if (item.id === id) {
-          return { ...item, size: sizein };
-        }
-        return item;
-      }),
-    }));
-  },
   deleteMenuItem: (id: number) => {
+    axios.delete("/menuItems", { params: { id } });
     set((state) => ({
       menuItems: state.menuItems.filter((item) => item.id !== id),
     }));

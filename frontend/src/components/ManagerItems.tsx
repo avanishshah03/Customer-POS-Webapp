@@ -34,14 +34,8 @@ export const ManagerItems = () => {
     const cart = useMenuStore((state) => state.cart);
     const menuitems = useMenuStore((state) => state.menuItems);
     const [page, setPage] = useState(1);
-    const changeItemPrice = useMenuStore((state) => state.changeItemPrice);
-    const changeGF = useMenuStore((state) => state.changeGF);
-    const changeVegan = useMenuStore((state) => state.changeVegan);
-    const changeExtraSauce = useMenuStore((state) => state.changeExtraSauce);
-    const changeSize = useMenuStore((state) => state.changeSize);
-    const changeItemName = useMenuStore((state) => state.changeItemName);
+    const changeItem = useMenuStore((state) => state.changeItem);
     const deleteMenuItem = useMenuStore((state) => state.deleteMenuItem);
-
     const [searchText, setSearchText] = useState("");
     const filteredMenuItems = menuitems.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase()));
 
@@ -114,7 +108,7 @@ export const ManagerItems = () => {
                                         type="string"
                                         value={menuItem.name}
                                         onChange={(e) =>
-                                            changeItemName(menuItem.id, e.target.value as any)
+                                            changeItem(menuItem.id, { ...menuItem, name: e.target.value as any })
                                         }
                                     />
                                 </TableCell>
@@ -124,7 +118,7 @@ export const ManagerItems = () => {
                                         type="number"
                                         value={menuItem.price}
                                         onChange={(e) =>
-                                            changeItemPrice(menuItem.id, e.target.value as any)
+                                            changeItem(menuItem.id, { ...menuItem, price: e.target.value as any })
                                         }
                                     />
                                 </TableCell>
@@ -134,13 +128,17 @@ export const ManagerItems = () => {
                                 <TableCell style={cellStyle}>
                                     <Checkbox
                                         checked={menuItem.glutenFree}
-                                        onChange={(e) => changeGF(menuItem.id)}
+                                        onChange={(e) =>
+                                            changeItem(menuItem.id, { ...menuItem, glutenFree: e.target.value === "on" ? true : false })
+                                        }
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <Checkbox
                                         checked={menuItem.vegan}
-                                        onChange={(e) => changeVegan(menuItem.id)}
+                                        onChange={(e) =>
+                                            changeItem(menuItem.id, { ...menuItem, vegan: e.target.value === "on" ? true : false })
+                                        }
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle}>
@@ -149,7 +147,9 @@ export const ManagerItems = () => {
                                         id="size-select-label"
                                         value={menuItem.size}
                                         label="menuitem.size"
-                                        onChange={(e) => changeSize(menuItem.id, e.target.value)}
+                                        onChange={(e) =>
+                                            changeItem(menuItem.id, { ...menuItem, size: e.target.value as any })
+                                        }
                                     >
                                         <MenuItem value={"single"}>single</MenuItem>
                                         <MenuItem value={"double"}>double</MenuItem>
@@ -167,11 +167,12 @@ export const ManagerItems = () => {
                                 <TableCell style={cellStyle}>
                                     <Checkbox
                                         checked={menuItem.extrasauce}
-                                        onChange={(e) => changeExtraSauce(menuItem.id)}
+                                        onChange={(e) =>
+                                            changeItem(menuItem.id, { ...menuItem, extrasauce: e.target.value as any })
+                                        }
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle}>
-                                    {/* <img>menuitem.imageUrl</img> */}
                                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                                         <EditImage menuItem={menuItem} />
                                     </div>
