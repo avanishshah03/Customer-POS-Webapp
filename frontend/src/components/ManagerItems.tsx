@@ -19,6 +19,7 @@ import { ItemToAdd } from "./ItemToAdd";
 import { EditItemIngredients } from "./EditItemIngredients";
 import { useState } from "react";
 import { DeleteConfirmItems } from "./DeleteConfirmItems";
+import { EditImage } from "./EditImage";
 
 // https://stackoverflow.com/questions/42761068/paginate-javascript-array
 function paginate<T>(array: T[], pageSize: number, pageNumber: number): T[] {
@@ -96,10 +97,10 @@ export const ManagerItems = () => {
                                 <Typography variant="h6">Extra Sauce</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">Delete Item</Typography>
+                                <Typography variant="h6">Image</Typography>
                             </TableCell>
                             <TableCell style={cellStyle}>
-                                <Typography variant="h6">Image</Typography>
+                                <Typography variant="h6">Delete</Typography>
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -170,6 +171,12 @@ export const ManagerItems = () => {
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle}>
+                                    {/* <img>menuitem.imageUrl</img> */}
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <EditImage menuItem={menuItem} />
+                                    </div>
+                                </TableCell>
+                                <TableCell style={cellStyle}>
                                     <DeleteConfirmItems
                                         id={menuItem.id}
                                         name={menuItem.name}
@@ -177,21 +184,7 @@ export const ManagerItems = () => {
                                         onClose={() => setAddItemDialogOpen(false)}
                                     />
                                 </TableCell>
-                                <TableCell style={cellStyle}>
-                                    {/* <img>menuitem.imageUrl</img> */}
-                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <Paper
-                                            elevation={3}
-                                            style={{
-                                                padding: "30px",
-                                                height: "100%",
-                                                textAlign: "center",
-                                                backgroundImage: menuItem.imageUrl ? `url(${menuItem.imageUrl})` : "none",
-                                                backgroundSize: "cover",
-                                            }}
-                                        ></Paper>
-                                    </div>
-                                </TableCell>
+
                             </TableRow>
                         ))}
                     </TableBody>
