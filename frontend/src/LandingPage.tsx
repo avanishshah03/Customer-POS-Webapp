@@ -12,7 +12,6 @@ import image5 from "./components/assets/05.jpg";
 import image6 from "./components/assets/06.jpg";
 const imgs = [image1, image2, image3, image4, image5, image6];
 console.log(import.meta.env.VITE_REACT_APP_API_KEY);
-import { useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 
@@ -21,10 +20,10 @@ export const LandingPage: React.FC = () => {
     const customButtonStyle = {
         color: 'white',
     };
-    
+
     return (
         <div className="landing-page background-image" >
-            <div className="content" id="google_translate_element">
+            <div className="content">
                 <div style={{ gridColumn: 2, gridRow: 1 }}>
                     <h1 className="notranslate">MESS WAFFLES</h1>
                     <h3>`Fall` in love with our Waffles.</h3>
@@ -45,7 +44,7 @@ export const LandingPage: React.FC = () => {
                     </Link>
                 </div>
                 <div style={{ gridColumn: 3, gridRow: 1, alignSelf: "start", justifySelf: "end", margin: '1.5em' }}>
-                    {( role === "ROLE_admin" || role === "ROLE_manager" || role === "ROLE_server") ?
+                    {(role === "ROLE_admin" || role === "ROLE_manager" || role === "ROLE_server") ?
                         (
                             <Link to="/server">
                                 <Button style={customButtonStyle} className="button-hover-effect">
