@@ -5,75 +5,159 @@ import axios, {
   handleErrorsNoRedirect,
 } from "./config/axiosConfig";
 
+/**
+ * Represents an entry in the shopping cart.
+ * @interface
+ */
 export interface CartEntry {
-  itemId: number;
-  quantity: number;
+  itemId: number; // Unique identifier for the item.
+  quantity: number; // Unique identifier for the item.
 }
 
+/**
+ * Describes the structure of a menu item.
+ * @interface
+ */
 export interface MenuItem {
-  id?: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-  categoryId: number;
-  vegan: boolean;
-  glutenFree: boolean;
-  size: string;
-  extrasauce: boolean;
-  quantity?: number;
-  ingredients: { [key: number]: number };
+  id?: number; // Optional unique identifier for the menu item.
+  name: string; // Name of the menu item.
+  price: number; // Price of the menu item.
+  imageUrl: string; // URL for the image of the menu item.
+  categoryId: number; // Identifier for the category this menu item belongs to.
+  vegan: boolean; // Indicates whether the item is vegan.
+  glutenFree: boolean; // Indicates whether the item is gluten-free.
+  size: string; // Size of the menu item.
+  extrasauce: boolean; // Indicates if extra sauce is added.
+  quantity?: number; // Optional quantity for bulk operations.
+  ingredients: { [key: number]: number }; // Ingredients and their quantities.
 }
 
+/**
+ * Represents a category of items.
+ * @interface
+ */
 export interface ItemCategory {
-  id?: number;
-  name: string;
+  id?: number; // Optional unique identifier for the category.
+  name: string; // Name of the category.
 }
 
+/**
+ * Represents an order made by a user.
+ * @interface
+ */
 export interface Order {
-  id?: number;
-  price: number;
-  time: string;
-  userId: number;
-  status: string;
-  items?: Record<number, number>;
+  id?: number; // Optional unique identifier for the order.
+  price: number; // Total price of the order.
+  time: string; // Timestamp of the order.
+  userId: number; // Identifier of the user who made the order.
+  status: string; // Current status of the order.
+  items?: Record<number, number>; // Record of item ids and their quantities.
 }
 
+/**
+ * Represents an ingredient used in menu items.
+ * @interface
+ */
 export interface Ingredient {
-  id?: number;
-  name: string;
-  stock: number;
-  restock: number;
-  amountOrdered: number;
-  price: number;
-  glutenFree: boolean;
-  vegan: boolean;
-  quantity?: number;
+  id?: number; // Optional unique identifier for the ingredient.
+  name: string; // Name of the ingredient.
+  stock: number; // Quantity in stock.
+  restock: number; // Quantity to be restocked.
+  amountOrdered: number; // Amount of ingredient ordered.
+  price: number; // Price of the ingredient.
+  glutenFree: boolean; // Indicates whether the ingredient is gluten-free.
+  vegan: boolean; // Indicates whether the ingredient is vegan.
+  quantity?: number; // Optional quantity for bulk operations.
 }
 
+/**
+ * Represents a user in the system.
+ * @interface
+ */
 export interface User {
-  id?: number;
-  username: string;
-  password: string;
-  email: string;
-  role: string;
+  id?: number; // Optional unique identifier for the user.
+  username: string; // Username of the user.
+  password: string; // Password of the user.
+  email: string; // Email of the user.
+  role: string; // Role of the user in the system.
 }
 
+/**
+ * Represents the main state and operations of the menu store.
+ * @interface
+ */
 interface Store {
+  /**
+   * Processes a checkout operation, clearing the cart and creating an order.
+   */
   checkout: () => void;
+
+  /**
+   * Adds a new item to the shopping cart.
+   * @param id - The unique identifier of the item to be added.
+   */
   addCartEntry: (id: number) => void;
+
+  /**
+   * Increments the quantity of a specific item in the cart.
+   * @param id - The unique identifier of the item.
+   */
   incrementCartEntryQuantity: (id: number) => void;
+
+  /**
+   * Decrements the quantity of a specific item in the cart.
+   * @param id - The unique identifier of the item.
+   */
   decrementCartEntryQuantity: (id: number) => void;
+
+  /**
+   * Updates a specific menu item.
+   * @param id - The unique identifier of the item to be updated.
+   * @param newItem - The new data for the item.
+   */
   changeItem: (id: number, newItem: MenuItem) => void;
+
+  /**
+   * Deletes a specific menu item.
+   * @param id - The unique identifier of the item to be deleted.
+   */
   deleteMenuItem: (id: number) => void;
+
+  /**
+   * Sets the list of ingredients.
+   * @param ingredients - The new list of ingredients.
+   */
   setIngredients: (ingredients: Ingredient[]) => void;
+
+  /**
+   * Updates a specific ingredient.
+   * @param id - The unique identifier of the ingredient to be updated.
+   * @param newIngredient - The new data for the ingredient.
+   */
   changeIngredient: (id: number, newIngredient: Ingredient) => void;
+
+  /**
+   * Deletes a specific ingredient.
+   * @param id - The unique identifier of the ingredient to be deleted.
+   */
   deleteIngredient: (id: number) => void;
+
+  /**
+   * Adds a new menu item.
+   * @param item - The menu item to be added.
+   */
   addMenuItem: (item: MenuItem) => void;
+
+  /**
+   * Adds a new ingredient.
+   * @param ingredient - The ingredient to be added.
+   */
   addIngredient: (ingredient: Ingredient) => void;
-  menuItems: MenuItem[];
-  cart: CartEntry[];
-  itemCategories: ItemCategory[];
-  ingredients: Ingredient[];
+
+  menuItems: MenuItem[]; // List of all menu items.
+  cart: CartEntry[]; // The current state of the shopping cart.
+  itemCategories: ItemCategory[]; // List of all item categories.
+  ingredients: Ingredient[]; // List of all ingredients.
 }
 
 let menuItemsResponse: Promise<MenuItem[]> = axios
