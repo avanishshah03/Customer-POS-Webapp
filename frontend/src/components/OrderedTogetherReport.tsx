@@ -54,7 +54,7 @@ export const OrderedTogetherReport = () => {
             }}
         >
             <Typography variant="h5" style={{ textAlign: "center" }}>
-                Items Sold Together Report
+                Items That Sold Together Report
             </Typography>
             <Typography variant="h5" style={{ textAlign: "center", fontSize: "medium" }}>
                 Number of Items sold together between the selected dates
