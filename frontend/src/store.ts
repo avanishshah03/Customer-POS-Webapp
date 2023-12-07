@@ -21,7 +21,7 @@ export interface MenuItem {
   size: string;
   extrasauce: boolean;
   quantity?: number;
-  ingredients: Ingredient[];
+  ingredients: { [key: number]: number };
 }
 
 export interface ItemCategory {

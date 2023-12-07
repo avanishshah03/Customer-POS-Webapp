@@ -38,7 +38,7 @@ export const CheckoutCart = ({ backgroundColor }: { backgroundColor?: string }) 
                 backgroundColor: backgroundColor ?? "#f3f3f3",
             }}
         >
-            <Typography variant="h5">Point of Sale</Typography>
+            <Typography variant="h5">Cart</Typography>
             <TableContainer>
                 <Table style={tableStyle}>
                     <TableHead>

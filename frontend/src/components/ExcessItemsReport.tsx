@@ -25,7 +25,6 @@ export const ExcessItemsReport = () => {
             }
         }).then((res) => {
             setExcessData(res.data);
-            console.log(res.data);
         });
     }, [startDate]);
 

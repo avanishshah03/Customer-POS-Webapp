@@ -30,6 +30,7 @@ export const EditItemIngredients: React.FC<EditItemIngredientsProps> = ({ menuIt
   const ingredients = useMenuStore((state) => state.ingredients);
   const filteredIngredients = ingredients.filter(v => v.name.toLowerCase().includes(searchText.toLowerCase()));
   const [ourIngredients, setOurIngredients] = useState<Ingredient[]>([]);
+  const changeItem = useMenuStore((state) => state.changeItem);
 
   useEffect(() => {
     axios
@@ -95,7 +96,13 @@ export const EditItemIngredients: React.FC<EditItemIngredientsProps> = ({ menuIt
             onChange={(e, v) => setOurIngredients(v)}
           />
 
-          <Button variant="contained" color="primary" onClick={handleClose}>
+          <Button variant="contained" color="primary" onClick={() => {
+            changeItem(menuItem.id, {
+              ...menuItem,
+              ingredients: ourIngredients.reduce((acc, curr) => (acc[curr.id] = 1, acc), {} as any)
+            });
+            setOpen(false)
+          }}>
             Save
           </Button>
         </DialogContent>
