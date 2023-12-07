@@ -18,7 +18,6 @@ export const RestockReport: React.FC = () => {
     useEffect(() => {
         axios.get<RestockData[]>("/restockReport").then((res) => {
             setRestockData(res.data);
-            console.log(res.data);
         });
     }, []);
 
