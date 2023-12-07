@@ -127,17 +127,17 @@ export const ManagerItems = () => {
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <Checkbox
-                                        checked={menuItem.glutenFree}
-                                        onChange={(e) =>
-                                            changeItem(menuItem.id, { ...menuItem, glutenFree: e.target.value === "on" ? true : false })
+                                        defaultChecked={menuItem.glutenFree}
+                                        onClick={() =>
+                                            changeItem(menuItem.id, { ...menuItem, glutenFree: !menuItem.glutenFree })
                                         }
                                     />
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <Checkbox
-                                        checked={menuItem.vegan}
-                                        onChange={(e) =>
-                                            changeItem(menuItem.id, { ...menuItem, vegan: e.target.value === "on" ? true : false })
+                                        defaultChecked={menuItem.vegan}
+                                        onClick={(e) =>
+                                            changeItem(menuItem.id, { ...menuItem, vegan: !menuItem.vegan })
                                         }
                                     />
                                 </TableCell>
@@ -166,9 +166,11 @@ export const ManagerItems = () => {
                                 </TableCell>
                                 <TableCell style={cellStyle}>
                                     <Checkbox
-                                        checked={menuItem.extrasauce}
-                                        onChange={(e) =>
-                                            changeItem(menuItem.id, { ...menuItem, extrasauce: e.target.value as any })
+                                        defaultChecked={menuItem.extraSauce}
+                                        onClick={(e) => {
+                                            console.log(menuItem.extraSauce);
+                                            changeItem(menuItem.id, { ...menuItem, extraSauce: !menuItem.extraSauce })
+                                        }
                                         }
                                     />
                                 </TableCell>

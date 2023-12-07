@@ -99,7 +99,7 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
             glutenFree: glutenFree,
             vegan: vegan,
             size: size,
-            extrasauce: extraSauce,
+            extraSauce: extraSauce,
             categoryId: 1, // FIXME
             imageUrl: ""
           })}>

@@ -27,7 +27,7 @@ export interface MenuItem {
   vegan: boolean; // Indicates whether the item is vegan.
   glutenFree: boolean; // Indicates whether the item is gluten-free.
   size: string; // Size of the menu item.
-  extrasauce: boolean; // Indicates if extra sauce is added.
+  extraSauce: boolean; // Indicates if extra sauce is added.
   quantity?: number; // Optional quantity for bulk operations.
   ingredients: { [key: number]: number }; // Ingredients and their quantities.
 }
