@@ -1,30 +1,38 @@
 package com.project3.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+/**
+ * Represents the mapping between an item and an order.
+ */
 @Entity
 @Data
 public class ItemToOrder {
+    /**
+     * The unique identifier for the item-to-order mapping.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "item_to_order_id_seq")
     @SequenceGenerator(name = "item_to_order_id_seq", sequenceName = "item_to_order_id_seq", allocationSize = 1)
     int id;
-    int itemId;
-    int orderId;
-    int quantity;
 
+    /**
+     * The identifier of the item in the mapping.
+     */
+    int itemId;
+
+    /**
+     * The identifier of the order in the mapping.
+     */
+    int orderId;
+
+    /**
+     * The quantity of the item in the order.
+     */
+    int quantity;
 }

@@ -1,6 +1,5 @@
 package com.project3.backend.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -13,13 +12,7 @@ import jakarta.persistence.JoinColumn;
 import lombok.Data;
 import java.util.Set;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * Represents an Ingredient used in the restaurant.
@@ -27,17 +20,52 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Data
 public class Ingredient {
+    /**
+     * The unique identifier of the ingredient.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "ingredient_id_seq")
     @SequenceGenerator(name = "ingredient_id_seq", sequenceName = "ingredient_id_seq", allocationSize = 1)
     private int id;
+
+    /**
+     * The name of the ingredient.
+     */
     private String name;
+
+    /**
+     * The current stock of the ingredient.
+     */
     private int stock;
+
+    /**
+     * The restock quantity of the ingredient.
+     */
     private int restock;
+
+    /**
+     * The amount of this ingredient ordered.
+     */
     private int amountOrdered;
+
+    /**
+     * The price of the ingredient.
+     */
     private double price;
+
+    /**
+     * Indicates if the ingredient is gluten-free.
+     */
     private boolean glutenFree;
+
+    /**
+     * Indicates if the ingredient is vegan.
+     */
     private boolean vegan;
+
+    /**
+     * Set of relationships between this ingredient and items.
+     */
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredientId")
     @Transient
@@ -47,8 +75,7 @@ public class Ingredient {
     /**
      * Default constructor for creating an Ingredient.
      */
-    public Ingredient()
-    {
+    public Ingredient() {
         this.id = 0;
         this.name = "";
         this.stock = 0;
@@ -59,7 +86,7 @@ public class Ingredient {
         this.vegan = false;
     }
 
-     /**
+    /**
      * Parameterized constructor for creating an Ingredient with specified attributes.
      *
      * @param name       The name of the ingredient.
@@ -69,8 +96,7 @@ public class Ingredient {
      * @param glutenFree Indicates if the ingredient is gluten-free.
      * @param vegan      Indicates if the ingredient is vegan.
      */
-    public Ingredient(String name, int stock, int restock, double price, boolean glutenFree, boolean vegan)
-    {
+    public Ingredient(String name, int stock, int restock, double price, boolean glutenFree, boolean vegan) {
         this.id = 0;
         this.name = name;
         this.stock = stock;
@@ -84,17 +110,16 @@ public class Ingredient {
     /**
      * Parameterized constructor for creating an Ingredient with all attributes.
      *
-     * @param id          The unique identifier of the ingredient.
-     * @param name        The name of the ingredient.
-     * @param stock       The current stock of the ingredient.
-     * @param restock     The restock quantity of the ingredient.
+     * @param id           The unique identifier of the ingredient.
+     * @param name         The name of the ingredient.
+     * @param stock        The current stock of the ingredient.
+     * @param restock      The restock quantity of the ingredient.
      * @param amountOrdered The amount of this ingredient ordered.
-     * @param price       The price of the ingredient.
-     * @param glutenFree  Indicates if the ingredient is gluten-free.
-     * @param vegan       Indicates if the ingredient is vegan.
+     * @param price        The price of the ingredient.
+     * @param glutenFree   Indicates if the ingredient is gluten-free.
+     * @param vegan        Indicates if the ingredient is vegan.
      */
-    public Ingredient(int id, String name, int stock, int restock, int amountOrdered, double price, boolean glutenFree, boolean vegan)
-    {
+    public Ingredient(int id, String name, int stock, int restock, int amountOrdered, double price, boolean glutenFree, boolean vegan) {
         this.id = id;
         this.name = name;
         this.stock = stock;
@@ -104,88 +129,4 @@ public class Ingredient {
         this.glutenFree = glutenFree;
         this.vegan = vegan;
     }
-
-   
-
-//     /**
-//      * Selects a list of ingredients based on specified conditions.
-//      *
-//      * @param conn       The SQLConnection object for database operations.
-//      * @param conditions The conditions to filter ingredients (e.g., "gluten_free=true").
-//      * @return A list of ingredients that meet the specified conditions.
-//      */
-//     public static List<Ingredient> selectIngredients(SQLConnection conn, List<String> conditions)
-//     {
-//         List<Ingredient> ingredients = new ArrayList<Ingredient>();
-//         try {
-//             ResultSet rs = conn.select("ingredients", List.of("*"), conditions);
-//             while (rs.next()) {
-//                 ingredients.add(new Ingredient(rs.getInt("id"), rs.getString("name"), rs.getInt("stock"), rs.getInt("restock"), rs.getInt("amount_ordered"), rs.getFloat("price"), rs.getBoolean("gluten_free"), rs.getBoolean("vegan")));
-//             }
-//         } catch (Exception e) {
-//             e.printStackTrace();
-//         }
-//         return ingredients;
-//     }
-
-//     /**
-//      * Selects all ingredients from the database.
-//      *
-//      * @param conn The SQLConnection object for database operations.
-//      * @return A list of all ingredients in the database.
-//      */
-//     public static List<Ingredient> selectAllIngredients(SQLConnection conn)
-//     {
-//         return selectIngredients(conn, List.of("TRUE"));
-//     }
-
-//     /**
-//      * Selects an ingredient by its unique identifier.
-//      *
-//      * @param conn The SQLConnection object for database operations.
-//      * @param id   The unique identifier of the ingredient.
-//      * @return The Ingredient object with the specified identifier, or null if not found.
-//      */
-//     public static Ingredient selectIngredientByID(SQLConnection conn, int id)
-//     {
-//         List<String> conditions = new ArrayList<String>();
-//         conditions.add("id=" + id);
-//         List<Ingredient> ingredients = selectIngredients(conn, conditions);
-//         if (ingredients.isEmpty()) {
-//             return null;
-//         }
-//         return ingredients.get(0);
-//     }
-
-//     /**
-//      * Inserts the current ingredient into the database.
-//      *
-//      * @param conn The SQLConnection object for database operations.
-//      */
-//     public void insertIngredient(SQLConnection conn) {
-//         List<String> columns = List.of("name", "stock", "restock", "price", "gluten_free", "vegan");
-//         List<String> values = List.of(this.getName(), String.valueOf(stock), String.valueOf(restock), String.valueOf(this.getPrice()), String.valueOf(this.isGlutenFree()), String.valueOf(this.isVegan()));
-//         conn.insert("ingredients", columns, values);
-//     }
-
-//     /**
-//      * Updates the current ingredient's information in the database.
-//      *
-//      * @param conn The SQLConnection object for database operations.
-//      */
-//     public void updateIngredient(SQLConnection conn)
-//     {
-//         List<String> columns = List.of("name", "stock", "restock", "price", "gluten_free", "vegan");
-//         List<String> values = List.of(this.getName(), String.valueOf(stock), String.valueOf(restock), String.valueOf(this.getPrice()), String.valueOf(this.isGlutenFree()), String.valueOf(this.isVegan()));
-//         conn.update("ingredients", columns, values, List.of("id=" + this.getID()));
-//     }
-
-//     /**
-//      * Deletes the current ingredient from the database.
-//      *
-//      * @param conn The SQLConnection object for database operations.
-//      */
-//     public void deleteIngredient(SQLConnection conn) {
-//         conn.delete("ingredients", List.of("id=" + this.getID()));
-//     }
 }

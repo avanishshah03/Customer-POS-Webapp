@@ -13,8 +13,18 @@ import com.project3.backend.reports.ItemToOrderWithQuantity;
 import com.project3.backend.reports.OrderedTogetherReport;
 import com.project3.backend.reports.SalesReport;
 
+/**
+ * Repository interface for managing Item entities in the database.
+ * Extends CrudRepository, providing basic CRUD operations.
+ */
 @Repository
 public interface ItemRepository extends CrudRepository<Item, Integer> {
+    /**
+     * Retrieves a list of items along with their quantities for a specific order.
+     *
+     * @param orderId The ID of the order to retrieve items for.
+     * @return List of ItemToOrderWithQuantity objects.
+     */
     @Query(value = "SELECT i.id, i.name, i.price, i.vegan, i.gluten_free AS glutenFree, i.category_id AS categoryId, i.size, i.extra_sauce AS extraSauce, i.image_url as imageUrl, io.quantity " +
                    "FROM item i " +
                    "JOIN item_to_order io ON i.id = io.item_id " +
@@ -22,6 +32,13 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
                    "WHERE o.id = :orderId", nativeQuery = true)
     List<ItemToOrderWithQuantity> findByItemToOrders_orderId(int orderId);
     
+    /**
+     * Retrieves a list of sales reports for items within a specified date range.
+     *
+     * @param startDate The start date of the date range.
+     * @param endDate   The end date of the date range.
+     * @return List of SalesReport objects.
+     */
     @Query(value = "SELECT i.id, i.name AS itemName, COUNT(io.order_id) AS orderCount FROM item i " +
                    "LEFT JOIN item_to_order io ON i.id = io.item_id " + 
                    "LEFT JOIN \"order\" o ON io.order_id = o.id " + 
@@ -31,6 +48,13 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
     List<SalesReport> findItemsWithOrderCount(@Param("startDate") LocalDateTime startDate, 
                                               @Param("endDate") LocalDateTime endDate);
 
+    /**
+     * Retrieves a list of items considered excess based on sales and restock data.
+     *
+     * @param chosenTimestamp   The chosen timestamp for filtering sales data.
+     * @param currentTimestamp  The current timestamp for filtering sales data.
+     * @return List of Item objects representing excess items.
+     */
     @Query(value = "WITH ItemSales AS (" +
                         "SELECT io.item_id, SUM(ii.Quantity) AS total_sold " +
                         "FROM item_to_order AS io " +
@@ -63,6 +87,13 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
     List<Item> findExcessItems(@Param("chosen_timestamp") LocalDateTime chosenTimestamp, 
                                @Param("current_timestamp") LocalDateTime currentTimestamp);
 
+    /**
+     * Retrieves a list of items ordered together frequently within a specified date range.
+     *
+     * @param startDate The start date of the date range.
+     * @param endDate   The end date of the date range.
+     * @return List of OrderedTogetherReport objects.
+     */
     @Query(value = "WITH FilteredOrders AS (" +
 					"SELECT o.id AS order_id, io1.item_id AS item1_id, io2.item_id AS item2_id " +
 					"FROM \"order\" o " +
