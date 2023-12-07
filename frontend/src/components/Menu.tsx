@@ -10,7 +10,7 @@ import { useMenuStore } from "../store";
 export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string, backgroundColor?: string, addPaddingToImage: boolean }) => {
   const menuItems = useMenuStore((state) => state.menuItems);
   const addtoCart = useMenuStore((state) => state.addCartEntry);
-  const [tabValue, setTabValue] = useState(0);
+  const [tabValue, setTabValue] = useState(1);
   const itemCategories = useMenuStore((state) => state.itemCategories);
 
   const paperStyle = {
@@ -30,7 +30,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string,
         sx={{ marginBottom: '32px' }}
       >
         {itemCategories.map((category) => (
-          <Tab label={category.name} key={category.id} />
+          <Tab label={category.name} key={category.id} value={category.id} />
         ))}
       </Tabs>
 
@@ -48,7 +48,7 @@ export const MenuItemsDisplay = (props: { showImage: boolean, fontSize?: string,
               alignItems="stretch"
             >
               {menuItems
-                .filter((menuItem) => menuItem.categoryId === category.id! + 1)
+                .filter((menuItem) => menuItem.categoryId === category.id)
                 .filter((v, i, a) => a.map(v => v.name).indexOf(v.name) === i) // https://stackoverflow.com/questions/1960473/get-all-unique-values-in-a-javascript-array-remove-duplicates
                 .map((menuItem) => (
                   <Grid item key={menuItem.id} xs={3} style={{ height: "250px" }} >
