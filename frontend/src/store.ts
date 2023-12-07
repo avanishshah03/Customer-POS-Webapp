@@ -174,6 +174,9 @@ let ingredientsPromise: Promise<Ingredient[]> = axios
 let ingredients: Ingredient[] = await ingredientsPromise;
 console.log("ingredients", ingredients);
 
+/**
+ * Represents the store used for managing menu items, ingredients, and cart in the frontend.
+ */
 export const useMenuStore = create<Store>((set) => ({
   cart: [],
   itemCategories: itemCategories,

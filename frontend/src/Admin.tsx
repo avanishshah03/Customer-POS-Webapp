@@ -13,6 +13,11 @@ const customButtonStyle = {
     backgroundColor: 'blue'
   };
 
+
+/**
+ * Admin component.
+ * Renders the admin page with a navigation bar and a user table.
+ */
 export const Admin: React.FC = () => {
     const [value, setValue] = React.useState(0);
     return (

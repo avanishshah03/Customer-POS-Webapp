@@ -21,22 +21,8 @@ interface DeleteConfirmProps {
 }
 
 export const DeleteConfirmIngredient: React.FC<DeleteConfirmProps> = ({ id, name }) => {
-    // const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(true);
-    const menuitems = useMenuStore((state) => state.menuItems);
-    const changeSize = useMenuStore((state) => state.changeSize);
-    // const tableStyle = {
-    //   border: "1px solid #ddd",
-    //   width: "100%",
-    // }
     const deleteIngredient = useMenuStore((state) => state.deleteIngredient);
     const [open, setOpen] = useState(false);
-    const [itemName, setItemName] = useState("");
-    const [itemPrice, setItemPrice] = useState("");
-
-    const [glutenFree, setGlutenFree] = useState(false);
-    const [vegan, setVegan] = useState(false);
-    const [size, setSize] = useState<string | undefined>("");
-    const [extraSauce, setExtraSauce] = useState(false);
 
     return (
         <>

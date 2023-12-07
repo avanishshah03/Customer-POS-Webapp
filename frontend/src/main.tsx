@@ -12,7 +12,13 @@ import { Unauthorized } from './Unauthorized.tsx'
 import { ProtectedRoute } from './components/ProtectedRoute.tsx';
 import { Admin } from './Admin.tsx';
 
-const AddTranslateScript = (props: any) => {
+
+/**
+ * Component that adds a Google Translate script to the page and renders a translation element.
+ * @param props - The component props.
+ * @returns The rendered component.
+ */
+export const AddTranslateScript = (props: any) => {
   const googleTranslateElementInit = () => {
     new window.google.translate.TranslateElement({ pageLanguage: 'en', layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE, }, 'google_translate_element')
   }
@@ -35,7 +41,12 @@ const AddTranslateScript = (props: any) => {
   </div>);
 }
 
-const router = createBrowserRouter([
+/**
+ * Defines the router configuration for the application.
+ * Each route is associated with a specific path and element/component.
+ * @returns {Array<RouteConfig>} The array of route configurations.
+ */
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <AddTranslateScript><LandingPage /> </AddTranslateScript>,

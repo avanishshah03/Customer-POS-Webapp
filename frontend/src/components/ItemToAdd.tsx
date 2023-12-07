@@ -92,6 +92,7 @@ export const ItemToAdd: React.FC<ItemToAddProps> = () => {
           </Typography>
           {/* Add more fields as needed */}
 
+          {/* @ts-ignore */}
           <Button variant="contained" color="primary" onClick={() => addMenuItem({
             name: itemName,
             price: parseFloat(itemPrice),

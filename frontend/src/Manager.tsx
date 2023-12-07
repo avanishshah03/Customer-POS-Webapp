@@ -13,6 +13,10 @@ import { RestockReport } from './components/RestockReport';
 import { SalesReport } from './components/SalesReport';
 
 
+/**
+ * Represents the Manager component.
+ * This component displays a manager interface with various tabs for different functionalities.
+ */
 export const Manager: React.FC = () => {
     const [value, setValue] = React.useState(0);
     const customButtonStyle = {
