@@ -25,12 +25,13 @@ export const LandingPage: React.FC = () => {
             <div className="content">
                 <div style={{ gridColumn: 2, gridRow: 1 }}>
                     <h1 className="notranslate">MESS WAFFLES</h1>
-                    <h3>`Fall` in love with our Waffles.</h3>
+                    <h2>`Fall` in love with our Waffles.</h2>
                 </div>
                 <iframe
                     src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_REACT_APP_API_KEY}&q=Mess+Waffles,College+Station,TX`}
                     allowFullScreen
                     style={{ filter: 'brightness(0.8)', gridColumn: 1, gridRow: 2, width: "100%", height: "100%", borderRadius: '10px', margin: "1em" }}
+                    title="Google Maps"
                 ></iframe>
                 <div style={{ gridColumn: 2, gridRow: 3 }}>
                     <Carousel slides={imgs} />
