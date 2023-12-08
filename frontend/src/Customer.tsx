@@ -26,13 +26,13 @@ const theme = createTheme({
 });
 
 const customButtonStyle = {
-  
+
   fontSize: '18px'
 };
 
 export default function Customer() {
   const paperStyle = {
-    
+
     padding: "20px",
     margin: "20px",
     textAlign: "center",
@@ -53,15 +53,15 @@ export default function Customer() {
             </div>
             <Link to="/" >
               <Button style={customButtonStyle} className="button-hover-effect">
-                  Home
+                Home
               </Button>
-          </Link>
+            </Link>
           </Paper>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={12} lg={8}>
           <MenuItemsDisplay showImage={true} backgroundColor={brown} addPaddingToImage={true} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} lg={4}>
           <CheckoutCart backgroundColor={brown} />
         </Grid>
       </Grid>

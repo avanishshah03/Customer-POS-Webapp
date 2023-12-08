@@ -94,3 +94,55 @@ button {
     background-color: white;
     /* Updated background color on hover */
 }
+
+@media screen and (max-width: 768px) {
+
+    .landing-page {
+        align-items: flex-start;
+    }
+
+    .background-image {
+        /* Adjust background image settings if needed */
+    }
+
+    .content {
+        display: block; /* Change grid to block layout for simplicity */
+        padding: 20px; /* Add some padding */
+    }
+
+    h1 {
+        font-size: 2.5rem; /* Smaller font size for headers */
+        margin-bottom: 15px;
+    }
+
+    p {
+        font-size: 1rem; /* Smaller font size for paragraphs */
+        margin-bottom: 15px;
+    }
+
+    button {
+        padding: 8px 16px; /* Adjust button padding */
+        font-size: 1rem; /* Smaller font size for buttons */
+    }
+
+    #order-here {
+        font-size: 1.5rem; /* Adjust font size */
+    }
+
+    #login-container {
+        justify-content: center; /* Center the login container */
+        margin: 1em;
+    }
+
+    #customer-button {
+        font-size: 90%; /* Slightly smaller font size */
+    }
+
+    .button-hover-effect {
+        /* Adjustments for button hover effects if needed */
+    }
+
+    iframe {
+        display: none;
+    }
+}
