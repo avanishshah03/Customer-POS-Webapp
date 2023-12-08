@@ -79,7 +79,7 @@ export const CheckoutCart = (props: { backgroundColor?: string, cart: CartEntry[
                 backgroundColor: backgroundColor ?? "#f3f3f3",
             }}
         >
-            <Typography variant="h5">Point of Sale</Typography>
+            <Typography variant="h5">Order {order.id}</Typography>
             <TableContainer>
                 <Table style={tableStyle}>
                     <TableHead>
